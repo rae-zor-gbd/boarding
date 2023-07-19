@@ -375,6 +375,9 @@ nav {
 .nav-link#am-meds::before, .nav-link#noon-meds::before, .nav-link#pm-meds::before {
   content:var(--icon-meds-01);
 }
+.nav-link#map::before {
+  content:var(--icon-clipboard-list);
+}
 .nav-link#rooms::before {
   content:var(--icon-clipboard-list);
 }
