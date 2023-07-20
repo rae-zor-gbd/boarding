@@ -7,6 +7,8 @@ SET character_set_client=utf8mb4;
 
 CREATE TABLE rooms (
   roomID INT(11) NOT NULL,
+  mapColumn INT(11) NOT NULL,
+  mapRow INT(11) NOT NULL,
   PRIMARY KEY (roomID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
