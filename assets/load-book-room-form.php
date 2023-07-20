@@ -25,7 +25,7 @@ echo "</select>
 </select>
 </div>
 <div class='input-group'>
-<span class='input-group-addon notes'>Feeding Instructions</span>
+<span class='input-group-addon food'>Feeding Instructions</span>
 <textarea class='form-control' name='feeding-instructions' id='newFeedingInstructions' rows='5' required></textarea>
 </div>";
 ?>

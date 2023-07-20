@@ -41,7 +41,7 @@
     </a>
     <div class='nav-links'>
       <a href='/'>
-        <div class='nav-link' id='rooms'>Food & Meds</div>
+        <div class='nav-link' id='food-meds'>Food & Meds</div>
       </a>
       <a href='/am-meds'>
         <div class='nav-link' id='am-meds'>AM Meds</div>
@@ -52,8 +52,8 @@
       <a href='/pm-meds'>
         <div class='nav-link' id='pm-meds'>PM Meds</div>
       </a>
-      <a href='/map'>
-        <div class='nav-link' id='map'>Map</div>
+      <a href='/rooms'>
+        <div class='nav-link' id='rooms'>Rooms</div>
       </a>
     </div>
   </div>

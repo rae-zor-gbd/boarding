@@ -299,7 +299,7 @@ textarea {
   content:var(--icon-at);
 }
 .input-group-addon.food::before {
-  content:var(--icon-bone);
+  content:var(--icon-food-02);
 }
 .input-group-addon.info::before {
   content:var(--icon-info);
@@ -314,7 +314,7 @@ textarea {
   content:var(--icon-phone-01);
 }
 .input-group-addon.room::before {
-  content:var(--icon-clipboard);
+  content:var(--icon-house);
 }
 .input-group-addon.vaccine::before {
   content:var(--icon-vaccine);
@@ -404,14 +404,20 @@ nav {
   padding-left:25px;
   padding-right:25px;
 }
-.nav-link#am-meds::before, .nav-link#noon-meds::before, .nav-link#pm-meds::before {
-  content:var(--icon-meds-01);
+.nav-link#am-meds::before {
+  content:var(--icon-sunrise);
 }
-.nav-link#map::before {
-  content:var(--icon-clipboard-list);
+.nav-link#food-meds::before {
+  content:var(--icon-food-02);
+}
+.nav-link#noon-meds::before {
+  content:var(--icon-sun);
+}
+.nav-link#pm-meds::before {
+  content:var(--icon-sunset);
 }
 .nav-link#rooms::before {
-  content:var(--icon-clipboard-list);
+  content:var(--icon-calendar-edit);
 }
 .nav-links, .panel-body, .panel-footer {
   border-top:1.5px solid var(--color-06)!important;

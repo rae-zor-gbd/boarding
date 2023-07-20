@@ -9,7 +9,7 @@ if (isset($_POST['id'])) {
   $dogName=htmlspecialchars($row_dog_info['dogName'], ENT_QUOTES);
   echo "<input type='hidden' class='form-control' name='id' id='deleteID' value='$id' required>
   <div class='input-group'>
-  <span class='input-group-addon owner'>Room</span>
+  <span class='input-group-addon room'>Room</span>
   <input type='text' class='form-control' name='room' id='deleteRoom' value='$roomNo' disabled>
   </div>
   <div class='input-group'>

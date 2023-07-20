@@ -34,7 +34,7 @@ include 'assets/config.php';
     });
   }
   $(document).ready(function(){
-    $('#rooms').addClass('active');
+    $('#food-meds').addClass('active');
     loadRooms();
     $('#bookRoom').click(function (e) {
       e.preventDefault();

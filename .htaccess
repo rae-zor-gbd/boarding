@@ -12,6 +12,8 @@ RewriteRule ^noon-meds noon-meds.php [NC,L]
 
 RewriteRule ^pm-meds pm-meds.php [NC,L]
 
+RewriteRule ^rooms rooms.php [NC,L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 
 <FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)(\.gz)?$">
