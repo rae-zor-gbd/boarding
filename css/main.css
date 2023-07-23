@@ -223,9 +223,12 @@ textarea {
   transition-duration:.3s;
   transition-property:background;
 }
-.button-complete::before, .button-email::before, .button-decrease::before, .button-delete::before, .button-dog::before, .button-edit::before, .button-journal::before, .button-meds::before, .button-notes::before, .button-package::before {
+.button-add::before, .button-complete::before, .button-email::before, .button-decrease::before, .button-delete::before, .button-dog::before, .button-edit::before, .button-journal::before, .button-meds::before, .button-notes::before, .button-package::before {
   font-family:var(--icon-font-family);
   font-weight:var(--font-weight-regular);
+}
+.button-add::before {
+  content:var(--icon-plus);
 }
 .button-complete::before {
   content:var(--icon-circle-check);
@@ -404,6 +407,17 @@ nav {
   padding-left:25px;
   padding-right:25px;
 }
+.nav-add-button {
+  bottom:calc(var(--spacer)*(4/3));
+  left:var(--spacer);
+  position:fixed;
+}
+.nav-add-button::before {
+  content:var(--icon-plus);
+  font-family:var(--icon-font-family);
+  font-weight:var(--font-weight-regular);
+  padding-right:calc(var(--spacer)/3);
+}
 .nav-link#am-meds::before {
   content:var(--icon-sunrise);
 }
@@ -463,17 +477,6 @@ nav {
 .nav-logo svg {
   height:100%;
   width:100%;
-}
-.book-room {
-  bottom:calc(var(--spacer)*(4/3));
-  left:var(--spacer);
-  position:fixed;
-}
-.book-room::before {
-  content:var(--icon-plus);
-  font-family:var(--icon-font-family);
-  font-weight:var(--font-weight-regular);
-  padding-right:calc(var(--spacer)/3);
 }
 .collapsed .panel-heading .panel-arrow {
   top:-1px;
@@ -663,6 +666,92 @@ nav {
 }
 .panel-title {
   font-size:var(--font-size);
+}
+.room-dates {
+  font-size:70%;
+  padding-top:calc(var(--spacer)/10);
+  text-transform:uppercase;
+}
+.room-buttons, .room-name-dates {
+  display:table-cell;
+}
+.room-buttons {
+  font-size:75%;
+  min-width:53px;
+  vertical-align:middle;
+}
+.room-buttons button:nth-last-child(1) {
+  padding-right:0;
+}
+.room-buttons button:nth-of-type(1) {
+  padding-left:0;
+}
+.room-name {
+  line-height:1;
+}
+.room-name-dates {
+  width:100%;
+}
+.room-number {
+  display:table-cell;
+  font-weight:var(--font-weight-bold);
+  padding-right:calc(var(--spacer)/3);
+  width:0;
+}
+.room-occupant {
+  display:table;
+  text-align:right;
+}
+.room-occupant:not(:nth-of-type(1)) {
+  margin-top:calc(var(--spacer)/3);
+}
+.room-occupant-column {
+  display:table-cell;
+}
+.room-row {
+  background:var(--color-08);
+  border:1px solid var(--color-05);
+  display:table;
+  margin-bottom:-1px;
+  padding:calc(var(--spacer)/4) calc(var(--spacer)/2);
+  width:calc((100vw - (var(--spacer)*2) - (var(--spacer)*11) - (var(--spacer)*(5/3)) - (var(--spacer)*(5/3)))/4);
+}
+.rooms-single-column {
+  flex:1;
+  flex-direction:column;
+}
+.rooms-container, .rooms-multi-column, .rooms-multi-row, .rooms-single-column {
+  display:flex;
+}
+.rooms-multi-column {
+  flex:3;
+  flex-direction:column;
+}
+.rooms-multi-column .rooms-multi-row .room-row:nth-of-type(3n-1), .rooms-single-column .rooms-multi-row .room-row {
+  margin-left:var(--spacer);
+}
+.rooms-multi-row {
+  flex:1;
+  flex-direction:row;
+  flex-wrap:wrap;
+}
+.rooms-multi-row:not(:nth-of-type(1)) {
+  margin-top:var(--spacer);
+}
+.rooms-multi-column .rooms-multi-row .room-row:nth-last-child(1), .rooms-multi-column .rooms-multi-row .room-row:nth-last-child(3), .rooms-single-column .rooms-multi-row .room-row:nth-last-child(1) {
+  border-bottom-right-radius:6px;
+}
+.rooms-multi-column .rooms-multi-row .room-row:nth-last-child(2), .rooms-multi-column .rooms-multi-row .room-row:nth-last-child(3), .rooms-single-column .rooms-multi-row .room-row:nth-last-child(1) {
+  border-bottom-left-radius:6px;
+} 
+.rooms-multi-column .rooms-multi-row .room-row:nth-of-type(1), .rooms-multi-column .rooms-multi-row .room-row:nth-of-type(2), .rooms-single-column .rooms-multi-row .room-row:nth-of-type(1) {
+  border-top-left-radius:6px;
+}
+.rooms-multi-column .rooms-multi-row .room-row:nth-of-type(1), .rooms-multi-column .rooms-multi-row .room-row:nth-of-type(3), .rooms-single-column .rooms-multi-row .room-row:nth-of-type(1) {
+  border-top-right-radius:6px;
+}
+.rooms-multi-column .rooms-multi-row .room-row:nth-of-type(3n) {
+  margin-left:-1px;
 }
 .vaccine-reminder-notes-text::before {
   padding-right:9px;

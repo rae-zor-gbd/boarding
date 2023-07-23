@@ -7,22 +7,22 @@ include 'assets/config.php';
   <title>Food & Meds</title>
   <?php include 'assets/header.php'; ?>
   <script type='text/javascript'>
-  function loadBookRoomForm(){
+  function loadAddFoodForm(){
     $.ajax({
-      url:'/assets/load-book-room-form.php',
+      url:'/assets/load-add-food-form.php',
       type:'POST',
       cache:false,
       data:{},
       success:function(data){
         if (data) {
-          $('#bookRoomModalBody').append(data);
+          $('#addFoodModalBody').append(data);
         }
       }
     });
   }
-  function loadRooms(){
+  function loadFoodMeds(){
     $.ajax({
-      url:'/assets/load-rooms.php',
+      url:'/assets/load-food-meds.php',
       type:'POST',
       cache:false,
       data:{},
@@ -35,28 +35,28 @@ include 'assets/config.php';
   }
   $(document).ready(function(){
     $('#food-meds').addClass('active');
-    loadRooms();
-    $('#bookRoom').click(function (e) {
+    loadFoodMeds();
+    $('#addFood').click(function (e) {
       e.preventDefault();
       var room=document.getElementById('newRoom').value;
       var name=document.getElementById('newDogName').value;
       var foodType=document.getElementById('newFoodType').value;
       var feedingInstructions=document.getElementById('newFeedingInstructions').value;
       $.ajax({
-        url:'assets/book-room.php',
+        url:'assets/add-food.php',
         type:'POST',
         cache:false,
         data:{room:room, name:name, foodType:foodType, feedingInstructions:feedingInstructions},
         success:function(response){
           $('#table-rooms').empty();
-          loadRooms();
-          $('#bookRoomModal').modal('hide');
-          document.getElementById('bookRoomForm').reset();
+          loadFoodMeds();
+          $('#addFoodModal').modal('hide');
+          document.getElementById('addFoodForm').reset();
         }
       });
     });
-    $('#bookRoomFormButton').click(function (e) {
-      loadBookRoomForm();
+    $('#addFoodButton').click(function (e) {
+      loadAddFoodForm();
     });
     $(document).on('click', '#delete-dog-button', function() {
       var id=$(this).data('id');
@@ -86,7 +86,7 @@ include 'assets/config.php';
       });
     });
     $('.modal').on('hidden.bs.modal', function(){
-      $('#bookRoomModalBody').empty();
+      $('#addFoodModalBody').empty();
       $('#deleteDogModalBody').empty();
     });
   });
@@ -94,23 +94,23 @@ include 'assets/config.php';
 </head>
 <body>
   <?php include 'assets/navbar.php'; ?>
-  <form action='' method='post' spellcheck='false' id='bookRoomForm'>
-    <div class='modal fade' id='bookRoomModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+  <form action='' method='post' spellcheck='false' id='addFoodForm'>
+    <div class='modal fade' id='addFoodModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
       <div class='modal-dialog'>
         <div class='modal-content'>
           <div class='modal-header'>
-            <h4 class='modal-title'>Book Room</h4>
+            <h4 class='modal-title'>Add Food</h4>
           </div>
-          <div class='modal-body' id='bookRoomModalBody'></div>
+          <div class='modal-body' id='addFoodModalBody'></div>
           <div class='modal-footer'>
-            <button type='submit' class='btn btn-primary' id='bookRoom'>Submit</button>
+            <button type='submit' class='btn btn-primary' id='addFood'>Submit</button>
             <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>
           </div>
         </div>
       </div>
     </div>
   </form>
-  <button type='button' class='btn btn-default book-room' id='bookRoomFormButton' data-toggle='modal' data-target='#bookRoomModal' data-backdrop='static' title='Book Room'>Book Room</button>
+  <button type='button' class='btn btn-default nav-add-button' id='addFoodButton' data-toggle='modal' data-target='#addFoodModal' data-backdrop='static' title='Add Food'>Add Food</button>
   <div class='container-fluid'>
     <div class='table-container'>
       <table class='table table-hover table-condensed'>
@@ -133,7 +133,7 @@ include 'assets/config.php';
       <div class='modal-dialog'>
         <div class='modal-content'>
           <div class='modal-header'>
-            <h4 class='modal-title'>Delete Dog</h4>
+            <h4 class='modal-title'>Delete Food & Meds</h4>
           </div>
           <div class='modal-body' id='deleteDogModalBody'></div>
           <div class='modal-footer'>

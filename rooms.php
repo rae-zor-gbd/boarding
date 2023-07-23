@@ -6,76 +6,64 @@ include 'assets/config.php';
 <head>
   <title>Rooms</title>
   <?php include 'assets/header.php'; ?>
-  <style>
-  .panel {
-    display:flex;
-    flex-direction:column;
-    width:calc((100%/4) - 12px);
-  }
-  .panel:not(:nth-of-type(4n-3)) {
-    margin-left:calc(var(--spacer)/2);
-  }
-  .panel-body {
-    flex:1 1 auto;
-    text-align:right;
-  }
-  .panel-container {
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:left;
-  }
-  .room-dates {
-    font-size:70%;
-    margin-left:calc(var(--spacer)/4);
-    text-transform:uppercase;
-  }
-  .room-number {
-    float:left;
-    font-weight:var(--font-weight-bold);
-  }
-  .room-occupant:not(:nth-of-type(2)) {
-    margin-top:10px;
-  }
-  </style>
   <script type='text/javascript'>
-  $(document).ready(function(){
-    $('#rooms').addClass('active');
-  });
+    $(document).ready(function() {
+      $('#rooms').addClass('active');
+    });
   </script>
 </head>
 <body>
   <?php include 'assets/navbar.php'; ?>
+  <button type='button' class='btn btn-default nav-add-button' title='Book Room'>Book Room</button>
   <div class='container-fluid'>
-    <div class='panel-container'>
+    <div class='rooms-container'>
       <?php
-      $sql_columns="SELECT DISTINCT columnID FROM rooms ORDER BY columnID";
-      $result_columns=$conn->query($sql_columns);
-      while ($row_columns=$result_columns->fetch_assoc()) {
-        $columnID=$row_columns['columnID'];
-        echo "<div class='panel panel-default'>";
-        $sql_groups="SELECT DISTINCT groupID FROM rooms WHERE columnID='$columnID' ORDER BY groupID";
+      $sql_containers="SELECT DISTINCT groupID FROM rooms ORDER BY groupID DESC";
+      $result_containers=$conn->query($sql_containers);
+      while ($row_containers=$result_containers->fetch_assoc()) {
+        $containerID=$row_containers['groupID'];
+        echo "<div class='rooms-";
+        if ($containerID==2) {
+          echo "multi";
+        } elseif ($containerID==1) {
+          echo "single";
+        }
+        echo "-column'>";
+        $columns=array();
+        $sql_columns="SELECT columnID FROM rooms GROUP BY columnID HAVING COUNT(DISTINCT(groupID))=$containerID ORDER BY columnID";
+        $result_columns=$conn->query($sql_columns);
+        while ($row_columns=$result_columns->fetch_assoc()) {
+          $columnID=$row_columns['columnID'];
+          $columns[]=$columnID;
+        }
+        $columnList=implode(', ', $columns);
+        $sql_groups="SELECT DISTINCT groupID FROM rooms WHERE columnID IN ($columnList) ORDER BY groupID";
         $result_groups=$conn->query($sql_groups);
         while ($row_groups=$result_groups->fetch_assoc()) {
           $groupID=$row_groups['groupID'];
-          /*echo "<ul class='list-group'>";*/
-          $sql_rows="SELECT roomID FROM rooms WHERE columnID='$columnID' AND groupID='$groupID' ORDER BY rowID";
-          $result_rows=$conn->query($sql_rows);
-          while ($row_rows=$result_rows->fetch_assoc()) {
-            $roomID=$row_rows['roomID'];
-            echo "<div class='panel-body'>
+            echo "<div class='rooms-multi-row'>";
+          $sql_rooms="SELECT roomID, groupID FROM rooms WHERE columnID IN ($columnList) AND groupID='$groupID' ORDER BY rowID, columnID";
+          $result_rooms=$conn->query($sql_rooms);
+          while ($row_rooms=$result_rooms->fetch_assoc()) {
+            $roomID=$row_rooms['roomID'];
+            echo "<div class='room-row'>
             <div class='room-number'>$roomID</div>
+            <div class='room-occupant-column'>
             <div class='room-occupant'>
-            <div class='room-name'>Indiana Jones (Indy)</div>
-            <div class='room-dates'>Wed 10/22 – Wed 10/23</div>
+            <div class='room-name-dates'>
+            <div class='room-name'>Isabella Rose & Kozmo</div>
+            <div class='room-dates'>Tue 8/22 – Wed 8/23</div>
             </div>
-            <div class='room-occupant'>
-            <div class='room-name'>Isabella Rose Gustafson</div>
-            <div class='room-dates'>Wed 10/22 – Wed 10/23</div>
+            <div class='room-buttons'>
+            <button type='button' class='button-edit' title='Edit'></button>
+            <button type='button' class='button-delete' title='Delete'></button>
+            </div>
+            </div>
             </div>
             </div>";
           }
-          /*echo "</ul>";*/
-        }
+            echo "</div>";
+        } 
         echo "</div>";
       }
       ?>
