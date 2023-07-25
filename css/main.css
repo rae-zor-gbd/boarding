@@ -28,6 +28,9 @@
   font-weight:700;
   src:url(/fonts/ProximaNova-BoldItalic.woff2) format('woff2');
 }
+::-webkit-scrollbar {
+  display:none;
+}
 :root {
   --base-color:240;
   --color-01:hsl(var(--base-color), 7%, 20%);
@@ -166,7 +169,6 @@
   --icon-vaccine:'\e94f';
   --icon-warning:'\e953';
   --icon-x:'\e954';
-  --journal-box-height:93px;
   --spacer:30px;
 }
 body {
@@ -205,7 +207,7 @@ button, .nav-link {
   transition-duration:.3s;
   transition-property:color;
 }
-button:hover:not(.disabled) {
+button:hover:not(.disabled):not(.btn) {
   color:var(--color-03);
 }
 button.disabled {
@@ -223,46 +225,24 @@ textarea {
   transition-duration:.3s;
   transition-property:background;
 }
-.button-add::before, .button-complete::before, .button-email::before, .button-decrease::before, .button-delete::before, .button-dog::before, .button-edit::before, .button-journal::before, .button-meds::before, .button-notes::before, .button-package::before {
+.button-add::before, .button-check::before, .button-delete::before, .button-edit::before, .button-meds::before {
   font-family:var(--icon-font-family);
   font-weight:var(--font-weight-regular);
 }
 .button-add::before {
   content:var(--icon-plus);
 }
-.button-complete::before {
-  content:var(--icon-circle-check);
-}
-.button-email::before {
-  content:var(--icon-envelope);
-  padding-left:calc(var(--spacer)/10);
-}
-.button-decrease::before {
-  content:var(--icon-arrow-down);
+.button-check::before {
+  content:var(--icon-check);
 }
 .button-delete::before {
   content:var(--icon-trash);
 }
-.button-dog::before {
-  content:var(--icon-dog);
-}
 .button-edit::before {
   content:var(--icon-edit);
 }
-.button-journal {
-  padding-left:6px!important;
-}
-.button-journal::before {
-  content:var(--icon-print);
-}
 .button-meds::before {
   content:var(--icon-meds-01);
-}
-.button-notes::before {
-  content:var(--icon-comment);
-}
-.button-package::before {
-  content:var(--icon-calendar-days);
 }
 .container, .container-fluid {
   padding:0;
@@ -277,53 +257,20 @@ textarea {
   min-width:calc(var(--spacer)*6);
   text-align:left;
 }
-.input-group-addon.clock::before, .input-group-addon.contract::before, .input-group-addon.day::before, .input-group-addon.days::before, .input-group-addon.dog::before, .input-group-addon.email::before, .input-group-addon.food::before, .input-group-addon.info::before, .input-group-addon.notes::before, .input-group-addon.owner::before, .input-group-addon.phone::before, .input-group-addon.room::before, .input-group-addon.vaccine::before, .input-group-addon.vet::before {
+.input-group-addon.dog::before, .input-group-addon.food::before, .input-group-addon.room::before {
   display:inline-block;
   font-family:var(--icon-font-family);
   font-weight:var(--font-weight-regular);
   width:var(--spacer);
 }
-.input-group-addon.clock::before {
-  content:var(--icon-clock);
-}
-.input-group-addon.contract::before {
-  content:var(--icon-contract);
-}
-.input-group-addon.day::before {
-  content:var(--icon-calendar-day);
-}
-.input-group-addon.days::before {
-  content:var(--icon-calendar-days);
-}
 .input-group-addon.dog::before {
   content:var(--icon-dog);
-}
-.input-group-addon.email::before {
-  content:var(--icon-at);
 }
 .input-group-addon.food::before {
   content:var(--icon-food-02);
 }
-.input-group-addon.info::before {
-  content:var(--icon-info);
-}
-.input-group-addon.notes::before {
-  content:var(--icon-comment);
-}
-.input-group-addon.owner::before {
-  content:var(--icon-user);
-}
-.input-group-addon.phone::before {
-  content:var(--icon-phone-01);
-}
 .input-group-addon.room::before {
   content:var(--icon-house);
-}
-.input-group-addon.vaccine::before {
-  content:var(--icon-vaccine);
-}
-.input-group-addon.vet::before, .nav-link#requests::before, .vaccine-reminder-vet::before, .vet-heading::before {
-  content:var(--icon-hospital);
 }
 .loading-ring {
   display:inline-block;
@@ -367,6 +314,15 @@ textarea {
 .table-condensed>tbody>tr>td {
   padding:calc(var(--spacer)/2) 5px;
 }
+.table-container {
+  background-color:var(--color-08);
+  border-bottom-left-radius:6px;
+  border-bottom-right-radius:6px;
+  padding:calc(var(--spacer)/3) var(--spacer);
+}
+td .label {
+  text-transform:uppercase;
+}
 @keyframes loading-ring {
   0% {
     transform:rotate(0deg);
@@ -390,7 +346,7 @@ textarea {
   display:table-cell;
   vertical-align:middle;
 }
-nav, .panel-group .panel-owner, .panel-group .panel-vet, .table-container {
+nav, .table-container {
   box-shadow:rgb(0 0 0 / 8%) 0px 2px 4px 0px;
 }
 nav {
@@ -449,7 +405,7 @@ nav {
 .nav-links a .nav-link.active::before {
   color:var(--color-01);
 }
-.nav-link, .panel-group .panel, .table-container {
+.nav-link, .panel-group .panel {
   border-radius:6px;
 }
 .nav-link {
@@ -482,137 +438,9 @@ nav {
   top:-1px;
   transform:rotate(0deg);
 }
-.contracts-container .panel, .panel-owner .panel-body .panel {
-  display:flex;
-  flex-direction:column;
-  margin-top:0;
-}
-.contracts-container .panel:not(:nth-of-type(4n-3)), .panel-owner .panel-body .panel:not(:nth-of-type(4n-3)) {
-  margin-left:calc(var(--spacer)/2);
-}
-.contracts-container .panel {
-  width:calc((100%/4) - 12px);
-}
-.contracts-container, .panel-owner>.panel-collapse>.panel-body {
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:left;
-}
-.dog-client-registration-status::before, .dog-daycare-contract-status::before, .dog-heading::before, .dog-notes::before, .dog-vaccine-status::before, .owner-heading::before, .package-days-left::before, .package-expiration-date::before, .package-heading::before, .package-notes::before, .package-reminder-notes .label::before, .package-reminder-days::before, .package-reminder-expiration::before, .package-reminder-title::before, .vaccine-reminder-dog::before, .vaccine-reminder-due::before, .vaccine-reminder-notes .label::before, .vaccine-reminder-notes-text::before, .vaccine-reminder-vet::before, .vet-heading::before {
-  display:inline-block;
-  font-family:var(--icon-font-family);
-  font-weight:var(--font-weight-regular);
-  text-align:left;
-}
-.dog-client-registration-status::before, .dog-daycare-contract-status::before, .dog-notes::before, .dog-vaccine-status::before, .package-days-left::before, .package-expiration-date::before, .package-notes::before, .package-reminder-notes .label::before, .package-reminder-days::before, .package-reminder-expiration::before, .package-reminder-title::before, .vaccine-reminder-dog::before, .vaccine-reminder-due::before, .vaccine-reminder-notes .label::before, .vaccine-reminder-notes-text::before, .vaccine-reminder-vet::before {
-  position:relative;
-  top:1px;
-}
-.dog-client-registration-status::before, .dog-daycare-contract-status::before, .dog-heading::before, .dog-vaccine-status::before, .owner-heading::before, .package-days-left::before, .package-expiration-date::before, .package-heading::before, .vet-heading::before {
-  width:var(--spacer);
-}
-.dog-client-registration-status::before, .dog-daycare-contract-status::before {
-  content:var(--icon-contract);
-}
-.dog-heading::before, .vaccine-reminder-dog::before {
-  content:var(--icon-dog);
-}
-.dog-notes, .package-notes {
-  padding-left:calc(var(--spacer) + (var(--spacer)/2))!important;
-}
-.dog-notes::before, .package-notes::before, .package-reminder-notes .label::before, .vaccine-reminder-notes-text::before {
-  content:var(--icon-thumbtack);
-}
-.dog-notes::before, .package-notes::before {
-  right:var(--spacer);
-  width:0;
-}
-.dog-vaccine-status::before, .vaccine-reminder-due::before {
-  content:var(--icon-vaccine);
-}
-.journal-box {
-  border-right:1px solid;
-  padding-left:5px;
-  text-transform:uppercase;
-}
-.journal-box p {
-  text-transform:none;
-}
-.journal-box-date, .journal-box-initials {
-  border-left:1px solid;
-  height:var(--journal-box-height);
-}
-.journal-box-initials {
-  border-top:1px solid;
-}
-.journal-box-notes {
-  height:calc(var(--journal-box-height)*2);
-}
-.journal-header {
-  text-align:right;
-}
-.journal-header:first-of-type {
-  margin-top:0;
-}
-.journal-row {
-  border-bottom:5px solid;
-}
-.journal-row:first-of-type {
-  border-top:5px solid;
-}
-.load-more, .panel-group .panel-owner+.panel-owner, .panel-group .panel-vet+.panel-vet {
-  margin-top:calc(var(--spacer)/2);
-}
 .load-more {
+  margin-top:calc(var(--spacer)/2);
   width:100%;
-}
-.owner-heading::before {
-  content:var(--icon-user);
-}
-.package-days-left::before, .package-reminder-days::before {
-  content:var(--icon-calendar-day);
-}
-.package-expiration-date::before, .package-reminder-expiration::before {
-  content:var(--icon-clock);
-}
-.package-heading::before, .package-reminder-title::before {
-  content:var(--icon-calendar-days);
-}
-.package-reminder button, .vaccine-reminder button {
-  padding-left:calc(var(--spacer)/3);
-  position:relative;
-  top:4px;
-}
-.package-reminder-days, .package-reminder-title, .vaccine-reminder-dog {
-  border-right:1.5px solid rgb(255 255 255 / 50%);
-  margin-right:calc(var(--spacer)/10);
-  padding-right:calc(var(--spacer)/6);
-}
-.package-reminder-days::before, .package-reminder-expiration::before, .package-reminder-title::before, .vaccine-reminder-dog::before, .vaccine-reminder-due::before, .vaccine-reminder-notes-text::before, .vaccine-reminder-vet::before {
-  padding-right:calc(var(--spacer)/6);
-}
-.package-reminder-notes .label {
-  padding-left:calc(.6em + (var(--spacer)/1.5));
-}
-.package-reminder-notes .label::before{
-  right:calc(var(--spacer)/1.5);
-  width:0;
-}
-.package-reminder-notes .label, .vaccine-reminder-notes .label {
-  display:inline-block;
-  line-height:1.15;
-  text-align:left;
-  white-space:unset;
-}
-.package-reminder-notes, .vaccine-reminder:not(:first-of-type), .vaccine-reminder-notes {
-  margin-top:5px;
-}
-.package-status {
-  float:right;
-  font-size:75%;
-  position:relative;
-  text-transform:uppercase;
-  top:5px;
 }
 .panel {
   border-width:2px;
@@ -642,27 +470,9 @@ nav {
 .panel-footer button:first-of-type {
   padding-left:0;
 }
-.panel-group .panel-owner, .panel-group .panel-vet {
-  border:0;
-}
 .panel-heading .panel-arrow {
   top:1px;
   transform:rotate(180deg);
-}
-.panel-owner .panel-body .panel:nth-of-type(n+5) {
-  margin-top:calc(var(--spacer)/2);
-}
-.panel-owner .panel-body .panel {
-  width:calc((100%/4) - 12px);
-}
-.panel-owner>a>.panel-heading, .panel-vet>a>.panel-heading, .table-container {
-  padding:calc(var(--spacer)/1.5) var(--spacer);
-}
-.panel-owner>.panel-collapse>.panel-body, .panel-owner>.panel-collapse>.panel-footer, .panel-vet>.panel-collapse>.panel-body, .panel-vet>.panel-collapse>.panel-footer {
-  padding:calc(var(--spacer)/1.5) var(--spacer);
-}
-.panel-owner, .panel-vet, .table-container {
-  background-color:var(--color-08);
 }
 .panel-title {
   font-size:var(--font-size);
@@ -753,9 +563,21 @@ nav {
 .rooms-multi-column .rooms-multi-row .room-row:nth-of-type(3n) {
   margin-left:-1px;
 }
-.vaccine-reminder-notes-text::before {
-  padding-right:9px;
+.table-count {
+  padding-left:5px;
 }
-#complete-contract-button {
-  float:right;
+.table-header {
+  background:var(--color-02);
+  border-top-left-radius:6px;
+  border-top-right-radius:6px;
+  color:var(--color-08);
+  padding:calc(var(--spacer)*(2/3)) calc(var(--spacer) + 5px) calc(var(--spacer)/3);
+  text-transform:uppercase;
+}
+.table-header:not(:nth-of-type(1)) {
+  margin-top:var(--spacer);
+}
+.table-heading {
+  font-size:20px;
+  font-weight:var(--font-weight-bold);
 }
