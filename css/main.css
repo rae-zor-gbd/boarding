@@ -563,6 +563,9 @@ nav {
 .rooms-multi-column .rooms-multi-row .room-row:nth-of-type(3n) {
   margin-left:-1px;
 }
+.table-container:has(>table tbody:empty) {
+  display:none;
+}
 .table-count {
   padding-left:5px;
 }
@@ -574,10 +577,14 @@ nav {
   padding:calc(var(--spacer)*(2/3)) calc(var(--spacer) + 5px) calc(var(--spacer)/3);
   text-transform:uppercase;
 }
-.table-header:not(:nth-of-type(1)) {
-  margin-top:var(--spacer);
+.table-outer:has(>.table-container table tbody:empty)>.table-header {
+  border-radius:6px;
+  padding:calc(var(--spacer)*(2/3)) calc(var(--spacer) + 5px);
 }
 .table-heading {
   font-size:20px;
   font-weight:var(--font-weight-bold);
+}
+.table-outer:not(:nth-of-type(1)) {
+  margin-top:var(--spacer);
 }

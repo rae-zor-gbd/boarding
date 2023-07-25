@@ -192,49 +192,53 @@ include 'assets/config.php';
     </div>
   </form>
   <div class='container-fluid'>
-    <div class='table-header'>
-      <span class='table-heading'>Currently Boarding</span>
-      <span class='table-count' id='table-currently-boarding-count'></span>
-      <a>
-        <button type='button' class='pull-right button-add' id='addCurrentlyBoardingButton' data-toggle='modal' data-target='#addFoodModal' data-backdrop='static' title='Add Food'></button>
-      </a>
+    <div class='table-outer'>
+      <div class='table-header'>
+        <span class='table-heading'>Currently Boarding</span>
+        <span class='table-count' id='table-currently-boarding-count'></span>
+        <a>
+          <button type='button' class='pull-right button-add' id='addCurrentlyBoardingButton' data-toggle='modal' data-target='#addFoodModal' data-backdrop='static' title='Add Food'></button>
+        </a>
+      </div>
+      <div class='table-container'>
+        <table class='table table-hover table-condensed'>
+          <thead>
+            <tr>
+              <th>Room</th>
+              <th>Name</th>
+              <th>Food Type</th>
+              <th>Feeding Instructions</th>
+              <th>Medications</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id='table-currently-boarding'></tbody>
+        </table>
+      </div>
     </div>
-    <div class='table-container'>
-      <table class='table table-hover table-condensed'>
-        <thead>
-          <tr>
-            <th>Room</th>
-            <th>Name</th>
-            <th>Food Type</th>
-            <th>Feeding Instructions</th>
-            <th>Medications</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id='table-currently-boarding'></tbody>
-      </table>
-    </div>
-    <div class='table-header'>
-      <span class='table-heading'>Future Arrivals</span>
-      <span class='table-count' id='table-future-arrivals-count'></span>
-      <a>
-        <button type='button' class='pull-right button-add' id='addFutureArrivalsButton' data-toggle='modal' data-target='#addFoodModal' data-backdrop='static' title='Add Food'></button>
-      </a>
-    </div>
-    <div class='table-container'>
-      <table class='table table-hover table-condensed'>
-        <thead>
-          <tr>
-            <th>Room</th>
-            <th>Name</th>
-            <th>Food Type</th>
-            <th>Feeding Instructions</th>
-            <th>Medications</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id='table-future-arrivals'></tbody>
-      </table>
+    <div class='table-outer'>
+      <div class='table-header'>
+        <span class='table-heading'>Future Arrivals</span>
+        <span class='table-count' id='table-future-arrivals-count'></span>
+        <a>
+          <button type='button' class='pull-right button-add' id='addFutureArrivalsButton' data-toggle='modal' data-target='#addFoodModal' data-backdrop='static' title='Add Food'></button>
+        </a>
+      </div>
+      <div class='table-container'>
+        <table class='table table-hover table-condensed'>
+          <thead>
+            <tr>
+              <th>Room</th>
+              <th>Name</th>
+              <th>Food Type</th>
+              <th>Feeding Instructions</th>
+              <th>Medications</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id='table-future-arrivals'></tbody>
+        </table>
+      </div>
     </div>
   </div>
   <form action='' method='post' spellcheck='false' id='addMedsForm'>
