@@ -242,7 +242,7 @@ textarea {
   content:var(--icon-edit);
 }
 .button-meds::before {
-  content:var(--icon-meds-add);
+  content:var(--icon-meds-01);
 }
 .container, .container-fluid {
   padding:0;
@@ -331,6 +331,11 @@ textarea {
   border-bottom-left-radius:6px;
   border-bottom-right-radius:6px;
   padding:calc(var(--spacer)/3) var(--spacer);
+}
+td:empty::before {
+  color:var(--color-03);
+  content:'None';
+  font-style:italic;
 }
 td .label {
   text-transform:uppercase;
@@ -453,6 +458,12 @@ nav {
 .load-more {
   margin-top:calc(var(--spacer)/2);
   width:100%;
+}
+.medication-label button {
+  font-size:75%;
+  padding:calc(var(--spacer)/6);
+  position:relative;
+  top:2px;
 }
 .panel {
   border-width:2px;

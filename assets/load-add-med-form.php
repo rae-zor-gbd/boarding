@@ -7,7 +7,15 @@ if (isset($_POST['status']) AND isset($_POST['id'])) {
   <input type='hidden' class='form-control' name='id' id='newID' value='$id' required>
   <div class='input-group'>
   <span class='input-group-addon meds'>Medication Name</span>
-  <input type='text' class='form-control' name='med-name' maxlength='255' id='newMedName' required>
+  <input type='text' class='form-control' name='med-name' maxlength='255' list='meds' id='newMedName' style='border-bottom-right-radius:4px; border-top-right-radius:4px;' required>
+  <datalist id='meds'>";
+  $sql_all_meds="SELECT medName FROM medications ORDER BY medName";
+  $result_all_meds=$conn->query($sql_all_meds);
+  while ($row_all_meds=$result_all_meds->fetch_assoc()) {
+    $medName=htmlspecialchars($row_all_meds['medName'], ENT_QUOTES);
+    echo "<option value='$medName'></option>";
+  }
+  echo "</datalist>
   </div>
   <div class='input-group'>
   <span class='input-group-addon chart'>Strength</span>

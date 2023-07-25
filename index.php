@@ -21,15 +21,15 @@ include 'assets/config.php';
       }
     });
   }
-  function loadAddMedsForm(status, id){
+  function loadaddMedForm(status, id){
     $.ajax({
-      url:'/assets/load-add-meds-form.php',
+      url:'/assets/load-add-med-form.php',
       type:'POST',
       cache:false,
       data:{status:status, id:id},
       success:function(data){
         if (data) {
-          $('#addMedsModalBody').append(data);
+          $('#addMedModalBody').append(data);
         }
       }
     });
@@ -85,7 +85,7 @@ include 'assets/config.php';
         }
       });
     });
-    $('#addMeds').click(function (e) {
+    $('#addMed').click(function (e) {
       e.preventDefault();
       var status=document.getElementById('newStatus').value;
       var id=document.getElementById('newID').value;
@@ -100,8 +100,8 @@ include 'assets/config.php';
         data:{status:status, id:id, medName:medName, strength:strength, dosage:dosage, frequency:frequency},
         success:function(response){
           loadFoodMeds(status);
-          $('#addMedsModal').modal('hide');
-          document.getElementById('addMedsForm').reset();
+          $('#addMedModal').modal('hide');
+          document.getElementById('addMedForm').reset();
         }
       });
     });
@@ -111,16 +111,16 @@ include 'assets/config.php';
     $('#addFutureArrivalsButton').click(function (e) {
       loadAddFoodForm('Future');
     });
-    $(document).on('click', '#add-meds-button', function() {
+    $(document).on('click', '#add-med-button', function() {
       var status=$(this).data('status');
       var id=$(this).data('id');
       $.ajax({
-        url:'assets/load-add-meds-form.php',
+        url:'assets/load-add-med-form.php',
         type:'POST',
         cache:false,
         data:{status:status, id:id},
         success:function(response){
-          $('#addMedsModalBody').append(response);
+          $('#addMedModalBody').append(response);
         }
       });
     });
@@ -165,10 +165,106 @@ include 'assets/config.php';
         }
       });
     });
+    $(document).on('click', '#delete-med-button', function() {
+      var id=$(this).data('id');
+      $.ajax({
+        url:'assets/load-delete-med-form.php',
+        type:'POST',
+        cache:false,
+        data:{id:id},
+        success:function(response){
+          $('#deleteMedModalBody').append(response);
+        }
+      });
+    });
+    $('#deleteMed').click(function (e) {
+      e.preventDefault();
+      var id=document.getElementById('deleteID').value;
+      $.ajax({
+        url:'assets/delete-med.php',
+        type:'POST',
+        cache:false,
+        data:{id:id},
+        success:function(response){
+          $('#med-label-'+id).remove();
+          $('#deleteMedModal').modal('hide');
+          $('#deleteMedModalBody').empty();
+        }
+      });
+    });
+    $(document).on('click', '#edit-dog-button', function() {
+      var id=$(this).data('id');
+      var status=$(this).data('status');
+      $.ajax({
+        url:'assets/load-edit-food-form.php',
+        type:'POST',
+        cache:false,
+        data:{id:id, status:status},
+        success:function(response){
+          $('#editDogModalBody').append(response);
+        }
+      });
+    });
+    $('#editDog').click(function (e) {
+      e.preventDefault();
+      var id=document.getElementById('editID').value;
+      var status=document.getElementById('editStatus').value;
+      var room=document.getElementById('editRoom').value;
+      var dogName=document.getElementById('editDogName').value;
+      var foodType=document.getElementById('editFoodType').value;
+      var feedingInstructions=document.getElementById('editFeedingInstructions').value;
+      $.ajax({
+        url:'assets/edit-food.php',
+        type:'POST',
+        cache:false,
+        data:{id:id, status:status, room:room, dogName:dogName, foodType:foodType, feedingInstructions:feedingInstructions},
+        success:function(response){
+          $('#editDogModal').modal('hide');
+          $('#editDogModalBody').empty();
+          loadFoodMeds(status);
+        }
+      });
+    });
+    $(document).on('click', '#edit-med-button', function() {
+      var id=$(this).data('id');
+      var status=$(this).data('status');
+      $.ajax({
+        url:'assets/load-edit-med-form.php',
+        type:'POST',
+        cache:false,
+        data:{id:id, status:status},
+        success:function(response){
+          $('#editMedModalBody').append(response);
+        }
+      });
+    });
+    $('#editMed').click(function (e) {
+      e.preventDefault();
+      var id=document.getElementById('editID').value;
+      var status=document.getElementById('editStatus').value;
+      var medName=document.getElementById('editMedName').value;
+      var strength=document.getElementById('editStrength').value;
+      var dosage=document.getElementById('editDosage').value;
+      var frequency=document.getElementById('editFrequency').value;
+      $.ajax({
+        url:'assets/edit-med.php',
+        type:'POST',
+        cache:false,
+        data:{id:id, status:status, medName:medName, strength:strength, dosage:dosage, frequency:frequency},
+        success:function(response){
+          $('#editMedModal').modal('hide');
+          $('#editMedModalBody').empty();
+          loadFoodMeds(status);
+        }
+      });
+    });
     $('.modal').on('hidden.bs.modal', function(){
       $('#addFoodModalBody').empty();
-      $('#addMedsModalBody').empty();
+      $('#addMedModalBody').empty();
       $('#deleteDogModalBody').empty();
+      $('#deleteMedModalBody').empty();
+      $('#editDogModalBody').empty();
+      $('#editMedModalBody').empty();
     });
   });
   </script>
@@ -241,16 +337,48 @@ include 'assets/config.php';
       </div>
     </div>
   </div>
-  <form action='' method='post' spellcheck='false' id='addMedsForm'>
-    <div class='modal fade' id='addMedsModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+  <form action='' method='post' spellcheck='false' id='addMedForm'>
+    <div class='modal fade' id='addMedModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
       <div class='modal-dialog'>
         <div class='modal-content'>
           <div class='modal-header'>
             <h4 class='modal-title'>Add Medication</h4>
           </div>
-          <div class='modal-body' id='addMedsModalBody'></div>
+          <div class='modal-body' id='addMedModalBody'></div>
           <div class='modal-footer'>
-            <button type='submit' class='btn btn-primary' id='addMeds'>Submit</button>
+            <button type='submit' class='btn btn-primary' id='addMed'>Submit</button>
+            <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <form action='' method='post' id='editDogForm'>
+    <div class='modal fade' id='editDogModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+      <div class='modal-dialog'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <h4 class='modal-title'>Edit Food</h4>
+          </div>
+          <div class='modal-body' id='editDogModalBody'></div>
+          <div class='modal-footer'>
+            <button type='submit' class='btn btn-primary' id='editDog'>Submit</button>
+            <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <form action='' method='post' id='editMedForm'>
+    <div class='modal fade' id='editMedModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+      <div class='modal-dialog'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <h4 class='modal-title'>Edit Medication</h4>
+          </div>
+          <div class='modal-body' id='editMedModalBody'></div>
+          <div class='modal-footer'>
+            <button type='submit' class='btn btn-primary' id='editMed'>Submit</button>
             <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>
           </div>
         </div>
@@ -262,11 +390,27 @@ include 'assets/config.php';
       <div class='modal-dialog'>
         <div class='modal-content'>
           <div class='modal-header'>
-            <h4 class='modal-title'>Delete Food & Meds</h4>
+            <h4 class='modal-title'>Delete Dog</h4>
           </div>
           <div class='modal-body' id='deleteDogModalBody'></div>
           <div class='modal-footer'>
             <button type='submit' class='btn btn-danger' id='deleteDog'>Delete</button>
+            <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <form action='' method='post' id='deleteMedForm'>
+    <div class='modal fade' id='deleteMedModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+      <div class='modal-dialog'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <h4 class='modal-title'>Delete Medication</h4>
+          </div>
+          <div class='modal-body' id='deleteMedModalBody'></div>
+          <div class='modal-footer'>
+            <button type='submit' class='btn btn-danger' id='deleteMed'>Delete</button>
             <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>
           </div>
         </div>
