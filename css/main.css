@@ -489,11 +489,6 @@ nav {
 .panel-title {
   font-size:var(--font-size);
 }
-.room-dates {
-  font-size:70%;
-  padding-top:calc(var(--spacer)/10);
-  text-transform:uppercase;
-}
 .room-buttons, .room-name-dates {
   display:table-cell;
 }
@@ -507,6 +502,11 @@ nav {
 }
 .room-buttons button:nth-of-type(1) {
   padding-left:0;
+}
+.room-dates {
+  font-size:70%;
+  padding-top:calc(var(--spacer)/10);
+  text-transform:uppercase;
 }
 .room-name {
   line-height:1;
