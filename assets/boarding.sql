@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS kennel;
-CREATE DATABASE kennel;
-USE kennel;
+DROP DATABASE IF EXISTS boarding;
+CREATE DATABASE boarding;
+USE boarding;
 SET FOREIGN_KEY_CHECKS=0;
 SET NAMES utf8;
 SET character_set_client=utf8mb4;
