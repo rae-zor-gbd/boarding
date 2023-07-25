@@ -6,19 +6,19 @@ if (isset($_POST['status']) AND isset($_POST['id'])) {
   echo "<input type='hidden' class='form-control' name='status' id='newStatus' value='$status' required>
   <input type='hidden' class='form-control' name='id' id='newID' value='$id' required>
   <div class='input-group'>
-  <span class='input-group-addon dog'>Medication Name</span>
+  <span class='input-group-addon meds'>Medication Name</span>
   <input type='text' class='form-control' name='med-name' maxlength='255' id='newMedName' required>
   </div>
   <div class='input-group'>
-  <span class='input-group-addon dog'>Strength</span>
+  <span class='input-group-addon chart'>Strength</span>
   <input type='text' class='form-control' name='strength' maxlength='255' id='newStrength'>
   </div>
   <div class='input-group'>
-  <span class='input-group-addon food'>Dosage</span>
+  <span class='input-group-addon list'>Dosage</span>
   <textarea class='form-control' name='dosage' id='newDosage' rows='5' required></textarea>
   </div>
   <div class='input-group'>
-  <span class='input-group-addon food'>Frequency</span>
+  <span class='input-group-addon clock'>Frequency</span>
   <select class='form-control' name='frequency' id='newFrequency' required>
   <option value='' selected disabled>Select Frequency</option>
   <option value='AM'>AM</option>

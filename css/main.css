@@ -242,7 +242,7 @@ textarea {
   content:var(--icon-edit);
 }
 .button-meds::before {
-  content:var(--icon-meds-01);
+  content:var(--icon-meds-add);
 }
 .container, .container-fluid {
   padding:0;
@@ -257,17 +257,29 @@ textarea {
   min-width:calc(var(--spacer)*6);
   text-align:left;
 }
-.input-group-addon.dog::before, .input-group-addon.food::before, .input-group-addon.room::before {
+.input-group-addon.chart::before, .input-group-addon.clock::before, .input-group-addon.dog::before, .input-group-addon.food::before, .input-group-addon.list::before, .input-group-addon.meds::before, .input-group-addon.room::before {
   display:inline-block;
   font-family:var(--icon-font-family);
   font-weight:var(--font-weight-regular);
   width:var(--spacer);
+}
+.input-group-addon.chart::before {
+  content:var(--icon-chart);
+}
+.input-group-addon.clock::before {
+  content:var(--icon-clock);
 }
 .input-group-addon.dog::before {
   content:var(--icon-dog);
 }
 .input-group-addon.food::before {
   content:var(--icon-food-02);
+}
+.input-group-addon.list::before {
+  content:var(--icon-list-01);
+}
+.input-group-addon.meds::before {
+  content:var(--icon-meds-01);
 }
 .input-group-addon.room::before {
   content:var(--icon-house);

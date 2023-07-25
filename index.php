@@ -246,7 +246,7 @@ include 'assets/config.php';
       <div class='modal-dialog'>
         <div class='modal-content'>
           <div class='modal-header'>
-            <h4 class='modal-title'>Add Meds</h4>
+            <h4 class='modal-title'>Add Medication</h4>
           </div>
           <div class='modal-body' id='addMedsModalBody'></div>
           <div class='modal-footer'>
