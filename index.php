@@ -1,5 +1,10 @@
 <?php
 include 'assets/config.php';
+if (isset($_GET['meds']) AND $_GET['meds']!='') {
+  $sortMeds=$_GET['meds'];
+} else {
+  $sortMeds='all';
+}
 ?>
 <!DOCTYPE html>
 <html lang='en'>
@@ -9,7 +14,7 @@ include 'assets/config.php';
   <script type='text/javascript'>
   function loadAddFoodForm(status){
     $.ajax({
-      url:'/assets/load-add-food-form.php',
+      url:'/ajax/load-add-food-form.php',
       type:'POST',
       cache:false,
       data:{status:status},
@@ -23,7 +28,7 @@ include 'assets/config.php';
   }
   function loadaddMedForm(status, id){
     $.ajax({
-      url:'/assets/load-add-med-form.php',
+      url:'/ajax/load-add-med-form.php',
       type:'POST',
       cache:false,
       data:{status:status, id:id},
@@ -34,12 +39,12 @@ include 'assets/config.php';
       }
     });
   }
-  function loadFoodMeds(status){
+  function loadFoodMeds(status, sortMeds){
     $.ajax({
-      url:'/assets/load-food-meds.php',
+      url:'/ajax/load-food-meds.php',
       type:'POST',
       cache:false,
-      data:{status:status},
+      data:{status:status, sortMeds:sortMeds},
       success:function(data){
         if (data) {
           if (status=='Active') {
@@ -63,9 +68,19 @@ include 'assets/config.php';
     $('#table-future-arrivals-count').append(futureArrivalsCount);
   }
   $(document).ready(function(){
-    $('#food-meds').addClass('active');
-    loadFoodMeds('Active');
-    loadFoodMeds('Future');
+    <?php
+    if ($sortMeds=='all') {
+      echo "$('#food-meds').addClass('active');";
+    } elseif ($sortMeds=='am') {
+      echo "$('#am-meds').addClass('active');";
+    } elseif ($sortMeds=='noon') {
+      echo "$('#noon-meds').addClass('active');";
+    } elseif ($sortMeds=='pm') {
+      echo "$('#pm-meds').addClass('active');";
+    }
+    ?>
+    loadFoodMeds('Active', <?php echo "'$sortMeds'"; ?>);
+    loadFoodMeds('Future', <?php echo "'$sortMeds'"; ?>);
     $('#addFood').click(function (e) {
       e.preventDefault();
       var status=document.getElementById('newStatus').value;
@@ -74,12 +89,12 @@ include 'assets/config.php';
       var foodType=document.getElementById('newFoodType').value;
       var feedingInstructions=document.getElementById('newFeedingInstructions').value;
       $.ajax({
-        url:'assets/add-food.php',
+        url:'ajax/add-food.php',
         type:'POST',
         cache:false,
         data:{status:status, room:room, name:name, foodType:foodType, feedingInstructions:feedingInstructions},
         success:function(response){
-          loadFoodMeds(status);
+          loadFoodMeds(status, <?php echo "'$sortMeds'"; ?>);
           $('#addFoodModal').modal('hide');
           document.getElementById('addFoodForm').reset();
         }
@@ -93,13 +108,14 @@ include 'assets/config.php';
       var strength=document.getElementById('newStrength').value;
       var dosage=document.getElementById('newDosage').value;
       var frequency=document.getElementById('newFrequency').value;
+      var notes=document.getElementById('newNotes').value;
       $.ajax({
-        url:'assets/add-med.php',
+        url:'ajax/add-med.php',
         type:'POST',
         cache:false,
-        data:{status:status, id:id, medName:medName, strength:strength, dosage:dosage, frequency:frequency},
+        data:{status:status, id:id, medName:medName, strength:strength, dosage:dosage, frequency:frequency, notes:notes},
         success:function(response){
-          loadFoodMeds(status);
+          loadFoodMeds(status, <?php echo "'$sortMeds'"; ?>);
           $('#addMedModal').modal('hide');
           document.getElementById('addMedForm').reset();
         }
@@ -115,7 +131,7 @@ include 'assets/config.php';
       var status=$(this).data('status');
       var id=$(this).data('id');
       $.ajax({
-        url:'assets/load-add-med-form.php',
+        url:'ajax/load-add-med-form.php',
         type:'POST',
         cache:false,
         data:{status:status, id:id},
@@ -127,20 +143,20 @@ include 'assets/config.php';
     $(document).on('click', '.button-check', function() {
       var id=$(this).data('id');
       $.ajax({
-        url:'assets/check-in-dog.php',
+        url:'ajax/check-in-dog.php',
         type:'POST',
         cache:false,
         data:{id:id},
         success:function(response){
           $('#row-dog-'+id).remove();
-          loadFoodMeds('Active');
+          loadFoodMeds('Active', <?php echo "'$sortMeds'"; ?>);
         }
       });
     });
     $(document).on('click', '#delete-dog-button', function() {
       var id=$(this).data('id');
       $.ajax({
-        url:'assets/load-delete-dog-form.php',
+        url:'ajax/load-delete-dog-form.php',
         type:'POST',
         cache:false,
         data:{id:id},
@@ -153,7 +169,7 @@ include 'assets/config.php';
       e.preventDefault();
       var id=document.getElementById('deleteID').value;
       $.ajax({
-        url:'assets/delete-dog.php',
+        url:'ajax/delete-dog.php',
         type:'POST',
         cache:false,
         data:{id:id},
@@ -168,7 +184,7 @@ include 'assets/config.php';
     $(document).on('click', '#delete-med-button', function() {
       var id=$(this).data('id');
       $.ajax({
-        url:'assets/load-delete-med-form.php',
+        url:'ajax/load-delete-med-form.php',
         type:'POST',
         cache:false,
         data:{id:id},
@@ -181,7 +197,7 @@ include 'assets/config.php';
       e.preventDefault();
       var id=document.getElementById('deleteID').value;
       $.ajax({
-        url:'assets/delete-med.php',
+        url:'ajax/delete-med.php',
         type:'POST',
         cache:false,
         data:{id:id},
@@ -196,7 +212,7 @@ include 'assets/config.php';
       var id=$(this).data('id');
       var status=$(this).data('status');
       $.ajax({
-        url:'assets/load-edit-food-form.php',
+        url:'ajax/load-edit-food-form.php',
         type:'POST',
         cache:false,
         data:{id:id, status:status},
@@ -214,14 +230,14 @@ include 'assets/config.php';
       var foodType=document.getElementById('editFoodType').value;
       var feedingInstructions=document.getElementById('editFeedingInstructions').value;
       $.ajax({
-        url:'assets/edit-food.php',
+        url:'ajax/edit-food.php',
         type:'POST',
         cache:false,
         data:{id:id, status:status, room:room, dogName:dogName, foodType:foodType, feedingInstructions:feedingInstructions},
         success:function(response){
           $('#editDogModal').modal('hide');
           $('#editDogModalBody').empty();
-          loadFoodMeds(status);
+          loadFoodMeds(status, <?php echo "'$sortMeds'"; ?>);
         }
       });
     });
@@ -229,7 +245,7 @@ include 'assets/config.php';
       var id=$(this).data('id');
       var status=$(this).data('status');
       $.ajax({
-        url:'assets/load-edit-med-form.php',
+        url:'ajax/load-edit-med-form.php',
         type:'POST',
         cache:false,
         data:{id:id, status:status},
@@ -246,15 +262,16 @@ include 'assets/config.php';
       var strength=document.getElementById('editStrength').value;
       var dosage=document.getElementById('editDosage').value;
       var frequency=document.getElementById('editFrequency').value;
+      var notes=document.getElementById('editNotes').value;
       $.ajax({
-        url:'assets/edit-med.php',
+        url:'ajax/edit-med.php',
         type:'POST',
         cache:false,
-        data:{id:id, status:status, medName:medName, strength:strength, dosage:dosage, frequency:frequency},
+        data:{id:id, status:status, medName:medName, strength:strength, dosage:dosage, frequency:frequency, notes:notes},
         success:function(response){
           $('#editMedModal').modal('hide');
           $('#editMedModalBody').empty();
-          loadFoodMeds(status);
+          loadFoodMeds(status, <?php echo "'$sortMeds'"; ?>);
         }
       });
     });
@@ -291,7 +308,7 @@ include 'assets/config.php';
     <div class='table-outer'>
       <div class='table-header'>
         <span class='table-heading'>Currently Boarding</span>
-        <span class='table-count' id='table-currently-boarding-count'></span>
+        <span class='table-count' id='table-currently-boarding-count'>0</span>
         <a>
           <button type='button' class='pull-right button-add' id='addCurrentlyBoardingButton' data-toggle='modal' data-target='#addFoodModal' data-backdrop='static' title='Add Food'></button>
         </a>
@@ -315,7 +332,7 @@ include 'assets/config.php';
     <div class='table-outer'>
       <div class='table-header'>
         <span class='table-heading'>Future Arrivals</span>
-        <span class='table-count' id='table-future-arrivals-count'></span>
+        <span class='table-count' id='table-future-arrivals-count'>0</span>
         <a>
           <button type='button' class='pull-right button-add' id='addFutureArrivalsButton' data-toggle='modal' data-target='#addFoodModal' data-backdrop='static' title='Add Food'></button>
         </a>

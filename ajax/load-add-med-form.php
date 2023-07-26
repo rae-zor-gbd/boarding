@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include '../assets/config.php';
 if (isset($_POST['status']) AND isset($_POST['id'])) {
   $status=$_POST['status'];
   $id=$_POST['id'];
@@ -34,7 +34,12 @@ if (isset($_POST['status']) AND isset($_POST['id'])) {
   <option value='2X'>2X</option>
   <option value='3X'>3X</option>
   <option value='As Needed'>As Needed</option>
+  <option value='Other'>Other</option>
   </select>
+  </div>
+  <div class='input-group'>
+  <span class='input-group-addon notes'>Notes</span>
+  <textarea class='form-control' name='notes' id='newNotes' rows='5'></textarea>
   </div>";
 }
 ?>

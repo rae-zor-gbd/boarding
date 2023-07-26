@@ -1,15 +1,16 @@
 <?php
-include 'config.php';
+include '../assets/config.php';
 if (isset($_POST['status']) AND isset($_POST['id'])) {
   $status=$_POST['status'];
   $id=$_POST['id'];
-  $sql_med_info="SELECT medName, strength, dosage, frequency FROM dogs_medications WHERE dogMedID='$id'";
+  $sql_med_info="SELECT medName, strength, dosage, frequency, notes FROM dogs_medications WHERE dogMedID='$id'";
   $result_med_info=$conn->query($sql_med_info);
   $row_med_info=$result_med_info->fetch_assoc();
   $medName=htmlspecialchars($row_med_info['medName'], ENT_QUOTES);
   $strength=htmlspecialchars($row_med_info['strength'], ENT_QUOTES);
   $dosage=htmlspecialchars($row_med_info['dosage'], ENT_QUOTES);
   $frequency=$row_med_info['frequency'];
+  $notes=htmlspecialchars($row_med_info['notes'], ENT_QUOTES);
   echo "<input type='hidden' class='form-control' name='status' id='editStatus' value='$status' required>
   <input type='hidden' class='form-control' name='id' id='editID' value='$id' required>
   <div class='input-group'>
@@ -61,7 +62,16 @@ if (isset($_POST['status']) AND isset($_POST['id'])) {
     echo " selected";
   }
   echo ">As Needed</option>
+  <option value='Other'";
+  if ($frequency=='Other') {
+    echo " selected";
+  }
+  echo ">Other</option>
   </select>
+  </div>
+  <div class='input-group'>
+  <span class='input-group-addon notes'>Notes</span>
+  <textarea class='form-control' name='notes' id='editNotes' rows='5'>$notes</textarea>
   </div>";
 }
 ?>

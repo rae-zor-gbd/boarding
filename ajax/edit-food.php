@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include '../assets/config.php';
 if (isset($_POST['status']) AND isset($_POST['id']) AND isset($_POST['room']) AND isset($_POST['dogName']) AND isset($_POST['foodType']) AND isset($_POST['feedingInstructions'])) {
   $status=$_POST['status'];
   $id=$_POST['id'];

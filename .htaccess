@@ -1,14 +1,18 @@
 Options -Indexes
 
-RewriteEngine on
-
-RewriteCond %{REQUEST_FILENAME} !-d
-
-RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteEngine On
 
 RewriteRule ^rooms rooms.php [NC,L]
 
+RewriteCond %{THE_REQUEST} \s/+index\.php\?([^\s&]+) [NC]
+
+RewriteRule ^ %1? [R=301,L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^medication/([^/]+)/?$ index.php?meds=$1 [L,QSA]
 
 <FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)(\.gz)?$">
   Header set Expires "Sun, 31 Dec 2023 00:00:00 GMT"

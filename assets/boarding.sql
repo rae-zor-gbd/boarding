@@ -42,7 +42,8 @@ CREATE TABLE dogs_medications (
   medName VARCHAR(255) NOT NULL,
   strength VARCHAR(100) DEFAULT NULL,
   dosage TEXT NOT NULL,
-  frequency ENUM('AM', 'PM', '2X', '3X', 'As Needed') NOT NULL,
+  frequency ENUM('AM', 'PM', '2X', '3X', 'As Needed', 'Other') NOT NULL,
+  notes TEXT DEFAULT NULL,
   lastUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (dogMedID),
   FOREIGN KEY (dogID) REFERENCES dogs(dogID) ON DELETE CASCADE ON UPDATE CASCADE

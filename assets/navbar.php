@@ -41,15 +41,15 @@
     </a>
     <div class='nav-links'>
       <a href='/'>
-        <div class='nav-link' id='food-meds'>Food & Meds</div>
+        <div class='nav-link' id='food-meds'>All Food & Meds</div>
       </a>
-      <a href='/am-meds'>
+      <a href='/medication/am'>
         <div class='nav-link' id='am-meds'>AM Meds</div>
       </a>
-      <a href='/noon-meds'>
+      <a href='/medication/noon'>
         <div class='nav-link' id='noon-meds'>Noon Meds</div>
       </a>
-      <a href='/pm-meds'>
+      <a href='/medication/pm'>
         <div class='nav-link' id='pm-meds'>PM Meds</div>
       </a>
       <a href='/rooms'>

@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include '../assets/config.php';
 if (isset($_POST['id'])) {
   $id=$_POST['id'];
   $sql_dog_info="SELECT roomID, dogName FROM dogs WHERE dogID='$id'";

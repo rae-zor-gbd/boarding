@@ -257,7 +257,7 @@ textarea {
   min-width:calc(var(--spacer)*6);
   text-align:left;
 }
-.input-group-addon.chart::before, .input-group-addon.clock::before, .input-group-addon.dog::before, .input-group-addon.food::before, .input-group-addon.list::before, .input-group-addon.meds::before, .input-group-addon.room::before {
+.input-group-addon.chart::before, .input-group-addon.clock::before, .input-group-addon.dog::before, .input-group-addon.food::before, .input-group-addon.list::before, .input-group-addon.meds::before, .input-group-addon.notes::before, .input-group-addon.room::before {
   display:inline-block;
   font-family:var(--icon-font-family);
   font-weight:var(--font-weight-regular);
@@ -280,6 +280,9 @@ textarea {
 }
 .input-group-addon.meds::before {
   content:var(--icon-meds-01);
+}
+.input-group-addon.notes::before {
+  content:var(--icon-comment);
 }
 .input-group-addon.room::before {
   content:var(--icon-house);

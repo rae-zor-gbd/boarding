@@ -1,8 +1,17 @@
 <?php
-include 'config.php';
-if (isset($_POST['status'])) {
+include '../assets/config.php';
+if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
   $status=$_POST['status'];
-  $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions FROM dogs WHERE status='$status' ORDER BY roomID, dogName";
+  $sortMeds=$_POST['sortMeds'];
+  if ($sortMeds=='all') {
+    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions FROM dogs WHERE status='$status' ORDER BY roomID, dogName";
+  } elseif ($sortMeds=='am') {
+    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('AM', '2X', '3X') ORDER BY roomID, dogName;";
+  } elseif ($sortMeds=='noon') {
+    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('3X') ORDER BY roomID, dogName;";
+  } elseif ($sortMeds=='pm') {
+    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('PM', '2X', '3X') ORDER BY roomID, dogName;";
+  }
   $result_all_dogs=$conn->query($sql_all_dogs);
   while ($row_all_dogs=$result_all_dogs->fetch_assoc()) {
     $boardingDogID=$row_all_dogs['dogID'];
@@ -24,7 +33,15 @@ if (isset($_POST['status'])) {
     </td>
     <td>$boardingFeedingInstructions</td>
     <td>";
-    $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogID='$boardingDogID' ORDER BY FIELD(frequency,'AM','2X','3X','PM','As Needed'), medName, strength";
+    if ($sortMeds=='all') {
+      $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency, notes FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogID='$boardingDogID' ORDER BY FIELD(frequency,'AM','2X','3X','PM','As Needed', 'Other'), medName, strength";
+    } elseif ($sortMeds=='am') {
+      $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency, notes FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogID='$boardingDogID' AND frequency IN ('AM', '2X', '3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','As Needed', 'Other'), medName, strength";
+    } elseif ($sortMeds=='noon') {
+      $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency, notes FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogID='$boardingDogID' AND frequency IN ('3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','As Needed', 'Other'), medName, strength";
+    } elseif ($sortMeds=='pm') {
+      $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency, notes FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogID='$boardingDogID' AND frequency IN ('PM', '2X', '3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','As Needed', 'Other'), medName, strength";
+    }
     $result_dog_meds=$conn->query($sql_dog_meds);
     if ($result_dog_meds->num_rows>0) {
       while ($row_dog_meds=$result_dog_meds->fetch_assoc()) {
@@ -33,10 +50,13 @@ if (isset($_POST['status'])) {
         $strength=$row_dog_meds['strength'];
         $dosage=htmlspecialchars($row_dog_meds['dosage'], ENT_QUOTES);
         $frequency=$row_dog_meds['frequency'];
+        $notes=htmlspecialchars($row_dog_meds['notes'], ENT_QUOTES);
         echo "<div class='medication-label' id='med-label-$dogMedID'>
         <span class='label label-";
         if ($frequency=='As Needed') {
           echo "warning";
+        } elseif ($frequency=='Other') {
+          echo "info";
         } else {
           echo "danger";
         }
@@ -44,7 +64,14 @@ if (isset($_POST['status'])) {
         if (isset($strength) AND $strength!='') {
           echo ", $strength";
         }
-        echo " ($dosage $frequency)</span>
+        echo " ($dosage";
+        if ($frequency!='Other') {
+          echo " $frequency";
+        }
+        if (isset($notes) AND $notes!='') {
+          echo ", $notes";
+        }
+        echo ")</span>
         <button type='button' class='button-edit' id='edit-med-button' data-toggle='modal' data-target='#editMedModal' data-id='$dogMedID' data-status='$status' data-backdrop='static' title='Edit Medication'></button>
         <button type='button' class='button-delete' id='delete-med-button' data-toggle='modal' data-target='#deleteMedModal' data-id='$dogMedID' data-backdrop='static' title='Delete Medication'></button>
         </div>";

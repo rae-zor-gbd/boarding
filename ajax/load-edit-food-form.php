@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include '../assets/config.php';
 if (isset($_POST['id']) AND isset($_POST['status'])) {
   $id=$_POST['id'];
   $status=$_POST['status'];

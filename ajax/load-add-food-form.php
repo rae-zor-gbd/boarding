@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include '../assets/config.php';
 if (isset($_POST['status'])) {
   $status=$_POST['status'];
   echo "<input type='hidden' class='form-control' name='status' id='newStatus' value='$status' required>

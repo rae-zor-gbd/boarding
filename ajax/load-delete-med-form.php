@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include '../assets/config.php';
 if (isset($_POST['id'])) {
   $id=$_POST['id'];
   $sql_med_info="SELECT dogName, medName, strength, dosage, frequency FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogMedID='$id'";
