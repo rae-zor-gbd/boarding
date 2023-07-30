@@ -89,7 +89,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       var foodType=document.getElementById('newFoodType').value;
       var feedingInstructions=document.getElementById('newFeedingInstructions').value;
       $.ajax({
-        url:'ajax/add-food.php',
+        url:'/ajax/add-food.php',
         type:'POST',
         cache:false,
         data:{status:status, room:room, name:name, foodType:foodType, feedingInstructions:feedingInstructions},
@@ -110,7 +110,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       var frequency=document.getElementById('newFrequency').value;
       var notes=document.getElementById('newNotes').value;
       $.ajax({
-        url:'ajax/add-med.php',
+        url:'/ajax/add-med.php',
         type:'POST',
         cache:false,
         data:{status:status, id:id, medName:medName, strength:strength, dosage:dosage, frequency:frequency, notes:notes},
@@ -131,7 +131,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       var status=$(this).data('status');
       var id=$(this).data('id');
       $.ajax({
-        url:'ajax/load-add-med-form.php',
+        url:'/ajax/load-add-med-form.php',
         type:'POST',
         cache:false,
         data:{status:status, id:id},
@@ -143,7 +143,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
     $(document).on('click', '.button-check', function() {
       var id=$(this).data('id');
       $.ajax({
-        url:'ajax/check-in-dog.php',
+        url:'/ajax/check-in-dog.php',
         type:'POST',
         cache:false,
         data:{id:id},
@@ -156,7 +156,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
     $(document).on('click', '#delete-dog-button', function() {
       var id=$(this).data('id');
       $.ajax({
-        url:'ajax/load-delete-dog-form.php',
+        url:'/ajax/load-delete-dog-form.php',
         type:'POST',
         cache:false,
         data:{id:id},
@@ -169,7 +169,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       e.preventDefault();
       var id=document.getElementById('deleteID').value;
       $.ajax({
-        url:'ajax/delete-dog.php',
+        url:'/ajax/delete-dog.php',
         type:'POST',
         cache:false,
         data:{id:id},
@@ -184,7 +184,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
     $(document).on('click', '#delete-med-button', function() {
       var id=$(this).data('id');
       $.ajax({
-        url:'ajax/load-delete-med-form.php',
+        url:'/ajax/load-delete-med-form.php',
         type:'POST',
         cache:false,
         data:{id:id},
@@ -197,7 +197,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       e.preventDefault();
       var id=document.getElementById('deleteID').value;
       $.ajax({
-        url:'ajax/delete-med.php',
+        url:'/ajax/delete-med.php',
         type:'POST',
         cache:false,
         data:{id:id},
@@ -212,7 +212,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       var id=$(this).data('id');
       var status=$(this).data('status');
       $.ajax({
-        url:'ajax/load-edit-food-form.php',
+        url:'/ajax/load-edit-food-form.php',
         type:'POST',
         cache:false,
         data:{id:id, status:status},
@@ -230,7 +230,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       var foodType=document.getElementById('editFoodType').value;
       var feedingInstructions=document.getElementById('editFeedingInstructions').value;
       $.ajax({
-        url:'ajax/edit-food.php',
+        url:'/ajax/edit-food.php',
         type:'POST',
         cache:false,
         data:{id:id, status:status, room:room, dogName:dogName, foodType:foodType, feedingInstructions:feedingInstructions},
@@ -245,7 +245,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       var id=$(this).data('id');
       var status=$(this).data('status');
       $.ajax({
-        url:'ajax/load-edit-med-form.php',
+        url:'/ajax/load-edit-med-form.php',
         type:'POST',
         cache:false,
         data:{id:id, status:status},
@@ -264,14 +264,17 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       var frequency=document.getElementById('editFrequency').value;
       var notes=document.getElementById('editNotes').value;
       $.ajax({
-        url:'ajax/edit-med.php',
+        url:'/ajax/edit-med.php',
         type:'POST',
         cache:false,
         data:{id:id, status:status, medName:medName, strength:strength, dosage:dosage, frequency:frequency, notes:notes},
         success:function(response){
           $('#editMedModal').modal('hide');
           $('#editMedModalBody').empty();
+          $('#table-currently-boarding').empty();
+          $('#table-future-arrivals').empty();
           loadFoodMeds(status, <?php echo "'$sortMeds'"; ?>);
+          loadTableCounts();
         }
       });
     });

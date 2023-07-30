@@ -10,7 +10,7 @@ if (isset($_POST['status']) AND isset($_POST['room']) AND isset($_POST['name']) 
   $result_next_dog_id=$conn->query($sql_next_dog_id);
   $row_next_dog_id=$result_next_dog_id->fetch_assoc();
   $dogID=$row_next_dog_id['nextDogID'];
-  $sql_book_room="INSERT INTO dogs (dogID, roomID, dogName, foodType, feedingInstructions, status) VALUES ('$dogID', '$room', '$name', '$foodType', '$feedingInstructions', '$status')";
-  $conn->query($sql_book_room);
+  $sql_add_food="INSERT INTO dogs (dogID, roomID, dogName, foodType, feedingInstructions, status) VALUES ('$dogID', '$room', '$name', '$foodType', '$feedingInstructions', '$status')";
+  $conn->query($sql_add_food);
 }
 ?>

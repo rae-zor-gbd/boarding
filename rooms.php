@@ -1,73 +1,209 @@
 <?php
 include 'assets/config.php';
+if (isset($_GET['startDate']) AND $_GET['startDate']!='' AND isset($_GET['endDate']) AND $_GET['endDate']!='') {
+  $startDate=date('Y-m-d', strtotime($_GET['startDate']));
+  $endDate=date('Y-m-d', strtotime($_GET['endDate']));
+} else {
+  $startDate=date('Y-m-d');
+  $endDate=date('Y-m-d', strtotime($startDate. ' + 7 days'));
+}
+$titleStartDate=date('D n/j', strtotime($startDate));
+$titleEndDate=date('D n/j', strtotime($endDate));
 ?>
 <!DOCTYPE html>
 <html lang='en'>
 <head>
-  <title>Rooms</title>
+  <title>Rooms | <?php echo "$titleStartDate – $titleEndDate"; ?></title>
   <?php include 'assets/header.php'; ?>
   <script type='text/javascript'>
-    $(document).ready(function() {
-      $('#rooms').addClass('active');
+  function loadBookRoomForm(){
+    $.ajax({
+      url:'/ajax/load-book-room-form.php',
+      type:'POST',
+      cache:false,
+      data:{},
+      success:function(data){
+        if (data) {
+          $('#bookRoomModalBody').append(data);
+        }
+      }
     });
+  }
+  function loadRooms(startDate, endDate){
+    $.ajax({
+      url:'/ajax/load-rooms.php',
+      type:'POST',
+      cache:false,
+      data:{startDate:startDate, endDate:endDate},
+      success:function(data){
+        if (data) {
+          $('#rooms-container').empty();
+          $('#rooms-container').append(data);
+        }
+      }
+    });
+  }
+  function toggleDates(){
+    var startDate=document.getElementById('startDate').value;
+    var endDate=document.getElementById('endDate').value;
+    window.open('/rooms/'+startDate+'/'+endDate, '_self');
+  }
+  $(document).ready(function() {
+    $('#rooms').addClass('active');
+    loadRooms('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
+    $('#bookRoomButton').click(function (e) {
+      loadBookRoomForm();
+    });
+    $('#bookRoom').click(function (e) {
+      e.preventDefault();
+      var room=document.getElementById('newRoom').value;
+      var name=document.getElementById('newDogName').value;
+      var checkIn=document.getElementById('newCheckIn').value;
+      var checkOut=document.getElementById('newCheckOut').value;
+      $.ajax({
+        url:'/ajax/book-room.php',
+        type:'POST',
+        cache:false,
+        data:{room:room, name:name, checkIn:checkIn, checkOut:checkOut},
+        success:function(response){
+          loadRooms('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
+          $('#bookRoomModal').modal('hide');
+          document.getElementById('bookRoomForm').reset();
+        }
+      });
+    });
+    $(document).on('click', '#delete-room-button', function() {
+      var id=$(this).data('id');
+      $.ajax({
+        url:'/ajax/load-delete-room-form.php',
+        type:'POST',
+        cache:false,
+        data:{id:id},
+        success:function(response){
+          $('#deleteRoomModalBody').append(response);
+        }
+      });
+    });
+    $('#deleteRoom').click(function (e) {
+      e.preventDefault();
+      var id=document.getElementById('deleteID').value;
+      $.ajax({
+        url:'/ajax/delete-room.php',
+        type:'POST',
+        cache:false,
+        data:{id:id},
+        success:function(response){
+          $('#room-occupant-'+id).remove();
+          $('#deleteRoomModal').modal('hide');
+          $('#deleteRoomModalBody').empty();
+          loadTableCounts();
+        }
+      });
+    });
+    $(document).on('click', '#edit-room-button', function() {
+      var id=$(this).data('id');
+      $.ajax({
+        url:'/ajax/load-edit-room-form.php',
+        type:'POST',
+        cache:false,
+        data:{id:id},
+        success:function(response){
+          $('#editRoomModalBody').append(response);
+        }
+      });
+    });
+    $('#editRoom').click(function (e) {
+      e.preventDefault();
+      var id=document.getElementById('editID').value;
+      var room=document.getElementById('editRoom').value;
+      var dogName=document.getElementById('editDogName').value;
+      var checkIn=document.getElementById('editCheckIn').value;
+      var checkOut=document.getElementById('editCheckOut').value;
+      $.ajax({
+        url:'/ajax/edit-room.php',
+        type:'POST',
+        cache:false,
+        data:{id:id, room:room, dogName:dogName, checkIn:checkIn, checkOut:checkOut},
+        success:function(response){
+          $('#editRoomModal').modal('hide');
+          $('#editRoomModalBody').empty();
+          loadRooms('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
+        }
+      });
+    });
+    $('.modal').on('hidden.bs.modal', function(){
+      $('#bookRoomModalBody').empty();
+      $('#deleteRoomModalBody').empty();
+      $('#editRoomModalBody').empty();
+    });
+  });
   </script>
 </head>
 <body>
   <?php include 'assets/navbar.php'; ?>
-  <button type='button' class='btn btn-default nav-add-button' title='Book Room'>Book Room</button>
-  <div class='container-fluid'>
-    <div class='rooms-container'>
-      <?php
-      $sql_containers="SELECT DISTINCT groupID FROM rooms ORDER BY groupID DESC";
-      $result_containers=$conn->query($sql_containers);
-      while ($row_containers=$result_containers->fetch_assoc()) {
-        $containerID=$row_containers['groupID'];
-        echo "<div class='rooms-";
-        if ($containerID==2) {
-          echo "multi";
-        } elseif ($containerID==1) {
-          echo "single";
-        }
-        echo "-column'>";
-        $columns=array();
-        $sql_columns="SELECT columnID FROM rooms GROUP BY columnID HAVING COUNT(DISTINCT(groupID))=$containerID ORDER BY columnID";
-        $result_columns=$conn->query($sql_columns);
-        while ($row_columns=$result_columns->fetch_assoc()) {
-          $columnID=$row_columns['columnID'];
-          $columns[]=$columnID;
-        }
-        $columnList=implode(', ', $columns);
-        $sql_groups="SELECT DISTINCT groupID FROM rooms WHERE columnID IN ($columnList) ORDER BY groupID";
-        $result_groups=$conn->query($sql_groups);
-        while ($row_groups=$result_groups->fetch_assoc()) {
-          $groupID=$row_groups['groupID'];
-            echo "<div class='rooms-multi-row'>";
-          $sql_rooms="SELECT roomID, groupID FROM rooms WHERE columnID IN ($columnList) AND groupID='$groupID' ORDER BY rowID, columnID";
-          $result_rooms=$conn->query($sql_rooms);
-          while ($row_rooms=$result_rooms->fetch_assoc()) {
-            $roomID=$row_rooms['roomID'];
-            echo "<div class='room-row'>
-            <div class='room-number'>$roomID</div>
-            <div class='room-occupant-column'>
-            <div class='room-occupant'>
-            <div class='room-name-dates'>
-            <div class='room-name'>Isabella Rose & Kozmo</div>
-            <div class='room-dates'>Tue 8/22 – Wed 8/23</div>
-            </div>
-            <div class='room-buttons'>
-            <button type='button' class='button-edit' title='Edit'></button>
-            <button type='button' class='button-delete' title='Delete'></button>
-            </div>
-            </div>
-            </div>
-            </div>";
-          }
-            echo "</div>";
-        } 
-        echo "</div>";
-      }
-      ?>
+  <form action='' method='post' spellcheck='false' id='bookRoomForm'>
+    <div class='modal fade' id='bookRoomModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+      <div class='modal-dialog'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <h4 class='modal-title'>Book Room</h4>
+          </div>
+          <div class='modal-body' id='bookRoomModalBody'></div>
+          <div class='modal-footer'>
+            <button type='submit' class='btn btn-primary' id='bookRoom'>Submit</button>
+            <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>
+          </div>
+        </div>
+      </div>
     </div>
+  </form>
+  <div class='nav-footer'>
+    <form action='' method='post' spellcheck='false' id='toggleDatesForm' onchange='toggleDates()'>
+      <div class='input-group'>
+        <span class='input-group-addon clock'>Start Date</span>
+        <input type='date' class='form-control' name='start-date' id='startDate' value='<?php echo $startDate; ?>' required>
+      </div>
+      <div class='input-group'>
+        <span class='input-group-addon clock'>End Date</span>
+        <input type='date' class='form-control' name='end-date' id='endDate' value='<?php echo $endDate; ?>' required>
+      </div>
+    </form>
+    <button type='button' class='btn btn-default nav-add-button' id='bookRoomButton' data-toggle='modal' data-target='#bookRoomModal' data-backdrop='static' title='Book Room'>Book Room</button>
   </div>
+  <div class='container-fluid'>
+    <div class='rooms-container' id='rooms-container'></div>
+  </div>
+  <form action='' method='post' id='editRoomForm'>
+    <div class='modal fade' id='editRoomModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+      <div class='modal-dialog'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <h4 class='modal-title'>Edit Reservation</h4>
+          </div>
+          <div class='modal-body' id='editRoomModalBody'></div>
+          <div class='modal-footer'>
+            <button type='submit' class='btn btn-primary' id='editRoom'>Submit</button>
+            <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <form action='' method='post' id='deleteRoomForm'>
+    <div class='modal fade' id='deleteRoomModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+      <div class='modal-dialog'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <h4 class='modal-title'>Delete Reservation</h4>
+          </div>
+          <div class='modal-body' id='deleteRoomModalBody'></div>
+          <div class='modal-footer'>
+            <button type='submit' class='btn btn-danger' id='deleteRoom'>Delete</button>
+            <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
 </body>
 </html>

@@ -2,6 +2,8 @@ Options -Indexes
 
 RewriteEngine On
 
+RewriteRule ^rooms/([^/]+)/([^/]+) rooms.php?startDate=$1&endDate=$2 [NC,L]
+
 RewriteRule ^rooms rooms.php [NC,L]
 
 RewriteCond %{THE_REQUEST} \s/+index\.php\?([^\s&]+) [NC]

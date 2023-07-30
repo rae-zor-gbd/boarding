@@ -55,6 +55,9 @@
       <a href='/rooms'>
         <div class='nav-link' id='rooms'>Rooms</div>
       </a>
+      <a href='/condos'>
+        <div class='nav-link' id='condos'>Condos</div>
+      </a>
     </div>
   </div>
 </nav>

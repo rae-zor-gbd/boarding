@@ -68,6 +68,7 @@
   --icon-calendar-edit:'\e960';
   --icon-calendar-plus:'\e90f';
   --icon-calendar-week:'\e961';
+  --icon-cat:'\e97b';
   --icon-chart:'\e963';
   --icon-check:'\e911';
   --icon-chevron-down-01:'\e912';
@@ -366,7 +367,7 @@ td .label {
   display:table-cell;
   vertical-align:middle;
 }
-nav, .table-container {
+nav, .room-row, .table-outer {
   box-shadow:rgb(0 0 0 / 8%) 0px 2px 4px 0px;
 }
 nav {
@@ -384,18 +385,29 @@ nav {
   padding-right:25px;
 }
 .nav-add-button {
-  bottom:calc(var(--spacer)*(4/3));
-  left:var(--spacer);
-  position:fixed;
+  margin-top:var(--spacer);
+  width:100%;
 }
 .nav-add-button::before {
-  content:var(--icon-plus);
+  content:var(--icon-book);
   font-family:var(--icon-font-family);
   font-weight:var(--font-weight-regular);
   padding-right:calc(var(--spacer)/3);
 }
+.nav-footer {
+  bottom:calc(var(--spacer)*(4/3));
+  left:var(--spacer);
+  position:fixed;
+  width:calc(var(--spacer)*9);
+}
+.nav-footer form .input-group .input-group-addon {
+  min-width:calc(var(--spacer)*4);
+}
 .nav-link#am-meds::before {
   content:var(--icon-sunrise);
+}
+.nav-link#condos::before {
+  content:var(--icon-cat);
 }
 .nav-link#food-meds::before {
   content:var(--icon-food-02);
@@ -407,9 +419,10 @@ nav {
   content:var(--icon-sunset);
 }
 .nav-link#rooms::before {
-  content:var(--icon-calendar-edit);
+  content:var(--icon-dog);
 }
 .nav-links, .panel-body, .panel-footer {
+  border-bottom:1.5px solid var(--color-06)!important;
   border-top:1.5px solid var(--color-06)!important;
 }
 .nav-links a .nav-link::before {

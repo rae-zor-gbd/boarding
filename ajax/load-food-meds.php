@@ -6,11 +6,11 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
   if ($sortMeds=='all') {
     $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions FROM dogs WHERE status='$status' ORDER BY roomID, dogName";
   } elseif ($sortMeds=='am') {
-    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('AM', '2X', '3X') ORDER BY roomID, dogName;";
+    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('AM', '2X', '3X') GROUP BY dogID ORDER BY roomID, dogName";
   } elseif ($sortMeds=='noon') {
-    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('3X') ORDER BY roomID, dogName;";
+    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('3X') GROUP BY dogID ORDER BY roomID, dogName";
   } elseif ($sortMeds=='pm') {
-    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('PM', '2X', '3X') ORDER BY roomID, dogName;";
+    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('PM', '2X', '3X') GROUP BY dogID ORDER BY roomID, dogName";
   }
   $result_all_dogs=$conn->query($sql_all_dogs);
   while ($row_all_dogs=$result_all_dogs->fetch_assoc()) {

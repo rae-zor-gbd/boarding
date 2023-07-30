@@ -13,8 +13,8 @@ CREATE TABLE rooms (
   PRIMARY KEY (roomID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE reservations (
-  reservationID INT(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE dog_reservations (
+  dogReservationID INT(11) NOT NULL AUTO_INCREMENT,
   roomID INT(11) NOT NULL,
   dogName VARCHAR(255) NOT NULL,
   checkIn DATE NOT NULL,
