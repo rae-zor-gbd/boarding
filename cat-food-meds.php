@@ -347,7 +347,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
             <tr>
               <th>Condo</th>
               <th>Name</th>
-              <th>Food Type</th>
+              <th>Food</th>
               <th>Feeding Instructions</th>
               <th>Medications</th>
               <th></th>
@@ -371,7 +371,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
             <tr>
               <th>Condo</th>
               <th>Name</th>
-              <th>Food Type</th>
+              <th>Food</th>
               <th>Feeding Instructions</th>
               <th>Medications</th>
               <th></th>

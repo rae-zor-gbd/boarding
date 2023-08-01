@@ -18,7 +18,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     $boardingRoomID=$row_all_dogs['roomID'];
     $boardingName=htmlspecialchars($row_all_dogs['dogName'], ENT_QUOTES);
     $boardingFoodType=$row_all_dogs['foodType'];
-    $boardingFeedingInstructions=htmlspecialchars($row_all_dogs['feedingInstructions'], ENT_QUOTES);
+    $boardingFeedingInstructions=nl2br(htmlspecialchars($row_all_dogs['feedingInstructions'], ENT_QUOTES));
     echo "<tr id='row-dog-$boardingDogID'>
     <td>$boardingRoomID</td>
     <td>$boardingName</td>
@@ -34,13 +34,13 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     <td>$boardingFeedingInstructions</td>
     <td>";
     if ($sortMeds=='all') {
-      $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency, notes FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogID='$boardingDogID' ORDER BY FIELD(frequency,'AM','2X','3X','PM','As Needed', 'Other'), medName, strength";
+      $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency, notes FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogID='$boardingDogID' ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";
     } elseif ($sortMeds=='am') {
-      $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency, notes FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogID='$boardingDogID' AND frequency IN ('AM', '2X', '3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','As Needed', 'Other'), medName, strength";
+      $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency, notes FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogID='$boardingDogID' AND frequency IN ('AM', '2X', '3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";
     } elseif ($sortMeds=='noon') {
-      $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency, notes FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogID='$boardingDogID' AND frequency IN ('3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','As Needed', 'Other'), medName, strength";
+      $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency, notes FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogID='$boardingDogID' AND frequency IN ('3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";
     } elseif ($sortMeds=='pm') {
-      $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency, notes FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogID='$boardingDogID' AND frequency IN ('PM', '2X', '3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','As Needed', 'Other'), medName, strength";
+      $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency, notes FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogID='$boardingDogID' AND frequency IN ('PM', '2X', '3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";
     }
     $result_dog_meds=$conn->query($sql_dog_meds);
     if ($result_dog_meds->num_rows>0) {

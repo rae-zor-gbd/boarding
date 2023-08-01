@@ -18,7 +18,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     $boardingCondoID=$row_all_cats['condoID'];
     $boardingName=htmlspecialchars($row_all_cats['catName'], ENT_QUOTES);
     $boardingFoodType=$row_all_cats['foodType'];
-    $boardingFeedingInstructions=htmlspecialchars($row_all_cats['feedingInstructions'], ENT_QUOTES);
+    $boardingFeedingInstructions=nl2br(htmlspecialchars($row_all_cats['feedingInstructions'], ENT_QUOTES));
     echo "<tr id='row-cat-$boardingCatID'>
     <td>$boardingCondoID</td>
     <td>$boardingName</td>
@@ -34,13 +34,13 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     <td>$boardingFeedingInstructions</td>
     <td>";
     if ($sortMeds=='all') {
-      $sql_cat_meds="SELECT catMedID, medName, strength, dosage, frequency, notes FROM cats c JOIN cats_medications m USING (catID) WHERE catID='$boardingCatID' ORDER BY FIELD(frequency,'AM','2X','3X','PM','As Needed', 'Other'), medName, strength";
+      $sql_cat_meds="SELECT catMedID, medName, strength, dosage, frequency, notes FROM cats c JOIN cats_medications m USING (catID) WHERE catID='$boardingCatID' ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";
     } elseif ($sortMeds=='am') {
-      $sql_cat_meds="SELECT catMedID, medName, strength, dosage, frequency, notes FROM cats c JOIN cats_medications m USING (catID) WHERE catID='$boardingCatID' AND frequency IN ('AM', '2X', '3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','As Needed', 'Other'), medName, strength";
+      $sql_cat_meds="SELECT catMedID, medName, strength, dosage, frequency, notes FROM cats c JOIN cats_medications m USING (catID) WHERE catID='$boardingCatID' AND frequency IN ('AM', '2X', '3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";
     } elseif ($sortMeds=='noon') {
-      $sql_cat_meds="SELECT catMedID, medName, strength, dosage, frequency, notes FROM cats c JOIN cats_medications m USING (catID) WHERE catID='$boardingCatID' AND frequency IN ('3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','As Needed', 'Other'), medName, strength";
+      $sql_cat_meds="SELECT catMedID, medName, strength, dosage, frequency, notes FROM cats c JOIN cats_medications m USING (catID) WHERE catID='$boardingCatID' AND frequency IN ('3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";
     } elseif ($sortMeds=='pm') {
-      $sql_cat_meds="SELECT catMedID, medName, strength, dosage, frequency, notes FROM cats c JOIN cats_medications m USING (catID) WHERE catID='$boardingCatID' AND frequency IN ('PM', '2X', '3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','As Needed', 'Other'), medName, strength";
+      $sql_cat_meds="SELECT catMedID, medName, strength, dosage, frequency, notes FROM cats c JOIN cats_medications m USING (catID) WHERE catID='$boardingCatID' AND frequency IN ('PM', '2X', '3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";
     }
     $result_cat_meds=$conn->query($sql_cat_meds);
     if ($result_cat_meds->num_rows>0) {

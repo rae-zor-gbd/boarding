@@ -344,9 +344,6 @@ td:empty::before {
   content:'None';
   font-style:italic;
 }
-td .label {
-  text-transform:uppercase;
-}
 @keyframes loading-ring {
   0% {
     transform:rotate(0deg);
