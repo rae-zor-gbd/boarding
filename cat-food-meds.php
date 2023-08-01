@@ -215,9 +215,8 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
           $('#med-label-'+id).remove();
           $('#deleteMedModal').modal('hide');
           $('#deleteMedModalBody').empty();
-          $('#table-currently-boarding').empty();
-          $('#table-future-arrivals').empty();
-          loadFoodMeds(status, <?php echo "'$sortMeds'"; ?>);
+          loadFoodMeds('Active', <?php echo "'$sortMeds'"; ?>);
+          loadFoodMeds('Future', <?php echo "'$sortMeds'"; ?>);
           loadTableCounts();
         }
       });

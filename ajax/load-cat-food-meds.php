@@ -73,7 +73,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
         }
         echo ")</span>
         <button type='button' class='button-edit' id='edit-med-button' data-toggle='modal' data-target='#editMedModal' data-id='$catMedID' data-status='$status' data-backdrop='static' title='Edit Medication'></button>
-        <button type='button' class='button-delete' id='delete-med-button' data-toggle='modal' data-target='#deleteMedModal' data-id='$catMedID' data-backdrop='static' title='Delete Medication'></button>
+        <button type='button' class='button-delete' id='delete-med-button' data-toggle='modal' data-target='#deleteMedModal' data-id='$catMedID' data-status='$status' data-backdrop='static' title='Delete Medication'></button>
         </div>";
       }
     }
@@ -84,7 +84,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     }
     echo "<button type='button' class='button-edit' id='edit-cat-button' data-toggle='modal' data-target='#editCatModal' data-id='$boardingCatID' data-status='$status' data-backdrop='static' title='Edit Food'></button>
     <button type='button' class='button-meds' id='add-med-button' data-toggle='modal' data-target='#addMedModal' data-status='$status' data-id='$boardingCatID' data-backdrop='static' title='Add Medication'></button>
-    <button type='button' class='button-delete' id='delete-cat-button' data-toggle='modal' data-target='#deleteCatModal' data-id='$boardingCatID' data-backdrop='static' title='Delete Cat'></button>
+    <button type='button' class='button-delete' id='delete-cat-button' data-toggle='modal' data-target='#deleteCatModal' data-status='$status' data-id='$boardingCatID' data-backdrop='static' title='Delete Cat'></button>
     </td>
     </tr>";
   }

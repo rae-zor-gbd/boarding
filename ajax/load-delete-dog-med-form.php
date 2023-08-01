@@ -1,7 +1,8 @@
 <?php
 include '../assets/config.php';
-if (isset($_POST['id'])) {
+if (isset($_POST['id']) AND isset($_POST['status'])) {
   $id=$_POST['id'];
+  $status=$_POST['status'];
   $sql_med_info="SELECT dogName, medName, strength, dosage, frequency FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogMedID='$id'";
   $result_med_info=$conn->query($sql_med_info);
   $row_med_info=$result_med_info->fetch_assoc();
@@ -11,6 +12,7 @@ if (isset($_POST['id'])) {
   $dosage=htmlspecialchars($row_med_info['dosage'], ENT_QUOTES);
   $frequency=$row_med_info['frequency'];
   echo "<input type='hidden' class='form-control' name='id' id='deleteID' value='$id' required>
+  <input type='hidden' class='form-control' name='status' id='deleteStatus' value='$status' required>
   <div class='input-group'>
   <span class='input-group-addon dog'>Dog Name(s)</span>
   <input type='text' class='form-control' name='dog-name' id='deleteDogName' value='$dogName' disabled>

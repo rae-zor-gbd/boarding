@@ -197,7 +197,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
         url:'/ajax/load-delete-dog-med-form.php',
         type:'POST',
         cache:false,
-        data:{id:id},
+        data:{id:id, status:status},
         success:function(response){
           $('#deleteMedModalBody').append(response);
         }
@@ -206,18 +206,18 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
     $('#deleteMed').click(function (e) {
       e.preventDefault();
       var id=document.getElementById('deleteID').value;
+      var status=document.getElementById('deleteStatus').value;
       $.ajax({
         url:'/ajax/delete-dog-med.php',
         type:'POST',
         cache:false,
-        data:{id:id},
+        data:{id:id, status:status},
         success:function(response){
           $('#med-label-'+id).remove();
           $('#deleteMedModal').modal('hide');
           $('#deleteMedModalBody').empty();
-          $('#table-currently-boarding').empty();
-          $('#table-future-arrivals').empty();
-          loadFoodMeds(status, <?php echo "'$sortMeds'"; ?>);
+          loadFoodMeds('Active', <?php echo "'$sortMeds'"; ?>);
+          loadFoodMeds('Future', <?php echo "'$sortMeds'"; ?>);
           loadTableCounts();
         }
       });
