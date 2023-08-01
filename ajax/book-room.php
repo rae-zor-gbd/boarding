@@ -5,7 +5,7 @@ if (isset($_POST['room']) AND isset($_POST['name']) AND isset($_POST['checkIn'])
   $name=mysqli_real_escape_string($conn, $_POST['name']);
   $checkIn=$_POST['checkIn'];
   $checkOut=$_POST['checkOut'];
-  $sql_book_room="INSERT INTO dog_reservations (roomID, dogName, checkIn, checkOut) VALUES ('$room', '$name', '$checkIn', '$checkOut')";
+  $sql_book_room="INSERT INTO dogs_reservations (roomID, dogName, checkIn, checkOut) VALUES ('$room', '$name', '$checkIn', '$checkOut')";
   $conn->query($sql_book_room);
 }
 ?>

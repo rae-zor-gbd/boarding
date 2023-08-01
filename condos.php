@@ -13,32 +13,32 @@ $titleEndDate=date('D n/j', strtotime($endDate));
 <!DOCTYPE html>
 <html lang='en'>
 <head>
-  <title>Rooms | <?php echo "$titleStartDate – $titleEndDate"; ?></title>
+  <title>Condos | <?php echo "$titleStartDate – $titleEndDate"; ?></title>
   <?php include 'assets/header.php'; ?>
   <script type='text/javascript'>
-  function loadBookRoomForm(){
+  function loadBookCondoForm(){
     $.ajax({
-      url:'/ajax/load-book-room-form.php',
+      url:'/ajax/load-book-condo-form.php',
       type:'POST',
       cache:false,
       data:{},
       success:function(data){
         if (data) {
-          $('#bookRoomModalBody').append(data);
+          $('#bookCondoModalBody').append(data);
         }
       }
     });
   }
-  function loadRooms(startDate, endDate){
+  function loadCondos(startDate, endDate){
     $.ajax({
-      url:'/ajax/load-rooms.php',
+      url:'/ajax/load-condos.php',
       type:'POST',
       cache:false,
       data:{startDate:startDate, endDate:endDate},
       success:function(data){
         if (data) {
-          $('#rooms-container').empty();
-          $('#rooms-container').append(data);
+          $('#condos-container').empty();
+          $('#condos-container').append(data);
         }
       }
     });
@@ -46,110 +46,110 @@ $titleEndDate=date('D n/j', strtotime($endDate));
   function toggleDates(){
     var startDate=document.getElementById('startDate').value;
     var endDate=document.getElementById('endDate').value;
-    window.open('/dogs/rooms/'+startDate+'/'+endDate, '_self');
+    window.open('/cats/condos/'+startDate+'/'+endDate, '_self');
   }
   $(document).ready(function() {
-    $('#rooms').addClass('active');
-    loadRooms('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
-    $('#bookRoomButton').click(function (e) {
-      loadBookRoomForm();
+    $('#condos').addClass('active');
+    loadCondos('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
+    $('#bookCondoButton').click(function (e) {
+      loadBookCondoForm();
     });
-    $('#bookRoom').click(function (e) {
+    $('#bookCondo').click(function (e) {
       e.preventDefault();
-      var room=document.getElementById('newRoom').value;
-      var name=document.getElementById('newDogName').value;
+      var condo=document.getElementById('newCondo').value;
+      var name=document.getElementById('newCatName').value;
       var checkIn=document.getElementById('newCheckIn').value;
       var checkOut=document.getElementById('newCheckOut').value;
       $.ajax({
-        url:'/ajax/book-room.php',
+        url:'/ajax/book-condo.php',
         type:'POST',
         cache:false,
-        data:{room:room, name:name, checkIn:checkIn, checkOut:checkOut},
+        data:{condo:condo, name:name, checkIn:checkIn, checkOut:checkOut},
         success:function(response){
-          loadRooms('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
-          $('#bookRoomModal').modal('hide');
-          document.getElementById('bookRoomForm').reset();
+          loadCondos('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
+          $('#bookCondoModal').modal('hide');
+          document.getElementById('bookCondoForm').reset();
         }
       });
     });
-    $(document).on('click', '#delete-room-button', function() {
+    $(document).on('click', '#delete-condo-button', function() {
       var id=$(this).data('id');
       $.ajax({
-        url:'/ajax/load-delete-room-form.php',
+        url:'/ajax/load-delete-condo-form.php',
         type:'POST',
         cache:false,
         data:{id:id},
         success:function(response){
-          $('#deleteRoomModalBody').append(response);
+          $('#deleteCondoModalBody').append(response);
         }
       });
     });
-    $('#deleteRoom').click(function (e) {
+    $('#deleteCondo').click(function (e) {
       e.preventDefault();
       var id=document.getElementById('deleteID').value;
       $.ajax({
-        url:'/ajax/delete-room.php',
+        url:'/ajax/delete-condo.php',
         type:'POST',
         cache:false,
         data:{id:id},
         success:function(response){
-          $('#room-occupant-'+id).remove();
-          $('#deleteRoomModal').modal('hide');
-          $('#deleteRoomModalBody').empty();
+          $('#condo-occupant-'+id).remove();
+          $('#deleteCondoModal').modal('hide');
+          $('#deleteCondoModalBody').empty();
         }
       });
     });
-    $(document).on('click', '#edit-room-button', function() {
+    $(document).on('click', '#edit-condo-button', function() {
       var id=$(this).data('id');
       $.ajax({
-        url:'/ajax/load-edit-room-form.php',
+        url:'/ajax/load-edit-condo-form.php',
         type:'POST',
         cache:false,
         data:{id:id},
         success:function(response){
-          $('#editRoomModalBody').append(response);
+          $('#editCondoModalBody').append(response);
         }
       });
     });
-    $('#editRoom').click(function (e) {
+    $('#editCondo').click(function (e) {
       e.preventDefault();
       var id=document.getElementById('editID').value;
-      var room=document.getElementById('editRoom').value;
-      var dogName=document.getElementById('editDogName').value;
+      var condo=document.getElementById('editCondo').value;
+      var catName=document.getElementById('editCatName').value;
       var checkIn=document.getElementById('editCheckIn').value;
       var checkOut=document.getElementById('editCheckOut').value;
       $.ajax({
-        url:'/ajax/edit-room.php',
+        url:'/ajax/edit-condo.php',
         type:'POST',
         cache:false,
-        data:{id:id, room:room, dogName:dogName, checkIn:checkIn, checkOut:checkOut},
+        data:{id:id, condo:condo, catName:catName, checkIn:checkIn, checkOut:checkOut},
         success:function(response){
-          $('#editRoomModal').modal('hide');
-          $('#editRoomModalBody').empty();
-          loadRooms('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
+          $('#editCondoModal').modal('hide');
+          $('#editCondoModalBody').empty();
+          loadCondos('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
         }
       });
     });
     $('.modal').on('hidden.bs.modal', function(){
-      $('#bookRoomModalBody').empty();
-      $('#deleteRoomModalBody').empty();
-      $('#editRoomModalBody').empty();
+      $('#bookCondoModalBody').empty();
+      $('#deleteCondoModalBody').empty();
+      $('#editCondoModalBody').empty();
     });
   });
   </script>
 </head>
 <body>
   <?php include 'assets/navbar.php'; ?>
-  <form action='' method='post' spellcheck='false' id='bookRoomForm'>
-    <div class='modal fade' id='bookRoomModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+  <form action='' method='post' spellcheck='false' id='bookCondoForm'>
+    <div class='modal fade' id='bookCondoModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
       <div class='modal-dialog'>
         <div class='modal-content'>
           <div class='modal-header'>
-            <h4 class='modal-title'>Book Room</h4>
+            <h4 class='modal-title'>Book Condo</h4>
           </div>
-          <div class='modal-body' id='bookRoomModalBody'></div>
+          <div class='modal-body' id='bookCondoModalBody'></div>
           <div class='modal-footer'>
-            <button type='submit' class='btn btn-primary' id='bookRoom'>Submit</button>
+            <button type='submit' class='btn btn-primary' id='bookCondo'>Submit</button>
             <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>
           </div>
         </div>
@@ -167,37 +167,37 @@ $titleEndDate=date('D n/j', strtotime($endDate));
         <input type='date' class='form-control' name='end-date' id='endDate' value='<?php echo $endDate; ?>' required>
       </div>
     </form>
-    <button type='button' class='btn btn-default nav-button' id='bookRoomButton' data-toggle='modal' data-target='#bookRoomModal' data-backdrop='static' title='Book Room'>Book Room</button>
+    <button type='button' class='btn btn-default nav-button' id='bookCondoButton' data-toggle='modal' data-target='#bookCondoModal' data-backdrop='static' title='Book Condo'>Book Condo</button>
   </div>
   <div class='container-fluid'>
-    <div class='rooms-container' id='rooms-container'></div>
+    <div class='condos-container' id='condos-container'></div>
   </div>
-  <form action='' method='post' id='editRoomForm'>
-    <div class='modal fade' id='editRoomModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+  <form action='' method='post' id='editCondoForm'>
+    <div class='modal fade' id='editCondoModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
       <div class='modal-dialog'>
         <div class='modal-content'>
           <div class='modal-header'>
             <h4 class='modal-title'>Edit Reservation</h4>
           </div>
-          <div class='modal-body' id='editRoomModalBody'></div>
+          <div class='modal-body' id='editCondoModalBody'></div>
           <div class='modal-footer'>
-            <button type='submit' class='btn btn-primary' id='editRoom'>Submit</button>
+            <button type='submit' class='btn btn-primary' id='editCondo'>Submit</button>
             <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>
           </div>
         </div>
       </div>
     </div>
   </form>
-  <form action='' method='post' id='deleteRoomForm'>
-    <div class='modal fade' id='deleteRoomModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+  <form action='' method='post' id='deleteCondoForm'>
+    <div class='modal fade' id='deleteCondoModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
       <div class='modal-dialog'>
         <div class='modal-content'>
           <div class='modal-header'>
             <h4 class='modal-title'>Delete Reservation</h4>
           </div>
-          <div class='modal-body' id='deleteRoomModalBody'></div>
+          <div class='modal-body' id='deleteCondoModalBody'></div>
           <div class='modal-footer'>
-            <button type='submit' class='btn btn-danger' id='deleteRoom'>Delete</button>
+            <button type='submit' class='btn btn-danger' id='deleteCondo'>Delete</button>
             <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>
           </div>
         </div>

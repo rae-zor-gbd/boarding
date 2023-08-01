@@ -2,9 +2,11 @@ Options -Indexes
 
 RewriteEngine On
 
-RewriteRule ^rooms/([^/]+)/([^/]+) rooms.php?startDate=$1&endDate=$2 [NC,L]
+RewriteRule ^dogs/food-meds index.php [NC,L]
 
-RewriteRule ^rooms rooms.php [NC,L]
+RewriteRule ^dogs/rooms/([^/]+)/([^/]+) rooms.php?startDate=$1&endDate=$2 [NC,L]
+
+RewriteRule ^dogs/rooms rooms.php [NC,L]
 
 RewriteCond %{THE_REQUEST} \s/+index\.php\?([^\s&]+) [NC]
 
@@ -14,7 +16,15 @@ RewriteCond %{REQUEST_FILENAME} !-f
 
 RewriteCond %{REQUEST_FILENAME} !-d
 
-RewriteRule ^medication/([^/]+)/?$ index.php?meds=$1 [L,QSA]
+RewriteRule ^dogs/medications/([^/]+)/?$ index.php?meds=$1 [L,QSA]
+
+RewriteRule ^cats/food-meds cat-food-meds.php [NC,L]
+
+RewriteRule ^cats/medications/([^/]+)/?$ cat-food-meds.php?meds=$1 [L,QSA]
+
+RewriteRule ^cats/condos/([^/]+)/([^/]+) condos.php?startDate=$1&endDate=$2 [NC,L]
+
+RewriteRule ^cats/condos condos.php [NC,L]
 
 <FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)(\.gz)?$">
   Header set Expires "Sun, 31 Dec 2023 00:00:00 GMT"

@@ -6,7 +6,7 @@ if (isset($_POST['id']) AND isset($_POST['room']) AND isset($_POST['dogName']) A
   $dogName=mysqli_real_escape_string($conn, $_POST['dogName']);
   $checkIn=$_POST['checkIn'];
   $checkOut=$_POST['checkOut'];
-  $sql_update="UPDATE dog_reservations SET roomID='$roomID', dogName='$dogName', checkIn='$checkIn', checkOut='$checkOut' WHERE dogReservationID='$id'";
+  $sql_update="UPDATE dogs_reservations SET roomID='$roomID', dogName='$dogName', checkIn='$checkIn', checkOut='$checkOut' WHERE dogReservationID='$id'";
   $conn->query($sql_update);
 }
 ?>

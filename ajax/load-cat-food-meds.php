@@ -1,0 +1,92 @@
+<?php
+include '../assets/config.php';
+if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
+  $status=$_POST['status'];
+  $sortMeds=$_POST['sortMeds'];
+  if ($sortMeds=='all') {
+    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions FROM cats WHERE status='$status' ORDER BY condoID, catName";
+  } elseif ($sortMeds=='am') {
+    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions FROM cats JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('AM', '2X', '3X') GROUP BY catID ORDER BY condoID, catName";
+  } elseif ($sortMeds=='noon') {
+    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions FROM cats JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('3X') GROUP BY catID ORDER BY condoID, catName";
+  } elseif ($sortMeds=='pm') {
+    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions FROM cats JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('PM', '2X', '3X') GROUP BY catID ORDER BY condoID, catName";
+  }
+  $result_all_cats=$conn->query($sql_all_cats);
+  while ($row_all_cats=$result_all_cats->fetch_assoc()) {
+    $boardingCatID=$row_all_cats['catID'];
+    $boardingCondoID=$row_all_cats['condoID'];
+    $boardingName=htmlspecialchars($row_all_cats['catName'], ENT_QUOTES);
+    $boardingFoodType=$row_all_cats['foodType'];
+    $boardingFeedingInstructions=htmlspecialchars($row_all_cats['feedingInstructions'], ENT_QUOTES);
+    echo "<tr id='row-cat-$boardingCatID'>
+    <td>$boardingCondoID</td>
+    <td>$boardingName</td>
+    <td>
+    <span class='label label-";
+    if ($boardingFoodType=='Ours') {
+      echo "success";
+    } else {
+      echo "default";
+    }
+    echo "'>$boardingFoodType<span>
+    </td>
+    <td>$boardingFeedingInstructions</td>
+    <td>";
+    if ($sortMeds=='all') {
+      $sql_cat_meds="SELECT catMedID, medName, strength, dosage, frequency, notes FROM cats c JOIN cats_medications m USING (catID) WHERE catID='$boardingCatID' ORDER BY FIELD(frequency,'AM','2X','3X','PM','As Needed', 'Other'), medName, strength";
+    } elseif ($sortMeds=='am') {
+      $sql_cat_meds="SELECT catMedID, medName, strength, dosage, frequency, notes FROM cats c JOIN cats_medications m USING (catID) WHERE catID='$boardingCatID' AND frequency IN ('AM', '2X', '3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','As Needed', 'Other'), medName, strength";
+    } elseif ($sortMeds=='noon') {
+      $sql_cat_meds="SELECT catMedID, medName, strength, dosage, frequency, notes FROM cats c JOIN cats_medications m USING (catID) WHERE catID='$boardingCatID' AND frequency IN ('3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','As Needed', 'Other'), medName, strength";
+    } elseif ($sortMeds=='pm') {
+      $sql_cat_meds="SELECT catMedID, medName, strength, dosage, frequency, notes FROM cats c JOIN cats_medications m USING (catID) WHERE catID='$boardingCatID' AND frequency IN ('PM', '2X', '3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','As Needed', 'Other'), medName, strength";
+    }
+    $result_cat_meds=$conn->query($sql_cat_meds);
+    if ($result_cat_meds->num_rows>0) {
+      while ($row_cat_meds=$result_cat_meds->fetch_assoc()) {
+        $catMedID=$row_cat_meds['catMedID'];
+        $medName=htmlspecialchars($row_cat_meds['medName'], ENT_QUOTES);
+        $strength=$row_cat_meds['strength'];
+        $dosage=htmlspecialchars($row_cat_meds['dosage'], ENT_QUOTES);
+        $frequency=$row_cat_meds['frequency'];
+        $notes=htmlspecialchars($row_cat_meds['notes'], ENT_QUOTES);
+        echo "<div class='medication-label' id='med-label-$catMedID'>
+        <span class='label label-";
+        if ($frequency=='As Needed') {
+          echo "warning";
+        } elseif ($frequency=='Other') {
+          echo "info";
+        } else {
+          echo "danger";
+        }
+        echo "'>$medName";
+        if (isset($strength) AND $strength!='') {
+          echo ", $strength";
+        }
+        echo " ($dosage";
+        if ($frequency!='Other') {
+          echo " $frequency";
+        }
+        if (isset($notes) AND $notes!='') {
+          echo ", $notes";
+        }
+        echo ")</span>
+        <button type='button' class='button-edit' id='edit-med-button' data-toggle='modal' data-target='#editMedModal' data-id='$catMedID' data-status='$status' data-backdrop='static' title='Edit Medication'></button>
+        <button type='button' class='button-delete' id='delete-med-button' data-toggle='modal' data-target='#deleteMedModal' data-id='$catMedID' data-backdrop='static' title='Delete Medication'></button>
+        </div>";
+      }
+    }
+    echo "</td>
+    <td style='text-align:right;'>";
+    if ($status=='Future') {
+      echo "<button type='button' class='button-check' id='check-cat-button' data-toggle='modal' data-target='#checkCatModal' data-id='$boardingCatID' data-backdrop='static' title='Check In'></button>";
+    }
+    echo "<button type='button' class='button-edit' id='edit-cat-button' data-toggle='modal' data-target='#editCatModal' data-id='$boardingCatID' data-status='$status' data-backdrop='static' title='Edit Food'></button>
+    <button type='button' class='button-meds' id='add-med-button' data-toggle='modal' data-target='#addMedModal' data-status='$status' data-id='$boardingCatID' data-backdrop='static' title='Add Medication'></button>
+    <button type='button' class='button-delete' id='delete-cat-button' data-toggle='modal' data-target='#deleteCatModal' data-id='$boardingCatID' data-backdrop='static' title='Delete Cat'></button>
+    </td>
+    </tr>";
+  }
+}
+?>

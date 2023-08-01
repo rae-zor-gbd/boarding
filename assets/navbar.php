@@ -40,22 +40,18 @@
       </div>
     </a>
     <div class='nav-links'>
-      <a href='/'>
-        <div class='nav-link' id='food-meds'>All Food & Meds</div>
+      <a href='/dogs/food-meds'>
+        <div class='nav-link' id='dog-food-meds'>Food & Meds</div>
       </a>
-      <a href='/medication/am'>
-        <div class='nav-link' id='am-meds'>AM Meds</div>
-      </a>
-      <a href='/medication/noon'>
-        <div class='nav-link' id='noon-meds'>Noon Meds</div>
-      </a>
-      <a href='/medication/pm'>
-        <div class='nav-link' id='pm-meds'>PM Meds</div>
-      </a>
-      <a href='/rooms'>
+      <a href='/dogs/rooms'>
         <div class='nav-link' id='rooms'>Rooms</div>
       </a>
-      <a href='/condos'>
+    </div>
+    <div class='nav-links'>
+      <a href='/cats/food-meds'>
+        <div class='nav-link' id='cat-food-meds'>Food & Meds</div>
+      </a>
+      <a href='/cats/condos'>
         <div class='nav-link' id='condos'>Condos</div>
       </a>
     </div>

@@ -10,7 +10,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
 <html lang='en'>
 <head>
   <title>
-    Dog Food & Meds
+    Cat Food & Meds
     <?php
     if ($sortMeds=='am') {
       echo " | AM Meds";
@@ -25,7 +25,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
   <script type='text/javascript'>
   function loadAddFoodForm(status){
     $.ajax({
-      url:'/ajax/load-add-dog-food-form.php',
+      url:'/ajax/load-add-cat-food-form.php',
       type:'POST',
       cache:false,
       data:{status:status},
@@ -39,7 +39,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
   }
   function loadaddMedForm(status, id){
     $.ajax({
-      url:'/ajax/load-add-dog-med-form.php',
+      url:'/ajax/load-add-cat-med-form.php',
       type:'POST',
       cache:false,
       data:{status:status, id:id},
@@ -52,7 +52,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
   }
   function loadFoodMeds(status, sortMeds){
     $.ajax({
-      url:'/ajax/load-dog-food-meds.php',
+      url:'/ajax/load-cat-food-meds.php',
       type:'POST',
       cache:false,
       data:{status:status, sortMeds:sortMeds},
@@ -79,7 +79,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
     $('#table-future-arrivals-count').append(futureArrivalsCount);
   }
   $(document).ready(function(){
-    $('#dog-food-meds').addClass('active');
+    $('#cat-food-meds').addClass('active');
     <?php
     if ($sortMeds=='am') {
       echo "$('#amMedsButton').addClass('active');";
@@ -94,15 +94,15 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
     $('#addFood').click(function (e) {
       e.preventDefault();
       var status=document.getElementById('newStatus').value;
-      var room=document.getElementById('newRoom').value;
-      var name=document.getElementById('newDogName').value;
+      var condo=document.getElementById('newCondo').value;
+      var name=document.getElementById('newCatName').value;
       var foodType=document.getElementById('newFoodType').value;
       var feedingInstructions=document.getElementById('newFeedingInstructions').value;
       $.ajax({
-        url:'/ajax/add-dog-food.php',
+        url:'/ajax/add-cat-food.php',
         type:'POST',
         cache:false,
-        data:{status:status, room:room, name:name, foodType:foodType, feedingInstructions:feedingInstructions},
+        data:{status:status, condo:condo, name:name, foodType:foodType, feedingInstructions:feedingInstructions},
         success:function(response){
           loadFoodMeds(status, <?php echo "'$sortMeds'"; ?>);
           $('#addFoodModal').modal('hide');
@@ -120,7 +120,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       var frequency=document.getElementById('newFrequency').value;
       var notes=document.getElementById('newNotes').value;
       $.ajax({
-        url:'/ajax/add-dog-med.php',
+        url:'/ajax/add-cat-med.php',
         type:'POST',
         cache:false,
         data:{status:status, id:id, medName:medName, strength:strength, dosage:dosage, frequency:frequency, notes:notes},
@@ -141,7 +141,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       var status=$(this).data('status');
       var id=$(this).data('id');
       $.ajax({
-        url:'/ajax/load-add-dog-med-form.php',
+        url:'/ajax/load-add-cat-med-form.php',
         type:'POST',
         cache:false,
         data:{status:status, id:id},
@@ -153,40 +153,40 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
     $(document).on('click', '.button-check', function() {
       var id=$(this).data('id');
       $.ajax({
-        url:'/ajax/check-in-dog.php',
+        url:'/ajax/check-in-cat.php',
         type:'POST',
         cache:false,
         data:{id:id},
         success:function(response){
-          $('#row-dog-'+id).remove();
+          $('#row-cat-'+id).remove();
           loadFoodMeds('Active', <?php echo "'$sortMeds'"; ?>);
         }
       });
     });
-    $(document).on('click', '#delete-dog-button', function() {
+    $(document).on('click', '#delete-cat-button', function() {
       var id=$(this).data('id');
       $.ajax({
-        url:'/ajax/load-delete-dog-form.php',
+        url:'/ajax/load-delete-cat-form.php',
         type:'POST',
         cache:false,
         data:{id:id},
         success:function(response){
-          $('#deleteDogModalBody').append(response);
+          $('#deleteCatModalBody').append(response);
         }
       });
     });
-    $('#deleteDog').click(function (e) {
+    $('#deleteCat').click(function (e) {
       e.preventDefault();
       var id=document.getElementById('deleteID').value;
       $.ajax({
-        url:'/ajax/delete-dog.php',
+        url:'/ajax/delete-cat.php',
         type:'POST',
         cache:false,
         data:{id:id},
         success:function(response){
-          $('#row-dog-'+id).remove();
-          $('#deleteDogModal').modal('hide');
-          $('#deleteDogModalBody').empty();
+          $('#row-cat-'+id).remove();
+          $('#deleteCatModal').modal('hide');
+          $('#deleteCatModalBody').empty();
           loadTableCounts();
         }
       });
@@ -194,7 +194,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
     $(document).on('click', '#delete-med-button', function() {
       var id=$(this).data('id');
       $.ajax({
-        url:'/ajax/load-delete-dog-med-form.php',
+        url:'/ajax/load-delete-cat-med-form.php',
         type:'POST',
         cache:false,
         data:{id:id},
@@ -207,7 +207,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       e.preventDefault();
       var id=document.getElementById('deleteID').value;
       $.ajax({
-        url:'/ajax/delete-dog-med.php',
+        url:'/ajax/delete-cat-med.php',
         type:'POST',
         cache:false,
         data:{id:id},
@@ -222,35 +222,35 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
         }
       });
     });
-    $(document).on('click', '#edit-dog-button', function() {
+    $(document).on('click', '#edit-cat-button', function() {
       var id=$(this).data('id');
       var status=$(this).data('status');
       $.ajax({
-        url:'/ajax/load-edit-dog-food-form.php',
+        url:'/ajax/load-edit-cat-food-form.php',
         type:'POST',
         cache:false,
         data:{id:id, status:status},
         success:function(response){
-          $('#editDogModalBody').append(response);
+          $('#editCatModalBody').append(response);
         }
       });
     });
-    $('#editDog').click(function (e) {
+    $('#editCat').click(function (e) {
       e.preventDefault();
       var id=document.getElementById('editID').value;
       var status=document.getElementById('editStatus').value;
-      var room=document.getElementById('editRoom').value;
-      var dogName=document.getElementById('editDogName').value;
+      var condo=document.getElementById('editCondo').value;
+      var catName=document.getElementById('editCatName').value;
       var foodType=document.getElementById('editFoodType').value;
       var feedingInstructions=document.getElementById('editFeedingInstructions').value;
       $.ajax({
-        url:'/ajax/edit-dog-food.php',
+        url:'/ajax/edit-cat-food.php',
         type:'POST',
         cache:false,
-        data:{id:id, status:status, room:room, dogName:dogName, foodType:foodType, feedingInstructions:feedingInstructions},
+        data:{id:id, status:status, condo:condo, catName:catName, foodType:foodType, feedingInstructions:feedingInstructions},
         success:function(response){
-          $('#editDogModal').modal('hide');
-          $('#editDogModalBody').empty();
+          $('#editCatModal').modal('hide');
+          $('#editCatModalBody').empty();
           loadFoodMeds(status, <?php echo "'$sortMeds'"; ?>);
         }
       });
@@ -259,7 +259,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       var id=$(this).data('id');
       var status=$(this).data('status');
       $.ajax({
-        url:'/ajax/load-edit-dog-med-form.php',
+        url:'/ajax/load-edit-cat-med-form.php',
         type:'POST',
         cache:false,
         data:{id:id, status:status},
@@ -278,7 +278,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       var frequency=document.getElementById('editFrequency').value;
       var notes=document.getElementById('editNotes').value;
       $.ajax({
-        url:'/ajax/edit-dog-med.php',
+        url:'/ajax/edit-cat-med.php',
         type:'POST',
         cache:false,
         data:{id:id, status:status, medName:medName, strength:strength, dosage:dosage, frequency:frequency, notes:notes},
@@ -295,9 +295,9 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
     $('.modal').on('hidden.bs.modal', function(){
       $('#addFoodModalBody').empty();
       $('#addMedModalBody').empty();
-      $('#deleteDogModalBody').empty();
+      $('#deleteCatModalBody').empty();
       $('#deleteMedModalBody').empty();
-      $('#editDogModalBody').empty();
+      $('#editCatModalBody').empty();
       $('#editMedModalBody').empty();
     });
   });
@@ -322,13 +322,13 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
     </div>
   </form>
   <div class='nav-footer'>
-    <a href='/dogs/medications/am'>
+    <a href='/cats/medications/am'>
       <button type='button' class='btn btn-default nav-button' id='amMedsButton' title='AM Medications'>AM Medications</button>
     </a>
-    <a href='/dogs/medications/noon'>
+    <a href='/cats/medications/noon'>
       <button type='button' class='btn btn-default nav-button' id='noonMedsButton' title='Noon Medications'>Noon Medications</button>
     </a>
-    <a href='/dogs/medications/pm'>
+    <a href='/cats/medications/pm'>
       <button type='button' class='btn btn-default nav-button' id='pmMedsButton' title='PM Medications'>PM Medications</button>
     </a>
   </div>
@@ -345,7 +345,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
         <table class='table table-hover table-condensed'>
           <thead>
             <tr>
-              <th>Room</th>
+              <th>Condo</th>
               <th>Name</th>
               <th>Food Type</th>
               <th>Feeding Instructions</th>
@@ -369,7 +369,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
         <table class='table table-hover table-condensed'>
           <thead>
             <tr>
-              <th>Room</th>
+              <th>Condo</th>
               <th>Name</th>
               <th>Food Type</th>
               <th>Feeding Instructions</th>
@@ -398,16 +398,16 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       </div>
     </div>
   </form>
-  <form action='' method='post' id='editDogForm'>
-    <div class='modal fade' id='editDogModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+  <form action='' method='post' id='editCatForm'>
+    <div class='modal fade' id='editCatModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
       <div class='modal-dialog'>
         <div class='modal-content'>
           <div class='modal-header'>
             <h4 class='modal-title'>Edit Food</h4>
           </div>
-          <div class='modal-body' id='editDogModalBody'></div>
+          <div class='modal-body' id='editCatModalBody'></div>
           <div class='modal-footer'>
-            <button type='submit' class='btn btn-primary' id='editDog'>Submit</button>
+            <button type='submit' class='btn btn-primary' id='editCat'>Submit</button>
             <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>
           </div>
         </div>
@@ -430,16 +430,16 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       </div>
     </div>
   </form>
-  <form action='' method='post' id='deleteDogForm'>
-    <div class='modal fade' id='deleteDogModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+  <form action='' method='post' id='deleteCatForm'>
+    <div class='modal fade' id='deleteCatModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
       <div class='modal-dialog'>
         <div class='modal-content'>
           <div class='modal-header'>
-            <h4 class='modal-title'>Delete Dog</h4>
+            <h4 class='modal-title'>Delete Cat</h4>
           </div>
-          <div class='modal-body' id='deleteDogModalBody'></div>
+          <div class='modal-body' id='deleteCatModalBody'></div>
           <div class='modal-footer'>
-            <button type='submit' class='btn btn-danger' id='deleteDog'>Delete</button>
+            <button type='submit' class='btn btn-danger' id='deleteCat'>Delete</button>
             <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>
           </div>
         </div>

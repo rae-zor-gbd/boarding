@@ -29,7 +29,7 @@ if (isset($_POST['id']) AND isset($_POST['status'])) {
   echo "</select>
   </div>
   <div class='input-group'>
-  <span class='input-group-addon dog'>Name</span>
+  <span class='input-group-addon dog'>Dog Name(s)</span>
   <input type='text' class='form-control' name='dog-name' maxlength='255' id='editDogName' value='$dogName' required>
   </div>
   <div class='input-group'>

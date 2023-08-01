@@ -15,7 +15,7 @@ while ($row_all_rooms=$result_all_rooms->fetch_assoc()) {
 echo "</select>
 </div>
 <div class='input-group'>
-<span class='input-group-addon dog'>Name(s)</span>
+<span class='input-group-addon dog'>Dog Name(s)</span>
 <input type='text' class='form-control' name='dog-name' maxlength='255' id='newDogName' required>
 </div>
 <div class='input-group'>

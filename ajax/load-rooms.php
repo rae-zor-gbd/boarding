@@ -34,7 +34,7 @@ if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
         echo "<div class='room-row'>
         <div class='room-number'>$roomID</div>
         <div class='room-occupant-column'>";
-        $sql_reservations="SELECT dogReservationID, dogName, checkIn, checkOut FROM dog_reservations WHERE roomID='$roomID' AND checkIn<='$endDate' AND checkOut>='$startDate' ORDER BY checkIn, dogName";
+        $sql_reservations="SELECT dogReservationID, dogName, checkIn, checkOut FROM dogs_reservations WHERE roomID='$roomID' AND checkIn<='$endDate' AND checkOut>='$startDate' ORDER BY checkIn, dogName";
         $result_reservations=$conn->query($sql_reservations);
         while ($row_reservations=$result_reservations->fetch_assoc()) {
           $reservationID=$row_reservations['dogReservationID'];
