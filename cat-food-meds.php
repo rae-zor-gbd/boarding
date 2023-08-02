@@ -81,7 +81,9 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
   $(document).ready(function(){
     $('#cat-food-meds').addClass('active');
     <?php
-    if ($sortMeds=='am') {
+    if ($sortMeds=='all') {
+      echo "$('#allFoodMedsButton').addClass('active');";
+    } elseif ($sortMeds=='am') {
       echo "$('#amMedsButton').addClass('active');";
     } elseif ($sortMeds=='noon') {
       echo "$('#noonMedsButton').addClass('active');";
@@ -215,6 +217,8 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
           $('#med-label-'+id).remove();
           $('#deleteMedModal').modal('hide');
           $('#deleteMedModalBody').empty();
+          $('#table-currently-boarding').empty();
+          $('#table-future-arrivals').empty();
           loadFoodMeds('Active', <?php echo "'$sortMeds'"; ?>);
           loadFoodMeds('Future', <?php echo "'$sortMeds'"; ?>);
           loadTableCounts();
@@ -321,6 +325,9 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
     </div>
   </form>
   <div class='nav-footer'>
+    <a href='/cats/food-meds'>
+      <button type='button' class='btn btn-default nav-button' id='allFoodMedsButton' title='All Food & Medications'>All Food & Medications</button>
+    </a>
     <a href='/cats/medications/am'>
       <button type='button' class='btn btn-default nav-button' id='amMedsButton' title='AM Medications'>AM Medications</button>
     </a>

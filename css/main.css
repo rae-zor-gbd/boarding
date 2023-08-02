@@ -474,6 +474,9 @@ nav {
   height:100%;
   width:100%;
 }
+#allFoodMedsButton::before {
+  content:var(--icon-table);
+}
 #amMedsButton::before {
   content:var(--icon-sunrise);
 }
