@@ -24,7 +24,7 @@ if (isset($_POST['id'])) {
     if ($allCondosID==$condo) {
       echo " selected";
     }
-    echo ">Room $allCondosID</option>";
+    echo ">Condo $allCondosID</option>";
   }
   echo "</select>
   </div>

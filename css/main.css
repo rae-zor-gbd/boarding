@@ -507,6 +507,36 @@ nav {
 .condo-buttons button:nth-of-type(1), .room-buttons button:nth-of-type(1) {
   padding-left:0;
 }
+.condo-container {
+  display:flex;
+  flex-wrap:wrap;
+  width:50%;
+}
+.condo-container:not(:nth-of-type(1)) .condo-row:nth-child(odd) {
+  margin-right:var(--spacer);
+}
+.condo-container:nth-of-type(1) .condo-row:nth-last-child(1), .condo-container:nth-of-type(1) .condo-row:nth-last-child(2) {
+  margin-top:var(--spacer);
+}
+.condo-container:not(:nth-of-type(1)) {
+  margin-left:50%;
+  margin-top:var(--spacer);
+}
+.condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(3), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(4), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(7), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(8) {
+  margin-bottom:var(--spacer);
+}
+.condo-container .condo-row:nth-last-child(1), .condo-container:not(:nth-of-type(1)) .condo-row:nth-last-child(1), .condo-container:not(:nth-of-type(1)) .condo-row:nth-last-child(2), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(3), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(4), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(7), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(8), .condo-container:nth-of-type(1) .condo-row:nth-of-type(2) {
+  border-bottom-right-radius:6px;
+}
+.condo-container .condo-row:nth-last-child(2), .condo-container:not(:nth-of-type(1)) .condo-row:nth-last-child(1), .condo-container:not(:nth-of-type(1)) .condo-row:nth-last-child(2), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(3), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(4), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(7), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(8), .condo-container:nth-of-type(1) .condo-row:nth-of-type(1) {
+  border-bottom-left-radius:6px;
+}
+.condo-container .condo-row:nth-of-type(1), .condo-container:not(:nth-of-type(1)) .condo-row:nth-last-child(1), .condo-container:not(:nth-of-type(1)) .condo-row:nth-last-child(2), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(2), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(5), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(6), .condo-container:nth-of-type(1) .condo-row:nth-last-child(2) {
+  border-top-left-radius:6px;
+}
+.condo-container .condo-row:nth-of-type(2), .condo-container:not(:nth-of-type(1)) .condo-row:nth-last-child(1), .condo-container:not(:nth-of-type(1)) .condo-row:nth-last-child(2), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(1), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(5), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(6), .condo-container:nth-of-type(1) .condo-row:nth-last-child(1) {
+  border-top-right-radius:6px;
+}
 .condo-dates, .room-dates {
   font-size:70%;
   padding-top:calc(var(--spacer)/10);
@@ -540,6 +570,8 @@ nav {
   display:table;
   margin-bottom:-1px;
   padding:calc(var(--spacer)/4) calc(var(--spacer)/2);
+}
+.condo-row {
   width:calc((100vw - (var(--spacer)*2) - (var(--spacer)*11) - (var(--spacer)*(5/3)) - (var(--spacer)*(5/3)))/4);
 }
 .load-more {
@@ -623,6 +655,9 @@ nav {
 }
 .rooms-multi-column .rooms-multi-row .room-row:nth-of-type(3n) {
   margin-left:-1px;
+}
+.room-row {
+  width:calc((100vw - (var(--spacer)*2) - (var(--spacer)*11) - (var(--spacer)*(5/3)) - (var(--spacer)*(5/3)))/4);
 }
 .table-container:has(>table tbody:empty) {
   display:none;

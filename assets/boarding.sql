@@ -7,25 +7,27 @@ SET character_set_client=utf8mb4;
 
 CREATE TABLE condos (
   condoID INT(11) NOT NULL,
+  columnID INT(11) NOT NULL,
+  rowID INT(11) NOT NULL,
+  groupID INT(11) NOT NULL,
   PRIMARY KEY (condoID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO condos (condoID) VALUES
-(1),
-(2),
-(3),
-(4),
-(5),
-(6),
-(7),
-(8),
-(9),
-(10),
-(11),
-(12),
-(13),
-(14),
-(15);
+INSERT INTO condos (condoID, columnID, rowID, groupID) VALUES
+(1, 1, 1, 1),
+(2, 2, 1, 1),
+(3, 2, 1, 2),
+(4, 2, 2, 2),
+(5, 2, 3, 2),
+(6, 2, 4, 2),
+(7, 1, 2, 1),
+(8, 2, 2, 1),
+(9, 1, 1, 2),
+(10, 1, 2, 2),
+(11, 1, 3, 2),
+(12, 1, 4, 2),
+(13, 2, 5, 2),
+(14, 1, 5, 2);
 
 CREATE TABLE cats (
   catID INT(11) NOT NULL AUTO_INCREMENT,
