@@ -221,6 +221,15 @@ input[type=checkbox]:hover {
 textarea {
   resize:none;
 }
+tr th:nth-child(1), tr th:nth-child(3) {
+  min-width:75px;
+}
+tr th:nth-child(2) {
+  min-width:250px;
+}
+tr th:nth-child(6) {
+  min-width:150px;
+}
 .btn {
   transform:translateZ(0);
   transition-duration:.3s;
@@ -332,6 +341,7 @@ textarea {
 }
 .table-condensed>tbody>tr>td {
   padding:calc(var(--spacer)/2) 5px;
+  text-transform:uppercase;
 }
 .table-container {
   background-color:var(--color-08);
@@ -343,6 +353,7 @@ td:empty::before {
   color:var(--color-03);
   content:'None';
   font-style:italic;
+  text-transform:none;
 }
 @keyframes loading-ring {
   0% {
@@ -578,11 +589,28 @@ nav {
   margin-top:calc(var(--spacer)/2);
   width:100%;
 }
+.medication-label{
+  min-width:455px;
+}
+.medication-label:not(:nth-of-type(1)):not(:nth-of-type(2)) {
+  margin-top:calc(var(--spacer)/6);
+}
+.medication-label:nth-of-type(2) {
+  margin-top:calc(var(--spacer)/10);
+}
 .medication-label button {
   font-size:75%;
-  padding:calc(var(--spacer)/6);
+  padding:0 calc(var(--spacer)/6);
   position:relative;
   top:2px;
+}
+.medication-label .label {
+  display:inline-block;
+  line-height:1.15;
+  max-width:400px;
+  padding:calc(var(--spacer)/6) calc(var(--spacer)/3.5);
+  text-align:left;
+  white-space:unset;
 }
 .panel {
   border-width:2px;
