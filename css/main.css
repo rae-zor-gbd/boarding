@@ -608,7 +608,7 @@ nav {
   display:inline-block;
   line-height:1.15;
   max-width:400px;
-  padding:calc(var(--spacer)/6) calc(var(--spacer)/3.5);
+  padding:calc(var(--spacer)/6) calc(var(--spacer)/3.5) calc(var(--spacer)/9);
   text-align:left;
   white-space:unset;
 }
