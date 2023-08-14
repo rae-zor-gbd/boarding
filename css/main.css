@@ -612,6 +612,9 @@ nav {
   text-align:left;
   white-space:unset;
 }
+.medication-notes {
+  text-decoration:underline dotted;
+}
 .panel {
   border-width:2px;
 }

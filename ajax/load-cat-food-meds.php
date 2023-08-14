@@ -69,7 +69,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
           echo " $frequency";
         }
         if (isset($notes) AND $notes!='') {
-          echo " $notes";
+          echo "; <span class='medication-notes'>$notes</span>";
         }
         echo ")</span>
         <button type='button' class='button-edit' id='edit-med-button' data-toggle='modal' data-target='#editMedModal' data-id='$catMedID' data-status='$status' data-backdrop='static' title='Edit Medication'></button>
