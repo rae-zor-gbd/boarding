@@ -11,10 +11,25 @@ if (isset($_POST['id']) AND isset($_POST['status'])) {
   $foodType=$row_cat_info['foodType'];
   $feedingInstructions=htmlspecialchars($row_cat_info['feedingInstructions'], ENT_QUOTES);
   echo "<input type='hidden' class='form-control' name='status' id='editID' value='$id' required>
-  <input type='hidden' class='form-control' name='status' id='editStatus' value='$status' required>
+  <div class='input-group'>
+  <span class='input-group-addon status'>Status</span>
+  <select class='form-control' name='status' id='editStatus' required>
+  <option value='' disabled>Select Status</option>
+  <option value='Active'";
+  if ($status=='Active') {
+    echo " selected";
+  }
+  echo ">Currently Boarding</option>
+  <option value='Future'";
+  if ($status=='Future') {
+    echo " selected";
+  }
+  echo ">Future Arrival</option>
+  </select>
+  </div>
   <div class='input-group'>
   <span class='input-group-addon room'>Condo</span>
-  <select class='form-control' name='condo' id='editCondo' required=''>
+  <select class='form-control' name='condo' id='editCondo' required>
   <option value='' disabled>Select Condo</option>";
   $sql__all_condos="SELECT condoID FROM condos ORDER BY condoID";
   $result__all_condos=$conn->query($sql__all_condos);
@@ -34,7 +49,7 @@ if (isset($_POST['id']) AND isset($_POST['status'])) {
   </div>
   <div class='input-group'>
   <span class='input-group-addon food'>Food Type</span>
-  <select class='form-control' name='foodType' id='editFoodType' required=''>
+  <select class='form-control' name='foodType' id='editFoodType' required>
   <option value='' disabled>Select Food Type</option>
   <option value='Own'";
   if ($foodType=='Own') {

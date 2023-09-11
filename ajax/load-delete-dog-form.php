@@ -13,7 +13,7 @@ if (isset($_POST['id'])) {
   <input type='text' class='form-control' name='room' id='deleteRoom' value='$roomNo' disabled>
   </div>
   <div class='input-group'>
-  <span class='input-group-addon dog'>Dog Name(s)</span>
+  <span class='input-group-addon dog'>Dog Name</span>
   <input type='text' class='form-control' name='dog-name' id='deleteDogName' value='$dogName' disabled>
   </div>";
 }

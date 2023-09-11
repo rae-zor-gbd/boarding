@@ -57,7 +57,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
     $('#bookCondo').click(function (e) {
       e.preventDefault();
       var condo=document.getElementById('newCondo').value;
-      var name=document.getElementById('newCatName').value;
+      var name=document.getElementById('newCatName').value.toUpperCase();
       var checkIn=document.getElementById('newCheckIn').value;
       var checkOut=document.getElementById('newCheckOut').value;
       $.ajax({
@@ -115,7 +115,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
       e.preventDefault();
       var id=document.getElementById('editID').value;
       var condo=document.getElementById('editCondo').value;
-      var catName=document.getElementById('editCatName').value;
+      var catName=document.getElementById('editCatName').value.toUpperCase();
       var checkIn=document.getElementById('editCheckIn').value;
       var checkOut=document.getElementById('editCheckOut').value;
       $.ajax({

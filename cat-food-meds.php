@@ -97,9 +97,9 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       e.preventDefault();
       var status=document.getElementById('newStatus').value;
       var condo=document.getElementById('newCondo').value;
-      var name=document.getElementById('newCatName').value;
+      var name=document.getElementById('newCatName').value.toUpperCase();
       var foodType=document.getElementById('newFoodType').value;
-      var feedingInstructions=document.getElementById('newFeedingInstructions').value;
+      var feedingInstructions=document.getElementById('newFeedingInstructions').value.toUpperCase();
       $.ajax({
         url:'/ajax/add-cat-food.php',
         type:'POST',
@@ -116,11 +116,11 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       e.preventDefault();
       var status=document.getElementById('newStatus').value;
       var id=document.getElementById('newID').value;
-      var medName=document.getElementById('newMedName').value;
-      var strength=document.getElementById('newStrength').value;
-      var dosage=document.getElementById('newDosage').value;
+      var medName=document.getElementById('newMedName').value.toUpperCase();
+      var strength=document.getElementById('newStrength').value.toUpperCase();
+      var dosage=document.getElementById('newDosage').value.toUpperCase();
       var frequency=document.getElementById('newFrequency').value;
-      var notes=document.getElementById('newNotes').value;
+      var notes=document.getElementById('newNotes').value.toUpperCase();
       $.ajax({
         url:'/ajax/add-cat-med.php',
         type:'POST',
@@ -243,9 +243,9 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       var id=document.getElementById('editID').value;
       var status=document.getElementById('editStatus').value;
       var condo=document.getElementById('editCondo').value;
-      var catName=document.getElementById('editCatName').value;
+      var catName=document.getElementById('editCatName').value.toUpperCase();
       var foodType=document.getElementById('editFoodType').value;
-      var feedingInstructions=document.getElementById('editFeedingInstructions').value;
+      var feedingInstructions=document.getElementById('editFeedingInstructions').value.toUpperCase();
       $.ajax({
         url:'/ajax/edit-cat-food.php',
         type:'POST',
@@ -254,7 +254,11 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
         success:function(response){
           $('#editCatModal').modal('hide');
           $('#editCatModalBody').empty();
-          loadFoodMeds(status, <?php echo "'$sortMeds'"; ?>);
+          $('#table-currently-boarding').empty();
+          $('#table-future-arrivals').empty();
+          loadFoodMeds('Active', <?php echo "'$sortMeds'"; ?>);
+          loadFoodMeds('Future', <?php echo "'$sortMeds'"; ?>);
+          loadTableCounts();
         }
       });
     });
@@ -275,11 +279,11 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       e.preventDefault();
       var id=document.getElementById('editID').value;
       var status=document.getElementById('editStatus').value;
-      var medName=document.getElementById('editMedName').value;
-      var strength=document.getElementById('editStrength').value;
-      var dosage=document.getElementById('editDosage').value;
+      var medName=document.getElementById('editMedName').value.toUpperCase();
+      var strength=document.getElementById('editStrength').value.toUpperCase();
+      var dosage=document.getElementById('editDosage').value.toUpperCase();
       var frequency=document.getElementById('editFrequency').value;
-      var notes=document.getElementById('editNotes').value;
+      var notes=document.getElementById('editNotes').value.toUpperCase();
       $.ajax({
         url:'/ajax/edit-cat-med.php',
         type:'POST',

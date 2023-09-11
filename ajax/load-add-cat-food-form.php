@@ -16,7 +16,7 @@ if (isset($_POST['status'])) {
   echo "</select>
   </div>
   <div class='input-group'>
-  <span class='input-group-addon cat'>Cat Name (s)</span>
+  <span class='input-group-addon cat'>Cat Name</span>
   <input type='text' class='form-control' name='cat-name' maxlength='255' id='newCatName' required>
   </div>
   <div class='input-group'>

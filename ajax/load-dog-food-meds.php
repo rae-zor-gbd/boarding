@@ -31,7 +31,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     }
     echo "'>$boardingFoodType<span>
     </td>
-    <td>$boardingFeedingInstructions</td>
+    <td>" . stripslashes($boardingFeedingInstructions) . "</td>
     <td>";
     if ($sortMeds=='all') {
       $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency, notes FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogID='$boardingDogID' ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";
@@ -64,9 +64,12 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
         if (isset($strength) AND $strength!='') {
           echo ", $strength";
         }
-        echo " ($dosage";
+        echo " (";
+        if (isset($dosage) AND $dosage!='') {
+          echo "$dosage ";
+        }
         if ($frequency!='Other') {
-          echo " $frequency";
+          echo "$frequency";
         }
         if (isset($notes) AND $notes!='') {
           echo "; <span class='medication-notes'>$notes</span>";

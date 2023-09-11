@@ -12,7 +12,7 @@ if (isset($_POST['status']) AND isset($_POST['id'])) {
   $sql_all_meds="SELECT medName FROM medications ORDER BY medName";
   $result_all_meds=$conn->query($sql_all_meds);
   while ($row_all_meds=$result_all_meds->fetch_assoc()) {
-    $medName=htmlspecialchars($row_all_meds['medName'], ENT_QUOTES);
+    $medName=strtoupper(htmlspecialchars($row_all_meds['medName'], ENT_QUOTES));
     echo "<option value='$medName'></option>";
   }
   echo "</datalist>

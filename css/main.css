@@ -260,6 +260,9 @@ tr th:nth-child(6) {
 .container-fluid {
   margin:calc(var(--spacer)*(2/3)) calc(var(--spacer)*(5/3)) calc(var(--spacer)*(2/3)) calc((var(--spacer)*11) + (var(--spacer)*(5/3)));
 }
+.input-group input, .input-group select, .input-group textarea {
+  text-transform:uppercase;
+}
 .input-group:not(:last-child) {
   margin-bottom:calc(var(--spacer)/2);
 }
@@ -267,7 +270,7 @@ tr th:nth-child(6) {
   min-width:calc(var(--spacer)*6);
   text-align:left;
 }
-.input-group-addon.cat::before, .input-group-addon.chart::before, .input-group-addon.clock::before, .input-group-addon.dog::before, .input-group-addon.food::before, .input-group-addon.list::before, .input-group-addon.meds::before, .input-group-addon.notes::before, .input-group-addon.room::before {
+.input-group-addon.cat::before, .input-group-addon.chart::before, .input-group-addon.clock::before, .input-group-addon.dog::before, .input-group-addon.food::before, .input-group-addon.list::before, .input-group-addon.meds::before, .input-group-addon.notes::before, .input-group-addon.room::before, .input-group-addon.status::before {
   display:inline-block;
   font-family:var(--icon-font-family);
   font-weight:var(--font-weight-regular);
@@ -299,6 +302,9 @@ tr th:nth-child(6) {
 }
 .input-group-addon.room::before {
   content:var(--icon-house);
+}
+.input-group-addon.status::before {
+  content:var(--icon-check);
 }
 .loading-ring {
   display:inline-block;
