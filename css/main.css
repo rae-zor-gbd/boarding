@@ -353,7 +353,6 @@ tr th:nth-child(6) {
   background-color:var(--color-08);
   border-bottom-left-radius:6px;
   border-bottom-right-radius:6px;
-  font-variant:tabular-nums;
   padding:calc(var(--spacer)/3) var(--spacer);
 }
 td:empty::before {
@@ -361,6 +360,9 @@ td:empty::before {
   content:'None';
   font-style:italic;
   text-transform:none;
+}
+tr td:not(:nth-of-type(1)) {
+  font-variant:tabular-nums;
 }
 @keyframes loading-ring {
   0% {
