@@ -215,8 +215,22 @@ button.disabled {
   cursor:not-allowed;
   opacity:0.5;
 }
+input[type=checkbox] {
+  height:calc(var(--spacer)/1.75);
+  margin-right:calc(var(--spacer)/3);
+  margin-top:0;
+  position:relative;
+  top:3px;
+  width:calc(var(--spacer)/1.75);
+}
 input[type=checkbox]:hover {
   cursor:pointer;
+}
+label {
+  display:inline;
+  font-size:16px;
+  font-weight:var(--font-weight-normal);
+  text-transform:uppercase;
 }
 textarea {
   resize:none;
@@ -593,6 +607,11 @@ nav {
 }
 .condo-row {
   width:calc((100vw - (var(--spacer)*2) - (var(--spacer)*11) - (var(--spacer)*(5/3)) - (var(--spacer)*(5/3)))/4);
+}
+.food-label {
+  display:inline-block;
+  margin:calc(var(--spacer)/15) calc(var(--spacer)/15) 0 0;
+  padding:calc(var(--spacer)/5) calc(var(--spacer)/3.5) calc(var(--spacer)/7);
 }
 .load-more {
   margin-top:calc(var(--spacer)/2);

@@ -4,13 +4,13 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
   $status=$_POST['status'];
   $sortMeds=$_POST['sortMeds'];
   if ($sortMeds=='all') {
-    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions FROM dogs WHERE status='$status' ORDER BY roomID, dogName";
+    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder FROM dogs WHERE status='$status' ORDER BY roomID, dogName";
   } elseif ($sortMeds=='am') {
-    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('AM', '2X', '3X') GROUP BY dogID ORDER BY roomID, dogName";
+    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('AM', '2X', '3X') GROUP BY dogID ORDER BY roomID, dogName";
   } elseif ($sortMeds=='noon') {
-    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('3X') GROUP BY dogID ORDER BY roomID, dogName";
+    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('3X') GROUP BY dogID ORDER BY roomID, dogName";
   } elseif ($sortMeds=='pm') {
-    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('PM', '2X', '3X') GROUP BY dogID ORDER BY roomID, dogName";
+    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('PM', '2X', '3X') GROUP BY dogID ORDER BY roomID, dogName";
   }
   $result_all_dogs=$conn->query($sql_all_dogs);
   while ($row_all_dogs=$result_all_dogs->fetch_assoc()) {
@@ -19,6 +19,11 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     $boardingName=htmlspecialchars($row_all_dogs['dogName'], ENT_QUOTES);
     $boardingFoodType=$row_all_dogs['foodType'];
     $boardingFeedingInstructions=nl2br(htmlspecialchars($row_all_dogs['feedingInstructions'], ENT_QUOTES));
+    $boardingFoodAllergies=$row_all_dogs['foodAllergies'];
+    $boardingNoSlipBowl=$row_all_dogs['noSlipBowl'];
+    $boardingPlasticBowl=$row_all_dogs['plasticBowl'];
+    $boardingSlowFeeder=$row_all_dogs['slowFeeder'];
+    $boardingElevatedFeeder=$row_all_dogs['elevatedFeeder'];
     echo "<tr id='row-dog-$boardingDogID'>
     <td>$boardingRoomID</td>
     <td>$boardingName</td>
@@ -31,7 +36,23 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     }
     echo "'>$boardingFoodType<span>
     </td>
-    <td>" . stripslashes($boardingFeedingInstructions) . "</td>
+    <td>" . stripslashes($boardingFeedingInstructions) . "<br>";
+    if ($boardingFoodAllergies=='Yes') {
+      echo "<span class='food-label label label-danger'>Food Allergies</span>";
+    }
+    if ($boardingNoSlipBowl=='Yes') {
+      echo "<span class='food-label label label-info'>No-Slip Bowl</span>";
+    }
+    if ($boardingPlasticBowl=='Yes') {
+      echo "<span class='food-label label label-info'>Plastic Bowl</span>";
+    }
+    if ($boardingSlowFeeder=='Yes') {
+      echo "<span class='food-label label label-info'>Slow Feeder</span>";
+    }
+    if ($boardingElevatedFeeder=='Yes') {
+      echo "<span class='food-label label label-info'>Elevated Feeder</span>";
+    }
+    echo "</td>
     <td>";
     if ($sortMeds=='all') {
       $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency, notes FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogID='$boardingDogID' ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";

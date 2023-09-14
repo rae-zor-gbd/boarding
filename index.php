@@ -100,11 +100,36 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       var name=document.getElementById('newDogName').value.toUpperCase();
       var foodType=document.getElementById('newFoodType').value;
       var feedingInstructions=document.getElementById('newFeedingInstructions').value.toUpperCase();
+      if (document.getElementById('newFoodAllergies').checked==true) {
+        var foodAllergies='Yes';
+      } else {
+        var foodAllergies='No';
+      }
+      if (document.getElementById('newNoSlipBowl').checked==true) {
+        var noSlipBowl='Yes';
+      } else {
+        var noSlipBowl='No';
+      }
+      if (document.getElementById('newPlasticBowl').checked==true) {
+        var plasticBowl='Yes';
+      } else {
+        var plasticBowl='No';
+      }
+      if (document.getElementById('newSlowFeeder').checked==true) {
+        var slowFeeder='Yes';
+      } else {
+        var slowFeeder='No';
+      }
+      if (document.getElementById('newElevatedFeeder').checked==true) {
+        var elevatedFeeder='Yes';
+      } else {
+        var elevatedFeeder='No';
+      }
       $.ajax({
         url:'/ajax/add-dog-food.php',
         type:'POST',
         cache:false,
-        data:{status:status, room:room, name:name, foodType:foodType, feedingInstructions:feedingInstructions},
+        data:{status:status, room:room, name:name, foodType:foodType, feedingInstructions:feedingInstructions, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder},
         success:function(response){
           loadFoodMeds(status, <?php echo "'$sortMeds'"; ?>);
           $('#addFoodModal').modal('hide');
@@ -247,11 +272,36 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       var dogName=document.getElementById('editDogName').value.toUpperCase();
       var foodType=document.getElementById('editFoodType').value;
       var feedingInstructions=document.getElementById('editFeedingInstructions').value.toUpperCase();
+      if (document.getElementById('editFoodAllergies').checked==true) {
+        var foodAllergies='Yes';
+      } else {
+        var foodAllergies='No';
+      }
+      if (document.getElementById('editNoSlipBowl').checked==true) {
+        var noSlipBowl='Yes';
+      } else {
+        var noSlipBowl='No';
+      }
+      if (document.getElementById('editPlasticBowl').checked==true) {
+        var plasticBowl='Yes';
+      } else {
+        var plasticBowl='No';
+      }
+      if (document.getElementById('editSlowFeeder').checked==true) {
+        var slowFeeder='Yes';
+      } else {
+        var slowFeeder='No';
+      }
+      if (document.getElementById('editElevatedFeeder').checked==true) {
+        var elevatedFeeder='Yes';
+      } else {
+        var elevatedFeeder='No';
+      }
       $.ajax({
         url:'/ajax/edit-dog-food.php',
         type:'POST',
         cache:false,
-        data:{id:id, status:status, room:room, dogName:dogName, foodType:foodType, feedingInstructions:feedingInstructions},
+        data:{id:id, status:status, room:room, dogName:dogName, foodType:foodType, feedingInstructions:feedingInstructions, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder},
         success:function(response){
           $('#editDogModal').modal('hide');
           $('#editDogModalBody').empty();

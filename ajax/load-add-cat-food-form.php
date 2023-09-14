@@ -30,6 +30,34 @@ if (isset($_POST['status'])) {
   <div class='input-group'>
   <span class='input-group-addon food'>Feeding Instructions</span>
   <textarea class='form-control' name='feeding-instructions' id='newFeedingInstructions' rows='5' required></textarea>
+  </div>
+  <div class='row'>
+  <div class='col-sm-4'>
+  <div class='input-group'>
+  <input type='checkbox' id='newFoodAllergies' name='foodAllergies' value='Yes'>
+  <label for='newFoodAllergies'>Food Allergies</label>
+  </div>
+  <div class='input-group'>
+  <input type='checkbox' id='newSlowFeeder' name='slowFeeder' value='Yes'>
+  <label for='newSlowFeeder'>Slow Feeder</label>
+  </div>
+  </div>
+  <div class='col-sm-4'>
+  <div class='input-group'>
+  <input type='checkbox' id='newNoSlipBowl' name='noSlipBowl' value='Yes'>
+  <label for='newNoSlipBowl'>No-Slip Bowl</label>
+  </div>
+  <div class='input-group'>
+  <input type='checkbox' id='newElevatedFeeder' name='elevatedFeeder' value='Yes'>
+  <label for='newElevatedFeeder'>Elevated Feeder</label>
+  </div>
+  </div>
+  <div class='col-sm-4'>
+  <div class='input-group'>
+  <input type='checkbox' id='newPlasticBowl' name='plasticBowl' value='Yes'>
+  <label for='newPlasticBowl'>Plastic Bowl</label>
+  </div>
+  </div>
   </div>";
 }
 ?>

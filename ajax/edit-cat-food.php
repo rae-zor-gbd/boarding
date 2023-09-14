@@ -1,13 +1,18 @@
 <?php
 include '../assets/config.php';
-if (isset($_POST['status']) AND isset($_POST['id']) AND isset($_POST['condo']) AND isset($_POST['catName']) AND isset($_POST['foodType']) AND isset($_POST['feedingInstructions'])) {
+if (isset($_POST['status']) AND isset($_POST['id']) AND isset($_POST['condo']) AND isset($_POST['catName']) AND isset($_POST['foodType']) AND isset($_POST['feedingInstructions']) AND isset($_POST['foodAllergies']) AND isset($_POST['noSlipBowl']) AND isset($_POST['plasticBowl']) AND isset($_POST['slowFeeder']) AND isset($_POST['elevatedFeeder'])) {
   $status=$_POST['status'];
   $id=$_POST['id'];
   $condoID=mysqli_real_escape_string($conn, $_POST['condo']);
   $catName=mysqli_real_escape_string($conn, $_POST['catName']);
   $foodType=mysqli_real_escape_string($conn, $_POST['foodType']);
   $feedingInstructions=mysqli_real_escape_string($conn, $_POST['feedingInstructions']);
-  $sql_update="UPDATE cats SET condoID='$condoID', catName='$catName', foodType='$foodType', feedingInstructions='$feedingInstructions', status='$status' WHERE catID='$id'";
+  $foodAllergies=$_POST['foodAllergies'];
+  $noSlipBowl=$_POST['noSlipBowl'];
+  $plasticBowl=$_POST['plasticBowl'];
+  $slowFeeder=$_POST['slowFeeder'];
+  $elevatedFeeder=$_POST['elevatedFeeder'];
+  $sql_update="UPDATE cats SET condoID='$condoID', catName='$catName', foodType='$foodType', feedingInstructions='$feedingInstructions', foodAllergies='$foodAllergies', noSlipBowl='$noSlipBowl', plasticBowl='$plasticBowl', slowFeeder='$slowFeeder', elevatedFeeder='$elevatedFeeder', status='$status' WHERE catID='$id'";
   $conn->query($sql_update);
 }
 ?>

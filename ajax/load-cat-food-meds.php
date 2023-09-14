@@ -4,13 +4,13 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
   $status=$_POST['status'];
   $sortMeds=$_POST['sortMeds'];
   if ($sortMeds=='all') {
-    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions FROM cats WHERE status='$status' ORDER BY condoID, catName";
+    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder FROM cats WHERE status='$status' ORDER BY condoID, catName";
   } elseif ($sortMeds=='am') {
-    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions FROM cats JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('AM', '2X', '3X') GROUP BY catID ORDER BY condoID, catName";
+    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder FROM cats JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('AM', '2X', '3X') GROUP BY catID ORDER BY condoID, catName";
   } elseif ($sortMeds=='noon') {
-    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions FROM cats JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('3X') GROUP BY catID ORDER BY condoID, catName";
+    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder FROM cats JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('3X') GROUP BY catID ORDER BY condoID, catName";
   } elseif ($sortMeds=='pm') {
-    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions FROM cats JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('PM', '2X', '3X') GROUP BY catID ORDER BY condoID, catName";
+    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder FROM cats JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('PM', '2X', '3X') GROUP BY catID ORDER BY condoID, catName";
   }
   $result_all_cats=$conn->query($sql_all_cats);
   while ($row_all_cats=$result_all_cats->fetch_assoc()) {
@@ -19,6 +19,11 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     $boardingName=htmlspecialchars($row_all_cats['catName'], ENT_QUOTES);
     $boardingFoodType=$row_all_cats['foodType'];
     $boardingFeedingInstructions=nl2br(htmlspecialchars($row_all_cats['feedingInstructions'], ENT_QUOTES));
+    $boardingFoodAllergies=$row_all_cats['foodAllergies'];
+    $boardingNoSlipBowl=$row_all_cats['noSlipBowl'];
+    $boardingPlasticBowl=$row_all_cats['plasticBowl'];
+    $boardingSlowFeeder=$row_all_cats['slowFeeder'];
+    $boardingElevatedFeeder=$row_all_cats['elevatedFeeder'];
     echo "<tr id='row-cat-$boardingCatID'>
     <td>$boardingCondoID</td>
     <td>$boardingName</td>
@@ -31,7 +36,23 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     }
     echo "'>$boardingFoodType<span>
     </td>
-    <td>" . stripslashes($boardingFeedingInstructions) . "</td>
+    <td>" . stripslashes($boardingFeedingInstructions);
+    if ($boardingFoodAllergies=='Yes') {
+      echo "<span class='food-label label label-danger'>Food Allergies</span>";
+    }
+    if ($boardingNoSlipBowl=='Yes') {
+      echo "<span class='food-label label label-info'>No-Slip Bowl</span>";
+    }
+    if ($boardingPlasticBowl=='Yes') {
+      echo "<span class='food-label label label-info'>Plastic Bowl</span>";
+    }
+    if ($boardingSlowFeeder=='Yes') {
+      echo "<span class='food-label label label-info'>Slow Feeder</span>";
+    }
+    if ($boardingElevatedFeeder=='Yes') {
+      echo "<span class='food-label label label-info'>Elevated Feeder</span>";
+    }
+    echo "</td>
     <td>";
     if ($sortMeds=='all') {
       $sql_cat_meds="SELECT catMedID, medName, strength, dosage, frequency, notes FROM cats c JOIN cats_medications m USING (catID) WHERE catID='$boardingCatID' ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";

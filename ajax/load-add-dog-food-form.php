@@ -30,6 +30,34 @@ if (isset($_POST['status'])) {
   <div class='input-group'>
   <span class='input-group-addon food'>Feeding Instructions</span>
   <textarea class='form-control' name='feeding-instructions' id='newFeedingInstructions' rows='5' required></textarea>
+  </div>
+  <div class='row'>
+  <div class='col-sm-4'>
+  <div class='input-group'>
+  <input type='checkbox' id='newFoodAllergies' name='foodAllergies'>
+  <label for='newFoodAllergies'>Food Allergies</label>
+  </div>
+  <div class='input-group'>
+  <input type='checkbox' id='newSlowFeeder' name='slowFeeder'>
+  <label for='newSlowFeeder'>Slow Feeder</label>
+  </div>
+  </div>
+  <div class='col-sm-4'>
+  <div class='input-group'>
+  <input type='checkbox' id='newNoSlipBowl' name='noSlipBowl'>
+  <label for='newNoSlipBowl'>No-Slip Bowl</label>
+  </div>
+  <div class='input-group'>
+  <input type='checkbox' id='newElevatedFeeder' name='elevatedFeeder'>
+  <label for='newElevatedFeeder'>Elevated Feeder</label>
+  </div>
+  </div>
+  <div class='col-sm-4'>
+  <div class='input-group'>
+  <input type='checkbox' id='newPlasticBowl' name='plasticBowl'>
+  <label for='newPlasticBowl'>Plastic Bowl</label>
+  </div>
+  </div>
   </div>";
 }
 ?>

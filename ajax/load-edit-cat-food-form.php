@@ -3,13 +3,18 @@ include '../assets/config.php';
 if (isset($_POST['id']) AND isset($_POST['status'])) {
   $id=$_POST['id'];
   $status=$_POST['status'];
-  $sql_cat_info="SELECT condoID, catName, foodType, feedingInstructions FROM cats WHERE catID='$id'";
+  $sql_cat_info="SELECT condoID, catName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder FROM cats WHERE catID='$id'";
   $result_cat_info=$conn->query($sql_cat_info);
   $row_cat_info=$result_cat_info->fetch_assoc();
   $condo=$row_cat_info['condoID'];
   $catName=htmlspecialchars($row_cat_info['catName'], ENT_QUOTES);
   $foodType=$row_cat_info['foodType'];
   $feedingInstructions=htmlspecialchars($row_cat_info['feedingInstructions'], ENT_QUOTES);
+  $foodAllergies=$row_cat_info['foodAllergies'];
+  $noSlipBowl=$row_cat_info['noSlipBowl'];
+  $plasticBowl=$row_cat_info['plasticBowl'];
+  $slowFeeder=$row_cat_info['slowFeeder'];
+  $elevatedFeeder=$row_cat_info['elevatedFeeder'];
   echo "<input type='hidden' class='form-control' name='status' id='editID' value='$id' required>
   <div class='input-group'>
   <span class='input-group-addon status'>Status</span>
@@ -31,10 +36,10 @@ if (isset($_POST['id']) AND isset($_POST['status'])) {
   <span class='input-group-addon room'>Condo</span>
   <select class='form-control' name='condo' id='editCondo' required>
   <option value='' disabled>Select Condo</option>";
-  $sql__all_condos="SELECT condoID FROM condos ORDER BY condoID";
-  $result__all_condos=$conn->query($sql__all_condos);
-  while ($row__all_condos=$result__all_condos->fetch_assoc()) {
-    $allCondosID=$row__all_condos['condoID'];
+  $sql_all_condos="SELECT condoID FROM condos ORDER BY condoID";
+  $result_all_condos=$conn->query($sql_all_condos);
+  while ($row_all_condos=$result_all_condos->fetch_assoc()) {
+    $allCondosID=$row_all_condos['condoID'];
     echo "<option value='$allCondosID'";
     if ($allCondosID==$condo) {
       echo " selected";
@@ -66,6 +71,54 @@ if (isset($_POST['id']) AND isset($_POST['status'])) {
   <div class='input-group'>
   <span class='input-group-addon food'>Feeding Instructions</span>
   <textarea class='form-control' name='feeding-instructions' id='editFeedingInstructions' rows='5' required>$feedingInstructions</textarea>
+  </div>
+  <div class='row'>
+  <div class='col-sm-4'>
+  <div class='input-group'>
+  <input type='checkbox' id='editFoodAllergies' name='foodAllergies' value='Yes'";
+  if ($foodAllergies=='Yes') {
+    echo " checked";
+  }
+  echo ">
+  <label for='editFoodAllergies'>Food Allergies</label>
+  </div>
+  <div class='input-group'>
+  <input type='checkbox' id='editSlowFeeder' name='slowFeeder' value='Yes'";
+  if ($slowFeeder=='Yes') {
+    echo " checked";
+  }
+  echo ">
+  <label for='editSlowFeeder'>Slow Feeder</label>
+  </div>
+  </div>
+  <div class='col-sm-4'>
+  <div class='input-group'>
+  <input type='checkbox' id='editNoSlipBowl' name='noSlipBowl' value='Yes'";
+  if ($noSlipBowl=='Yes') {
+    echo " checked";
+  }
+  echo ">
+  <label for='editNoSlipBowl'>No-Slip Bowl</label>
+  </div>
+  <div class='input-group'>
+  <input type='checkbox' id='editElevatedFeeder' name='elevatedFeeder' value='Yes'";
+  if ($elevatedFeeder=='Yes') {
+    echo " checked";
+  }
+  echo ">
+  <label for='editElevatedFeeder'>Elevated Feeder</label>
+  </div>
+  </div>
+  <div class='col-sm-4'>
+  <div class='input-group'>
+  <input type='checkbox' id='editPlasticBowl' name='plasticBowl' value='Yes'";
+  if ($plasticBowl=='Yes') {
+    echo " checked";
+  }
+  echo ">
+  <label for='editPlasticBowl'>Plastic Bowl</label>
+  </div>
+  </div>
   </div>";
 }
 ?>
