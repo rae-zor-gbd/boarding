@@ -294,7 +294,8 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
           $('#editMedModalBody').empty();
           $('#table-currently-boarding').empty();
           $('#table-future-arrivals').empty();
-          loadFoodMeds(status, <?php echo "'$sortMeds'"; ?>);
+          loadFoodMeds('Active', <?php echo "'$sortMeds'"; ?>);
+          loadFoodMeds('Future', <?php echo "'$sortMeds'"; ?>);
           loadTableCounts();
         }
       });
