@@ -41,16 +41,16 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
       echo "<span class='food-label label label-danger'>Food Allergies</span>";
     }
     if ($boardingNoSlipBowl=='Yes') {
-      echo "<span class='food-label label label-info'>No-Slip Bowl</span>";
+      echo "<span class='food-label label label-primary'>No-Slip Bowl</span>";
     }
     if ($boardingPlasticBowl=='Yes') {
-      echo "<span class='food-label label label-info'>Plastic Bowl</span>";
+      echo "<span class='food-label label label-primary'>Plastic Bowl</span>";
     }
     if ($boardingSlowFeeder=='Yes') {
-      echo "<span class='food-label label label-info'>Slow Feeder</span>";
+      echo "<span class='food-label label label-primary'>Slow Feeder</span>";
     }
     if ($boardingElevatedFeeder=='Yes') {
-      echo "<span class='food-label label label-info'>Elevated Feeder</span>";
+      echo "<span class='food-label label label-primary'>Elevated Feeder</span>";
     }
     echo "</td>
     <td>";
@@ -77,7 +77,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
         if ($frequency=='As Needed') {
           echo "warning";
         } elseif ($frequency=='Other') {
-          echo "info";
+          echo "primary";
         } else {
           echo "danger";
         }
