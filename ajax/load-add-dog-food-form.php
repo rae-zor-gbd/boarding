@@ -16,8 +16,8 @@ if (isset($_POST['status'])) {
   echo "</select>
   </div>
   <div class='input-group'>
-  <span class='input-group-addon dog'>Dog Name</span>
-  <input type='text' class='form-control' name='dog-name' maxlength='255' id='newDogName' required>
+  <span class='input-group-addon cat'>Cat Name</span>
+  <input type='text' class='form-control' name='cat-name' maxlength='255' id='newCatName' required>
   </div>
   <div class='input-group'>
   <span class='input-group-addon food'>Food Type</span>
@@ -34,28 +34,32 @@ if (isset($_POST['status'])) {
   <div class='row'>
   <div class='col-sm-4'>
   <div class='input-group'>
-  <input type='checkbox' id='newFoodAllergies' name='foodAllergies'>
+  <input type='checkbox' id='newFoodAllergies' name='foodAllergies' value='Yes'>
   <label for='newFoodAllergies'>Food Allergies</label>
   </div>
   <div class='input-group'>
-  <input type='checkbox' id='newSlowFeeder' name='slowFeeder'>
-  <label for='newSlowFeeder'>Slow Feeder</label>
+  <input type='checkbox' id='newSeparateToFeed' name='separateToFeed' value='Yes'>
+  <label for='newSeparateToFeed'>Separate To Feed</label>
   </div>
   </div>
   <div class='col-sm-4'>
   <div class='input-group'>
-  <input type='checkbox' id='newNoSlipBowl' name='noSlipBowl'>
+  <input type='checkbox' id='newNoSlipBowl' name='noSlipBowl' value='Yes'>
   <label for='newNoSlipBowl'>No-Slip Bowl</label>
   </div>
   <div class='input-group'>
-  <input type='checkbox' id='newElevatedFeeder' name='elevatedFeeder'>
-  <label for='newElevatedFeeder'>Elevated Feeder</label>
+  <input type='checkbox' id='newPlasticBowl' name='plasticBowl' value='Yes'>
+  <label for='newPlasticBowl'>Plastic Bowl</label>
   </div>
   </div>
   <div class='col-sm-4'>
   <div class='input-group'>
-  <input type='checkbox' id='newPlasticBowl' name='plasticBowl'>
-  <label for='newPlasticBowl'>Plastic Bowl</label>
+  <input type='checkbox' id='newSlowFeeder' name='slowFeeder' value='Yes'>
+  <label for='newSlowFeeder'>Slow Feeder</label>
+  </div>
+  <div class='input-group'>
+  <input type='checkbox' id='newElevatedFeeder' name='elevatedFeeder' value='Yes'>
+  <label for='newElevatedFeeder'>Elevated Feeder</label>
   </div>
   </div>
   </div>";

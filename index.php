@@ -125,11 +125,16 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       } else {
         var elevatedFeeder='No';
       }
+      if (document.getElementById('newSeparateToFeed').checked==true) {
+        var separateToFeed='Yes';
+      } else {
+        var separateToFeed='No';
+      }
       $.ajax({
         url:'/ajax/add-dog-food.php',
         type:'POST',
         cache:false,
-        data:{status:status, room:room, name:name, foodType:foodType, feedingInstructions:feedingInstructions, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder},
+        data:{status:status, room:room, name:name, foodType:foodType, feedingInstructions:feedingInstructions, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder, separateToFeed:separateToFeed},
         success:function(response){
           loadFoodMeds(status, <?php echo "'$sortMeds'"; ?>);
           $('#addFoodModal').modal('hide');
@@ -297,11 +302,16 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       } else {
         var elevatedFeeder='No';
       }
+      if (document.getElementById('editSeparateToFeed').checked==true) {
+        var separateToFeed='Yes';
+      } else {
+        var separateToFeed='No';
+      }
       $.ajax({
         url:'/ajax/edit-dog-food.php',
         type:'POST',
         cache:false,
-        data:{id:id, status:status, room:room, dogName:dogName, foodType:foodType, feedingInstructions:feedingInstructions, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder},
+        data:{id:id, status:status, room:room, dogName:dogName, foodType:foodType, feedingInstructions:feedingInstructions, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder, separateToFeed:separateToFeed},
         success:function(response){
           $('#editDogModal').modal('hide');
           $('#editDogModalBody').empty();

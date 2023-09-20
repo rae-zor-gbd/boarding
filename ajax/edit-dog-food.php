@@ -1,6 +1,6 @@
 <?php
 include '../assets/config.php';
-if (isset($_POST['status']) AND isset($_POST['id']) AND isset($_POST['room']) AND isset($_POST['dogName']) AND isset($_POST['foodType']) AND isset($_POST['feedingInstructions']) AND isset($_POST['foodAllergies']) AND isset($_POST['noSlipBowl']) AND isset($_POST['plasticBowl']) AND isset($_POST['slowFeeder']) AND isset($_POST['elevatedFeeder'])) {
+if (isset($_POST['status']) AND isset($_POST['id']) AND isset($_POST['room']) AND isset($_POST['dogName']) AND isset($_POST['foodType']) AND isset($_POST['feedingInstructions']) AND isset($_POST['foodAllergies']) AND isset($_POST['noSlipBowl']) AND isset($_POST['plasticBowl']) AND isset($_POST['slowFeeder']) AND isset($_POST['elevatedFeeder']) AND isset($_POST['separateToFeed'])) {
   $status=$_POST['status'];
   $id=$_POST['id'];
   $roomID=mysqli_real_escape_string($conn, $_POST['room']);
@@ -12,7 +12,8 @@ if (isset($_POST['status']) AND isset($_POST['id']) AND isset($_POST['room']) AN
   $plasticBowl=$_POST['plasticBowl'];
   $slowFeeder=$_POST['slowFeeder'];
   $elevatedFeeder=$_POST['elevatedFeeder'];
-  $sql_update="UPDATE dogs SET roomID='$roomID', dogName='$dogName', foodType='$foodType', feedingInstructions='$feedingInstructions', foodAllergies='$foodAllergies', noSlipBowl='$noSlipBowl', plasticBowl='$plasticBowl', slowFeeder='$slowFeeder', elevatedFeeder='$elevatedFeeder', status='$status' WHERE dogID='$id'";
+  $separateToFeed=$_POST['separateToFeed'];
+  $sql_update="UPDATE dogs SET roomID='$roomID', dogName='$dogName', foodType='$foodType', feedingInstructions='$feedingInstructions', foodAllergies='$foodAllergies', noSlipBowl='$noSlipBowl', plasticBowl='$plasticBowl', slowFeeder='$slowFeeder', elevatedFeeder='$elevatedFeeder', separateToFeed='$separateToFeed', status='$status' WHERE dogID='$id'";
   $conn->query($sql_update);
 }
 ?>

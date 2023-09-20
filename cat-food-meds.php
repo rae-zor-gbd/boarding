@@ -125,11 +125,16 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       } else {
         var elevatedFeeder='No';
       }
+      if (document.getElementById('newSeparateToFeed').checked==true) {
+        var separateToFeed='Yes';
+      } else {
+        var separateToFeed='No';
+      }
       $.ajax({
         url:'/ajax/add-cat-food.php',
         type:'POST',
         cache:false,
-        data:{status:status, condo:condo, name:name, foodType:foodType, feedingInstructions:feedingInstructions, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder},
+        data:{status:status, condo:condo, name:name, foodType:foodType, feedingInstructions:feedingInstructions, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder, separateToFeed:separateToFeed},
         success:function(response){
           loadFoodMeds(status, <?php echo "'$sortMeds'"; ?>);
           $('#addFoodModal').modal('hide');
@@ -296,11 +301,16 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       } else {
         var elevatedFeeder='No';
       }
+      if (document.getElementById('editSeparateToFeed').checked==true) {
+        var separateToFeed='Yes';
+      } else {
+        var separateToFeed='No';
+      }
       $.ajax({
         url:'/ajax/edit-cat-food.php',
         type:'POST',
         cache:false,
-        data:{id:id, status:status, condo:condo, catName:catName, foodType:foodType, feedingInstructions:feedingInstructions, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder},
+        data:{id:id, status:status, condo:condo, catName:catName, foodType:foodType, feedingInstructions:feedingInstructions, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder, separateToFeed:separateToFeed},
         success:function(response){
           $('#editCatModal').modal('hide');
           $('#editCatModalBody').empty();

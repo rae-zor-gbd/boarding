@@ -38,8 +38,8 @@ if (isset($_POST['status'])) {
   <label for='newFoodAllergies'>Food Allergies</label>
   </div>
   <div class='input-group'>
-  <input type='checkbox' id='newSlowFeeder' name='slowFeeder' value='Yes'>
-  <label for='newSlowFeeder'>Slow Feeder</label>
+  <input type='checkbox' id='newSeparateToFeed' name='separateToFeed' value='Yes'>
+  <label for='newSeparateToFeed'>Separate To Feed</label>
   </div>
   </div>
   <div class='col-sm-4'>
@@ -48,14 +48,18 @@ if (isset($_POST['status'])) {
   <label for='newNoSlipBowl'>No-Slip Bowl</label>
   </div>
   <div class='input-group'>
-  <input type='checkbox' id='newElevatedFeeder' name='elevatedFeeder' value='Yes'>
-  <label for='newElevatedFeeder'>Elevated Feeder</label>
+  <input type='checkbox' id='newPlasticBowl' name='plasticBowl' value='Yes'>
+  <label for='newPlasticBowl'>Plastic Bowl</label>
   </div>
   </div>
   <div class='col-sm-4'>
   <div class='input-group'>
-  <input type='checkbox' id='newPlasticBowl' name='plasticBowl' value='Yes'>
-  <label for='newPlasticBowl'>Plastic Bowl</label>
+  <input type='checkbox' id='newSlowFeeder' name='slowFeeder' value='Yes'>
+  <label for='newSlowFeeder'>Slow Feeder</label>
+  </div>
+  <div class='input-group'>
+  <input type='checkbox' id='newElevatedFeeder' name='elevatedFeeder' value='Yes'>
+  <label for='newElevatedFeeder'>Elevated Feeder</label>
   </div>
   </div>
   </div>";

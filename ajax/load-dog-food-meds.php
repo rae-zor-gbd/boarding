@@ -4,13 +4,13 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
   $status=$_POST['status'];
   $sortMeds=$_POST['sortMeds'];
   if ($sortMeds=='all') {
-    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder FROM dogs WHERE status='$status' ORDER BY roomID, dogName";
+    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM dogs WHERE status='$status' ORDER BY roomID, dogName";
   } elseif ($sortMeds=='am') {
-    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('AM', '2X', '3X') GROUP BY dogID ORDER BY roomID, dogName";
+    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('AM', '2X', '3X') GROUP BY dogID ORDER BY roomID, dogName";
   } elseif ($sortMeds=='noon') {
-    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('3X') GROUP BY dogID ORDER BY roomID, dogName";
+    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('3X') GROUP BY dogID ORDER BY roomID, dogName";
   } elseif ($sortMeds=='pm') {
-    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('PM', '2X', '3X') GROUP BY dogID ORDER BY roomID, dogName";
+    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('PM', '2X', '3X') GROUP BY dogID ORDER BY roomID, dogName";
   }
   $result_all_dogs=$conn->query($sql_all_dogs);
   while ($row_all_dogs=$result_all_dogs->fetch_assoc()) {
@@ -24,6 +24,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     $boardingPlasticBowl=$row_all_dogs['plasticBowl'];
     $boardingSlowFeeder=$row_all_dogs['slowFeeder'];
     $boardingElevatedFeeder=$row_all_dogs['elevatedFeeder'];
+    $boardingSeparateToFeed=$row_all_dogs['separateToFeed'];
     echo "<tr id='row-dog-$boardingDogID'>
     <td>$boardingRoomID</td>
     <td>$boardingName</td>
@@ -39,6 +40,9 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     <td>" . stripslashes($boardingFeedingInstructions) . "<br>";
     if ($boardingFoodAllergies=='Yes') {
       echo "<span class='food-label label label-danger'>Food Allergies</span>";
+    }
+    if ($boardingSeparateToFeed=='Yes') {
+      echo "<span class='food-label label label-primary'>Separate To Feed</span>";
     }
     if ($boardingNoSlipBowl=='Yes') {
       echo "<span class='food-label label label-primary'>No-Slip Bowl</span>";
