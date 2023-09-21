@@ -447,7 +447,7 @@ nav {
 }
 .nav-header {
   font-weight:var(--font-weight-bold);
-  padding:calc(var(--spacer)/3) 0;
+  padding:calc(var(--spacer)/2) 0;
   text-align:center;
   text-transform:uppercase;
 }
