@@ -39,6 +39,7 @@
         </svg>
       </div>
     </a>
+    <div class='nav-header'>Boarding</div>
     <div class='nav-links'>
       <a href='/dogs/food-meds'>
         <div class='nav-link' id='dog-food-meds'>Food & Meds</div>
