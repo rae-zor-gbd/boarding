@@ -35,7 +35,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     } else {
       echo "default";
     }
-    echo "'>$boardingFoodType<span>
+    echo "'>$boardingFoodType</span>
     </td>
     <td>" . stripslashes($boardingFeedingInstructions) . "<br>";
     if ($boardingFoodAllergies=='Yes') {
