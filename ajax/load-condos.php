@@ -22,10 +22,17 @@ if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
         $reservationName=htmlspecialchars($row_reservations['catName'], ENT_QUOTES);
         $reservationCheckIn=strtotime($row_reservations['checkIn']);
         $reservationCheckOut=strtotime($row_reservations['checkOut']);
+        $checkOutDayOfWeek=date('l', strtotime($row_reservations['checkOut']));
         echo "<div class='condo-occupant' id='condo-occupant-$reservationID'>
         <div class='condo-name-dates'>
         <div class='condo-name'>$reservationName</div>
-        <div class='condo-dates'>" . date('D n/j', $reservationCheckIn) . " – " . date('D n/j', $reservationCheckOut) . "</div>
+        <div class='condo-dates'>
+          <span class='condo-check-in'>" . date('D n/j', $reservationCheckIn) . "</span> – <span class='condo-check-out";
+          if ($checkOutDayOfWeek=='Friday' OR $checkOutDayOfWeek=='Saturday' OR $checkOutDayOfWeek=='Sunday') {
+            echo " weekend-check-out";
+          }
+          echo "'>" . date('D n/j', $reservationCheckOut) . "</span>
+          </div>
         </div>
         <div class='condo-buttons'>
         <button type='button' class='button-edit' id='edit-condo-button' data-toggle='modal' data-target='#editCondoModal' data-id='$reservationID' data-backdrop='static' title='Edit Reservation'></button>

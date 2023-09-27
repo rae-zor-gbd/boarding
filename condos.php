@@ -43,6 +43,20 @@ $titleEndDate=date('D n/j', strtotime($endDate));
       }
     });
   }
+  function loadCounts(startDate, endDate){
+    $.ajax({
+      url:'/ajax/load-cat-counts.php',
+      type:'POST',
+      cache:false,
+      data:{startDate:startDate, endDate:endDate},
+      success:function(data){
+        if (data) {
+          $('#navCounts').empty();
+          $('#navCounts').append(data);
+        }
+      }
+    });
+  }
   function toggleDates(){
     var startDate=document.getElementById('startDate').value;
     var endDate=document.getElementById('endDate').value;
@@ -51,6 +65,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
   $(document).ready(function() {
     $('#condos').addClass('active');
     loadCondos('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
+    loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
     $('#bookCondoButton').click(function (e) {
       loadBookCondoForm();
     });
@@ -67,6 +82,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
         data:{condo:condo, name:name, checkIn:checkIn, checkOut:checkOut},
         success:function(response){
           loadCondos('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
+          loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
           $('#bookCondoModal').modal('hide');
           document.getElementById('bookCondoForm').reset();
         }
@@ -96,6 +112,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
           $('#condo-occupant-'+id).remove();
           $('#deleteCondoModal').modal('hide');
           $('#deleteCondoModalBody').empty();
+          loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
         }
       });
     });
@@ -127,6 +144,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
           $('#editCondoModal').modal('hide');
           $('#editCondoModalBody').empty();
           loadCondos('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
+          loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
         }
       });
     });
@@ -157,6 +175,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
     </div>
   </form>
   <div class='nav-footer'>
+    <div id='navCounts'></div>
     <form action='' method='post' spellcheck='false' id='toggleDatesForm' onchange='toggleDates()'>
       <div class='input-group'>
         <span class='input-group-addon clock'>Start Date</span>

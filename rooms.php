@@ -29,6 +29,20 @@ $titleEndDate=date('D n/j', strtotime($endDate));
       }
     });
   }
+  function loadCounts(startDate, endDate){
+    $.ajax({
+      url:'/ajax/load-dog-counts.php',
+      type:'POST',
+      cache:false,
+      data:{startDate:startDate, endDate:endDate},
+      success:function(data){
+        if (data) {
+          $('#navCounts').empty();
+          $('#navCounts').append(data);
+        }
+      }
+    });
+  }
   function loadRooms(startDate, endDate){
     $.ajax({
       url:'/ajax/load-rooms.php',
@@ -51,6 +65,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
   $(document).ready(function() {
     $('#rooms').addClass('active');
     loadRooms('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
+    loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
     $('#bookRoomButton').click(function (e) {
       loadBookRoomForm();
     });
@@ -67,6 +82,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
         data:{room:room, name:name, checkIn:checkIn, checkOut:checkOut},
         success:function(response){
           loadRooms('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
+          loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
           $('#bookRoomModal').modal('hide');
           document.getElementById('bookRoomForm').reset();
         }
@@ -96,6 +112,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
           $('#room-occupant-'+id).remove();
           $('#deleteRoomModal').modal('hide');
           $('#deleteRoomModalBody').empty();
+          loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
         }
       });
     });
@@ -127,6 +144,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
           $('#editRoomModal').modal('hide');
           $('#editRoomModalBody').empty();
           loadRooms('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
+          loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
         }
       });
     });
@@ -157,6 +175,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
     </div>
   </form>
   <div class='nav-footer'>
+    <div id='navCounts'></div>
     <form action='' method='post' spellcheck='false' id='toggleDatesForm' onchange='toggleDates()'>
       <div class='input-group'>
         <span class='input-group-addon clock'>Start Date</span>

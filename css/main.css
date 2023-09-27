@@ -41,6 +41,7 @@
   --color-06:hsl(var(--base-color), 10%, 93%);
   --color-07:hsl(var(--base-color), 25%, 96%);
   --color-08:hsl(var(--base-color), 10%, 100%);
+  --color-emphasis:#FF404C;
   --font-family:'Proxima Nova', sans-serif;
   --font-size:18px;
   --font-weight-bold:700;
@@ -427,8 +428,15 @@ nav {
   font-weight:var(--font-weight-regular);
   padding-right:calc(var(--spacer)/3);
 }
+.nav-condo-count, .nav-room-count, .nav-weekend-count {
+  margin-bottom:calc(var(--spacer)/2);
+  text-align:center;
+}
 .nav-container .nav-links:last-child {
   border-bottom:1.5px solid var(--color-06)!important;
+}
+.nav-count {
+  font-weight:var(--font-weight-bold);
 }
 .nav-footer {
   bottom:calc(var(--spacer)*(4/3));
@@ -599,7 +607,9 @@ nav {
   text-align:right;
 }
 .condo-occupant:not(:nth-of-type(1)), .room-occupant:not(:nth-of-type(1)) {
-  margin-top:calc(var(--spacer)/3);
+  border-top:1px solid var(--color-05);
+  margin-top:calc(var(--spacer)/6);
+  padding-top:calc(var(--spacer)/6);
 }
 .condo-occupant-column, .room-occupant-column {
   display:table-cell;
@@ -745,4 +755,8 @@ nav {
 }
 .table-outer:not(:nth-of-type(1)) {
   margin-top:var(--spacer);
+}
+.weekend-check-out {
+  color:var(--color-emphasis);
+  font-weight:var(--font-weight-bold);
 }

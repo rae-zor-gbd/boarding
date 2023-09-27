@@ -41,10 +41,17 @@ if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
           $reservationName=htmlspecialchars($row_reservations['dogName'], ENT_QUOTES);
           $reservationCheckIn=strtotime($row_reservations['checkIn']);
           $reservationCheckOut=strtotime($row_reservations['checkOut']);
+          $checkOutDayOfWeek=date('l', strtotime($row_reservations['checkOut']));
           echo "<div class='room-occupant' id='room-occupant-$reservationID'>
           <div class='room-name-dates'>
           <div class='room-name'>$reservationName</div>
-          <div class='room-dates'>" . date('D n/j', $reservationCheckIn) . " – " . date('D n/j', $reservationCheckOut) . "</div>
+          <div class='room-dates'>
+          <span class='room-check-in'>" . date('D n/j', $reservationCheckIn) . "</span> – <span class='room-check-out";
+          if ($checkOutDayOfWeek=='Friday' OR $checkOutDayOfWeek=='Saturday' OR $checkOutDayOfWeek=='Sunday') {
+            echo " weekend-check-out";
+          }
+          echo "'>" . date('D n/j', $reservationCheckOut) . "</span>
+          </div>
           </div>
           <div class='room-buttons'>
           <button type='button' class='button-edit' id='edit-room-button' data-toggle='modal' data-target='#editRoomModal' data-id='$reservationID' data-backdrop='static' title='Edit Reservation'></button>
