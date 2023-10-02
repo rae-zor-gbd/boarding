@@ -41,7 +41,8 @@
   --color-06:hsl(var(--base-color), 10%, 93%);
   --color-07:hsl(var(--base-color), 25%, 96%);
   --color-08:hsl(var(--base-color), 10%, 100%);
-  --color-emphasis:#FF404C;
+  --color-emphasis-01:#FF404C;
+  --color-emphasis-02:#FFFEA1;
   --font-family:'Proxima Nova', sans-serif;
   --font-size:18px;
   --font-weight-bold:700;
@@ -624,6 +625,9 @@ nav {
 .condo-row {
   width:calc((100vw - (var(--spacer)*2) - (var(--spacer)*11) - (var(--spacer)*(5/3)) - (var(--spacer)*(5/3)))/4);
 }
+.condo-row:has(.condo-occupant-column:empty), .room-row:has(.room-occupant-column:empty) {
+  background:var(--color-emphasis-02);
+}
 .food-label {
   display:inline-block;
   margin:calc(var(--spacer)/15) calc(var(--spacer)/15) 0 0;
@@ -757,6 +761,6 @@ nav {
   margin-top:var(--spacer);
 }
 .weekend-check-out {
-  color:var(--color-emphasis);
+  color:var(--color-emphasis-01);
   font-weight:var(--font-weight-bold);
 }
