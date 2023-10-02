@@ -27,11 +27,12 @@ if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
     while ($row_groups=$result_groups->fetch_assoc()) {
       $groupID=$row_groups['groupID'];
         echo "<div class='rooms-multi-row'>";
-      $sql_rooms="SELECT roomID, groupID FROM rooms WHERE columnID IN ($columnList) AND groupID='$groupID' ORDER BY rowID, columnID";
+      $sql_rooms="SELECT roomID, groupID, status FROM rooms WHERE columnID IN ($columnList) AND groupID='$groupID' ORDER BY rowID, columnID";
       $result_rooms=$conn->query($sql_rooms);
       while ($row_rooms=$result_rooms->fetch_assoc()) {
         $roomID=$row_rooms['roomID'];
-        echo "<div class='room-row'>
+        $status=strtolower($row_rooms['status']);
+        echo "<div class='room-row $status'>
         <div class='room-number'>$roomID</div>
         <div class='room-occupant-column'>";
         $sql_reservations="SELECT dogReservationID, dogName, checkIn, checkOut FROM dogs_reservations WHERE roomID='$roomID' AND checkIn<='$endDate' AND checkOut>='$startDate' ORDER BY checkIn, dogName";

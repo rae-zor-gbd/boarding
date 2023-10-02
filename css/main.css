@@ -625,7 +625,10 @@ nav {
 .condo-row {
   width:calc((100vw - (var(--spacer)*2) - (var(--spacer)*11) - (var(--spacer)*(5/3)) - (var(--spacer)*(5/3)))/4);
 }
-.condo-row:has(.condo-occupant-column:empty), .room-row:has(.room-occupant-column:empty) {
+.condo-row.disabled:has(.condo-occupant-column:empty), .room-row.disabled:has(.room-occupant-column:empty) {
+  background:repeating-linear-gradient(-55deg, var(--color-04), var(--color-04) 3px, var(--color-05) 3px, var(--color-05) 6px);
+}
+.condo-row.enabled:has(.condo-occupant-column:empty), .room-row.enabled:has(.room-occupant-column:empty) {
   background:var(--color-emphasis-02);
 }
 .food-label {
