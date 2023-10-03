@@ -7,7 +7,12 @@ if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
   $result_room_count=$conn->query($sql_room_count);
   $row_room_count=$result_room_count->fetch_assoc();
   $roomCount=$row_room_count['availableRooms'];
-  $sql_weekend_count="SELECT COUNT(dogReservationID) AS weekendCheckOuts FROM dogs_reservations WHERE checkIn<='$endDate' AND checkOut>='$startDate' AND checkOut<='$endDate' AND WEEKDAY(checkOut) IN (4, 5, 6)";
+  $endDateDayOfWeek=date('N', strtotime($endDate));
+  $endDateAdd=7-$endDateDayOfWeek;
+  $endDateFormat=date_create(date('Y-m-d', strtotime($endDate)));
+  date_add($endDateFormat,date_interval_create_from_date_string("$endDateAdd days"));
+  $weekendCountEndDate=date_format($endDateFormat,'Y-m-d');
+  $sql_weekend_count="SELECT COUNT(dogReservationID) AS weekendCheckOuts FROM dogs_reservations WHERE checkIn<='$endDate' AND checkOut>='$startDate' AND checkOut<='$weekendCountEndDate' AND WEEKDAY(checkOut) IN (4, 5, 6)";
   $result_weekend_count=$conn->query($sql_weekend_count);
   $row_weekend_count=$result_weekend_count->fetch_assoc();
   $weekendCount=$row_weekend_count['weekendCheckOuts'];

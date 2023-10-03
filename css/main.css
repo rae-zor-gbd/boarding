@@ -632,6 +632,9 @@ nav {
 .condo-row.enabled:has(.condo-occupant-column:empty), .room-row.enabled:has(.room-occupant-column:empty) {
   background:var(--color-emphasis-02);
 }
+.condo-row.enabled:hover, .room-row.enabled:hover {
+  background:#F5F5F5!important;
+}
 .food-label {
   display:inline-block;
   margin:calc(var(--spacer)/15) calc(var(--spacer)/15) 0 0;
