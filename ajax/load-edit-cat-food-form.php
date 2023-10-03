@@ -3,13 +3,14 @@ include '../assets/config.php';
 if (isset($_POST['id']) AND isset($_POST['status'])) {
   $id=$_POST['id'];
   $status=$_POST['status'];
-  $sql_cat_info="SELECT condoID, catName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats WHERE catID='$id'";
+  $sql_cat_info="SELECT condoID, catName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats WHERE catID='$id'";
   $result_cat_info=$conn->query($sql_cat_info);
   $row_cat_info=$result_cat_info->fetch_assoc();
   $condo=$row_cat_info['condoID'];
   $catName=htmlspecialchars($row_cat_info['catName'], ENT_QUOTES);
   $foodType=$row_cat_info['foodType'];
   $feedingInstructions=htmlspecialchars($row_cat_info['feedingInstructions'], ENT_QUOTES);
+  $specialNotes=htmlspecialchars($row_cat_info['specialNotes'], ENT_QUOTES);
   $foodAllergies=$row_cat_info['foodAllergies'];
   $noSlipBowl=$row_cat_info['noSlipBowl'];
   $plasticBowl=$row_cat_info['plasticBowl'];
@@ -72,6 +73,10 @@ if (isset($_POST['id']) AND isset($_POST['status'])) {
   <div class='input-group'>
   <span class='input-group-addon food'>Feeding Instructions</span>
   <textarea class='form-control' name='feeding-instructions' id='editFeedingInstructions' rows='5' required>$feedingInstructions</textarea>
+  </div>
+  <div class='input-group'>
+  <span class='input-group-addon notes'>Special Notes</span>
+  <textarea class='form-control' name='special-notes' id='editSpecialNotes' rows='5'>$specialNotes</textarea>
   </div>
   <div class='row'>
   <div class='col-sm-4'>

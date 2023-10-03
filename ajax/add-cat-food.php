@@ -6,6 +6,11 @@ if (isset($_POST['status']) AND isset($_POST['condo']) AND isset($_POST['name'])
   $name=mysqli_real_escape_string($conn, $_POST['name']);
   $foodType=mysqli_real_escape_string($conn, $_POST['foodType']);
   $feedingInstructions=mysqli_real_escape_string($conn, $_POST['feedingInstructions']);
+  if (isset($_POST['specialNotes']) AND $_POST['specialNotes']!='') {
+    $specialNotes=mysqli_real_escape_string($conn, $_POST['specialNotes']);
+  } else {
+    $specialNotes=NULL;
+  }
   $foodAllergies=$_POST['foodAllergies'];
   $noSlipBowl=$_POST['noSlipBowl'];
   $plasticBowl=$_POST['plasticBowl'];
@@ -16,7 +21,7 @@ if (isset($_POST['status']) AND isset($_POST['condo']) AND isset($_POST['name'])
   $result_next_cat_id=$conn->query($sql_next_cat_id);
   $row_next_cat_id=$result_next_cat_id->fetch_assoc();
   $catID=$row_next_cat_id['nextCatID'];
-  $sql_add_food="INSERT INTO cats (catID, condoID, catName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed, status) VALUES ('$catID', '$condo', '$name', '$foodType', '$feedingInstructions', '$foodAllergies', '$noSlipBowl', '$plasticBowl', '$slowFeeder', '$elevatedFeeder', '$separateToFeed', '$status')";
+  $sql_add_food="INSERT INTO cats (catID, condoID, catName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed, status) VALUES ('$catID', '$condo', '$name', '$foodType', '$feedingInstructions', '$specialNotes', '$foodAllergies', '$noSlipBowl', '$plasticBowl', '$slowFeeder', '$elevatedFeeder', '$separateToFeed', '$status')";
   $conn->query($sql_add_food);
 }
 ?>

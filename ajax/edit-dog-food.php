@@ -7,13 +7,18 @@ if (isset($_POST['status']) AND isset($_POST['id']) AND isset($_POST['room']) AN
   $dogName=mysqli_real_escape_string($conn, $_POST['dogName']);
   $foodType=mysqli_real_escape_string($conn, $_POST['foodType']);
   $feedingInstructions=mysqli_real_escape_string($conn, $_POST['feedingInstructions']);
+  if (isset($_POST['specialNotes']) AND $_POST['specialNotes']!='') {
+    $specialNotes=mysqli_real_escape_string($conn, $_POST['specialNotes']);
+  } else {
+    $specialNotes=NULL;
+  }
   $foodAllergies=$_POST['foodAllergies'];
   $noSlipBowl=$_POST['noSlipBowl'];
   $plasticBowl=$_POST['plasticBowl'];
   $slowFeeder=$_POST['slowFeeder'];
   $elevatedFeeder=$_POST['elevatedFeeder'];
   $separateToFeed=$_POST['separateToFeed'];
-  $sql_update="UPDATE dogs SET roomID='$roomID', dogName='$dogName', foodType='$foodType', feedingInstructions='$feedingInstructions', foodAllergies='$foodAllergies', noSlipBowl='$noSlipBowl', plasticBowl='$plasticBowl', slowFeeder='$slowFeeder', elevatedFeeder='$elevatedFeeder', separateToFeed='$separateToFeed', status='$status' WHERE dogID='$id'";
+  $sql_update="UPDATE dogs SET roomID='$roomID', dogName='$dogName', foodType='$foodType', feedingInstructions='$feedingInstructions', specialNotes='$specialNotes', foodAllergies='$foodAllergies', noSlipBowl='$noSlipBowl', plasticBowl='$plasticBowl', slowFeeder='$slowFeeder', elevatedFeeder='$elevatedFeeder', separateToFeed='$separateToFeed', status='$status' WHERE dogID='$id'";
   $conn->query($sql_update);
 }
 ?>

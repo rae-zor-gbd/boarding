@@ -31,6 +31,10 @@ if (isset($_POST['status'])) {
   <span class='input-group-addon food'>Feeding Instructions</span>
   <textarea class='form-control' name='feeding-instructions' id='newFeedingInstructions' rows='5' required></textarea>
   </div>
+  <div class='input-group'>
+  <span class='input-group-addon notes'>Special Notes</span>
+  <textarea class='form-control' name='special-notes' id='newSpecialNotes' rows='5'></textarea>
+  </div>
   <div class='row'>
   <div class='col-sm-4'>
   <div class='input-group'>

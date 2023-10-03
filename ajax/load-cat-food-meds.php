@@ -4,13 +4,13 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
   $status=$_POST['status'];
   $sortMeds=$_POST['sortMeds'];
   if ($sortMeds=='all') {
-    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats WHERE status='$status' ORDER BY condoID, catName";
+    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats WHERE status='$status' ORDER BY condoID, catName";
   } elseif ($sortMeds=='am') {
-    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('AM', '2X', '3X') GROUP BY catID ORDER BY condoID, catName";
+    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('AM', '2X', '3X') GROUP BY catID ORDER BY condoID, catName";
   } elseif ($sortMeds=='noon') {
-    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('3X') GROUP BY catID ORDER BY condoID, catName";
+    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('3X') GROUP BY catID ORDER BY condoID, catName";
   } elseif ($sortMeds=='pm') {
-    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('PM', '2X', '3X') GROUP BY catID ORDER BY condoID, catName";
+    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('PM', '2X', '3X') GROUP BY catID ORDER BY condoID, catName";
   }
   $result_all_cats=$conn->query($sql_all_cats);
   while ($row_all_cats=$result_all_cats->fetch_assoc()) {
@@ -19,6 +19,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     $boardingName=htmlspecialchars($row_all_cats['catName'], ENT_QUOTES);
     $boardingFoodType=$row_all_cats['foodType'];
     $boardingFeedingInstructions=nl2br(htmlspecialchars($row_all_cats['feedingInstructions'], ENT_QUOTES));
+    $boardingSpecialNotes=htmlspecialchars($row_all_cats['specialNotes'], ENT_QUOTES);
     $boardingFoodAllergies=$row_all_cats['foodAllergies'];
     $boardingNoSlipBowl=$row_all_cats['noSlipBowl'];
     $boardingPlasticBowl=$row_all_cats['plasticBowl'];
@@ -37,7 +38,14 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     }
     echo "'>$boardingFoodType</span>
     </td>
-    <td>" . stripslashes($boardingFeedingInstructions) . "<br>";
+    <td>" . stripslashes($boardingFeedingInstructions);
+    if (isset($boardingSpecialNotes) AND $boardingSpecialNotes!='') {
+      echo "<div class='special-notes-label'>
+      <span class='label label-info'>$boardingSpecialNotes</span>
+      </div>";
+    } else {
+      echo "<br>";
+    }
     if ($boardingFoodAllergies=='Yes') {
       echo "<span class='food-label label label-danger'>Food Allergies</span>";
     }

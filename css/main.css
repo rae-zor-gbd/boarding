@@ -41,8 +41,11 @@
   --color-06:hsl(var(--base-color), 10%, 93%);
   --color-07:hsl(var(--base-color), 25%, 96%);
   --color-08:hsl(var(--base-color), 10%, 100%);
-  --color-emphasis-01:#FF404C;
-  --color-emphasis-02:#FFFEA1;
+  --color-emphasis-01:#FD3A4A;
+  --color-emphasis-02:#FF9933;
+  --color-emphasis-03:#35BDF9;
+  --color-emphasis-04:#FF68B0;
+  --color-highlight:#FFFEA1;
   --font-family:'Proxima Nova', sans-serif;
   --font-size:18px;
   --font-weight-bold:700;
@@ -321,6 +324,18 @@ tr th:nth-child(6) {
 }
 .input-group-addon.status::before {
   content:var(--icon-check);
+}
+.label-danger {
+  background:var(--color-emphasis-01);
+}
+.label-info {
+  background:var(--color-emphasis-04);
+}
+.label-primary {
+  background:var(--color-emphasis-03);
+}
+.label-warning {
+  background:var(--color-emphasis-02);
 }
 .loading-ring {
   display:inline-block;
@@ -630,14 +645,14 @@ nav {
   background-image:url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
 }
 .condo-row.enabled:has(.condo-occupant-column:empty), .room-row.enabled:has(.room-occupant-column:empty) {
-  background:var(--color-emphasis-02);
+  background:var(--color-highlight);
 }
 .condo-row.enabled:hover, .room-row.enabled:hover {
   background:#F5F5F5!important;
 }
 .food-label {
   display:inline-block;
-  margin:calc(var(--spacer)/15) calc(var(--spacer)/15) 0 0;
+  margin:calc(var(--spacer)/10) calc(var(--spacer)/10) 0 0;
   padding:calc(var(--spacer)/5) calc(var(--spacer)/3.5) calc(var(--spacer)/7);
 }
 .load-more {
@@ -656,7 +671,7 @@ nav {
   position:relative;
   top:2px;
 }
-.medication-label .label {
+.medication-label .label, .special-notes-label .label {
   display:inline-block;
   line-height:1;
   max-width:400px;

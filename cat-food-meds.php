@@ -100,6 +100,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       var name=document.getElementById('newCatName').value.toUpperCase();
       var foodType=document.getElementById('newFoodType').value;
       var feedingInstructions=document.getElementById('newFeedingInstructions').value.toUpperCase();
+      var specialNotes=document.getElementById('newSpecialNotes').value.toUpperCase();
       if (document.getElementById('newFoodAllergies').checked==true) {
         var foodAllergies='Yes';
       } else {
@@ -134,7 +135,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
         url:'/ajax/add-cat-food.php',
         type:'POST',
         cache:false,
-        data:{status:status, condo:condo, name:name, foodType:foodType, feedingInstructions:feedingInstructions, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder, separateToFeed:separateToFeed},
+        data:{status:status, condo:condo, name:name, foodType:foodType, feedingInstructions:feedingInstructions, specialNotes:specialNotes, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder, separateToFeed:separateToFeed},
         success:function(response){
           loadFoodMeds(status, <?php echo "'$sortMeds'"; ?>);
           $('#addFoodModal').modal('hide');
@@ -276,6 +277,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       var catName=document.getElementById('editCatName').value.toUpperCase();
       var foodType=document.getElementById('editFoodType').value;
       var feedingInstructions=document.getElementById('editFeedingInstructions').value.toUpperCase();
+      var specialNotes=document.getElementById('editSpecialNotes').value.toUpperCase();
       if (document.getElementById('editFoodAllergies').checked==true) {
         var foodAllergies='Yes';
       } else {
@@ -310,7 +312,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
         url:'/ajax/edit-cat-food.php',
         type:'POST',
         cache:false,
-        data:{id:id, status:status, condo:condo, catName:catName, foodType:foodType, feedingInstructions:feedingInstructions, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder, separateToFeed:separateToFeed},
+        data:{id:id, status:status, condo:condo, catName:catName, foodType:foodType, feedingInstructions:feedingInstructions, specialNotes:specialNotes, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder, separateToFeed:separateToFeed},
         success:function(response){
           $('#editCatModal').modal('hide');
           $('#editCatModalBody').empty();
