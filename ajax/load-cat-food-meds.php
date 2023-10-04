@@ -3,15 +3,17 @@ include '../assets/config.php';
 if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
   $status=$_POST['status'];
   $sortMeds=$_POST['sortMeds'];
+  $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats";
   if ($sortMeds=='all') {
-    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats WHERE status='$status' ORDER BY condoID, catName";
+    $sql_all_cats.=" WHERE status='$status'";
   } elseif ($sortMeds=='am') {
-    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('AM', '2X', '3X') GROUP BY catID ORDER BY condoID, catName";
+    $sql_all_cats.=" JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('AM', '2X', '3X') GROUP BY catID";
   } elseif ($sortMeds=='noon') {
-    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('3X') GROUP BY catID ORDER BY condoID, catName";
+    $sql_all_cats.=" JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('3X') GROUP BY catID";
   } elseif ($sortMeds=='pm') {
-    $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('PM', '2X', '3X') GROUP BY catID ORDER BY condoID, catName";
+    $sql_all_cats.=" JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('PM', '2X', '3X') GROUP BY catID";
   }
+  $sql_all_cats.=" ORDER BY condoID, catName";
   $result_all_cats=$conn->query($sql_all_cats);
   while ($row_all_cats=$result_all_cats->fetch_assoc()) {
     $boardingCatID=$row_all_cats['catID'];
@@ -66,15 +68,15 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     }
     echo "</td>
     <td>";
-    if ($sortMeds=='all') {
-      $sql_cat_meds="SELECT catMedID, medName, strength, dosage, frequency, notes FROM cats c JOIN cats_medications m USING (catID) WHERE catID='$boardingCatID' ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";
-    } elseif ($sortMeds=='am') {
-      $sql_cat_meds="SELECT catMedID, medName, strength, dosage, frequency, notes FROM cats c JOIN cats_medications m USING (catID) WHERE catID='$boardingCatID' AND frequency IN ('AM', '2X', '3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";
+    $sql_cat_meds="SELECT catMedID, medName, strength, dosage, frequency, notes FROM cats c JOIN cats_medications m USING (catID) WHERE catID='$boardingCatID'";
+    if ($sortMeds=='am') {
+      $sql_cat_meds.=" AND frequency IN ('AM', '2X', '3X')";
     } elseif ($sortMeds=='noon') {
-      $sql_cat_meds="SELECT catMedID, medName, strength, dosage, frequency, notes FROM cats c JOIN cats_medications m USING (catID) WHERE catID='$boardingCatID' AND frequency IN ('3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";
+      $sql_cat_meds.=" AND frequency IN ('3X')";
     } elseif ($sortMeds=='pm') {
-      $sql_cat_meds="SELECT catMedID, medName, strength, dosage, frequency, notes FROM cats c JOIN cats_medications m USING (catID) WHERE catID='$boardingCatID' AND frequency IN ('PM', '2X', '3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";
+      $sql_cat_meds.=" AND frequency IN ('PM', '2X', '3X')";
     }
+    $sql_cat_meds.=" ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";
     $result_cat_meds=$conn->query($sql_cat_meds);
     if ($result_cat_meds->num_rows>0) {
       while ($row_cat_meds=$result_cat_meds->fetch_assoc()) {
@@ -89,7 +91,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
         if ($frequency=='As Needed') {
           echo "warning";
         } elseif ($frequency=='Other') {
-          echo "primary";
+          echo "info";
         } else {
           echo "danger";
         }

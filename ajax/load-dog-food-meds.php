@@ -3,15 +3,17 @@ include '../assets/config.php';
 if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
   $status=$_POST['status'];
   $sortMeds=$_POST['sortMeds'];
+  $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM dogs";
   if ($sortMeds=='all') {
-    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM dogs WHERE status='$status' ORDER BY roomID, dogName";
+    $sql_all_dogs.=" WHERE status='$status'";
   } elseif ($sortMeds=='am') {
-    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('AM', '2X', '3X') GROUP BY dogID ORDER BY roomID, dogName";
+    $sql_all_dogs.=" JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('AM', '2X', '3X') GROUP BY dogID";
   } elseif ($sortMeds=='noon') {
-    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('3X') GROUP BY dogID ORDER BY roomID, dogName";
+    $sql_all_dogs.=" JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('3X') GROUP BY dogID";
   } elseif ($sortMeds=='pm') {
-    $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM dogs JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('PM', '2X', '3X') GROUP BY dogID ORDER BY roomID, dogName";
+    $sql_all_dogs.=" JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('PM', '2X', '3X') GROUP BY dogID";
   }
+  $sql_all_dogs.=" ORDER BY roomID, dogName";
   $result_all_dogs=$conn->query($sql_all_dogs);
   while ($row_all_dogs=$result_all_dogs->fetch_assoc()) {
     $boardingDogID=$row_all_dogs['dogID'];
@@ -66,15 +68,15 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     }
     echo "</td>
     <td>";
-    if ($sortMeds=='all') {
-      $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency, notes FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogID='$boardingDogID' ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";
-    } elseif ($sortMeds=='am') {
-      $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency, notes FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogID='$boardingDogID' AND frequency IN ('AM', '2X', '3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";
+    $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency, notes FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogID='$boardingDogID'";
+    if ($sortMeds=='am') {
+      $sql_dog_meds.=" AND frequency IN ('AM', '2X', '3X')";
     } elseif ($sortMeds=='noon') {
-      $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency, notes FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogID='$boardingDogID' AND frequency IN ('3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";
+      $sql_dog_meds.=" AND frequency IN ('3X')";
     } elseif ($sortMeds=='pm') {
-      $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency, notes FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogID='$boardingDogID' AND frequency IN ('PM', '2X', '3X') ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";
+      $sql_dog_meds.=" AND frequency IN ('PM', '2X', '3X')";
     }
+    $sql_dog_meds.=" ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";
     $result_dog_meds=$conn->query($sql_dog_meds);
     if ($result_dog_meds->num_rows>0) {
       while ($row_dog_meds=$result_dog_meds->fetch_assoc()) {
@@ -89,7 +91,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
         if ($frequency=='As Needed') {
           echo "warning";
         } elseif ($frequency=='Other') {
-          echo "primary";
+          echo "info";
         } else {
           echo "danger";
         }
