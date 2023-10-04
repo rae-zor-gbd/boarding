@@ -373,7 +373,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
 </head>
 <body>
   <?php include 'assets/navbar.php'; ?>
-  <form action='' method='post' spellcheck='false' id='addFoodForm'>
+  <form action='' method='post' spellcheck='false' autocomplete='off' id='addFoodForm'>
     <div class='modal fade' id='addFoodModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
       <div class='modal-dialog'>
         <div class='modal-content'>
@@ -453,7 +453,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       </div>
     </div>
   </div>
-  <form action='' method='post' spellcheck='false' id='addMedForm'>
+  <form action='' method='post' spellcheck='false' autocomplete='off' id='addMedForm'>
     <div class='modal fade' id='addMedModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
       <div class='modal-dialog'>
         <div class='modal-content'>
@@ -469,7 +469,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       </div>
     </div>
   </form>
-  <form action='' method='post' id='editDogForm'>
+  <form action='' method='post' spellcheck='false' autocomplete='off' id='editDogForm'>
     <div class='modal fade' id='editDogModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
       <div class='modal-dialog'>
         <div class='modal-content'>
@@ -485,7 +485,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       </div>
     </div>
   </form>
-  <form action='' method='post' id='editMedForm'>
+  <form action='' method='post' spellcheck='false' autocomplete='off' id='editMedForm'>
     <div class='modal fade' id='editMedModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
       <div class='modal-dialog'>
         <div class='modal-content'>
@@ -501,7 +501,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       </div>
     </div>
   </form>
-  <form action='' method='post' id='deleteDogForm'>
+  <form action='' method='post' spellcheck='false' autocomplete='off' id='deleteDogForm'>
     <div class='modal fade' id='deleteDogModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
       <div class='modal-dialog'>
         <div class='modal-content'>
@@ -517,7 +517,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       </div>
     </div>
   </form>
-  <form action='' method='post' id='deleteMedForm'>
+  <form action='' method='post' spellcheck='false' autocomplete='off' id='deleteMedForm'>
     <div class='modal fade' id='deleteMedModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
       <div class='modal-dialog'>
         <div class='modal-content'>

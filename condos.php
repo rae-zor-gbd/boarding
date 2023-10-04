@@ -158,7 +158,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
 </head>
 <body>
   <?php include 'assets/navbar.php'; ?>
-  <form action='' method='post' spellcheck='false' id='bookCondoForm'>
+  <form action='' method='post' spellcheck='false' autocomplete='off' id='bookCondoForm'>
     <div class='modal fade' id='bookCondoModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
       <div class='modal-dialog'>
         <div class='modal-content'>
@@ -176,7 +176,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
   </form>
   <div class='nav-footer'>
     <div id='navCounts'></div>
-    <form action='' method='post' spellcheck='false' id='toggleDatesForm' onchange='toggleDates()'>
+    <form action='' method='post' spellcheck='false' autocomplete='off' id='toggleDatesForm' onchange='toggleDates()'>
       <div class='input-group'>
         <span class='input-group-addon clock'>Start Date</span>
         <input type='date' class='form-control' name='start-date' id='startDate' value='<?php echo $startDate; ?>' required>
@@ -191,7 +191,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
   <div class='container-fluid'>
     <div class='condos-container' id='condos-container'></div>
   </div>
-  <form action='' method='post' id='editCondoForm'>
+  <form action='' method='post' spellcheck='false' autocomplete='off' id='editCondoForm'>
     <div class='modal fade' id='editCondoModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
       <div class='modal-dialog'>
         <div class='modal-content'>
@@ -207,7 +207,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
       </div>
     </div>
   </form>
-  <form action='' method='post' id='deleteCondoForm'>
+  <form action='' method='post' spellcheck='false' autocomplete='off' id='deleteCondoForm'>
     <div class='modal fade' id='deleteCondoModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
       <div class='modal-dialog'>
         <div class='modal-content'>
