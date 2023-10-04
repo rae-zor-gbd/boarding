@@ -5,13 +5,13 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
   $sortMeds=$_POST['sortMeds'];
   $sql_all_cats="SELECT r.catReservationID, catFoodID, condoID, catName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats_reservations r JOIN cats_food f USING (catReservationID)";
   if ($sortMeds=='all') {
-    $sql_all_cats.=" WHERE status='$status'";
+    $sql_all_cats.=" WHERE status='$status' AND checkOut>=DATE(NOW())";
   } elseif ($sortMeds=='am') {
-    $sql_all_cats.=" JOIN cats_medications m USING (catReservationID) WHERE status='$status' AND frequency IN ('AM', '2X', '3X') GROUP BY r.catReservationID, catFoodID";
+    $sql_all_cats.=" JOIN cats_medications m USING (catReservationID) WHERE status='$status' AND checkOut>=DATE(NOW()) AND frequency IN ('AM', '2X', '3X') GROUP BY r.catReservationID, catFoodID";
   } elseif ($sortMeds=='noon') {
-    $sql_all_cats.=" JOIN cats_medications m USING (catReservationID) WHERE status='$status' AND frequency IN ('3X') GROUP BY r.catReservationID, catFoodID";
+    $sql_all_cats.=" JOIN cats_medications m USING (catReservationID) WHERE status='$status' AND checkOut>=DATE(NOW()) AND frequency IN ('3X') GROUP BY r.catReservationID, catFoodID";
   } elseif ($sortMeds=='pm') {
-    $sql_all_cats.=" JOIN cats_medications m USING (catReservationID) WHERE status='$status' AND frequency IN ('PM', '2X', '3X') GROUP BY r.catReservationID, catFoodID";
+    $sql_all_cats.=" JOIN cats_medications m USING (catReservationID) WHERE status='$status' AND checkOut>=DATE(NOW()) AND frequency IN ('PM', '2X', '3X') GROUP BY r.catReservationID, catFoodID";
   }
   $sql_all_cats.=" ORDER BY condoID, catName";
   $result_all_cats=$conn->query($sql_all_cats);
