@@ -30,10 +30,9 @@ INSERT INTO condos (condoID, columnID, rowID, groupID, status) VALUES
 (13, 1, 4, 2, 'Enabled'),
 (14, 1, 5, 2, 'Enabled');
 
-CREATE TABLE cats (
-  catID INT(11) NOT NULL AUTO_INCREMENT,
-  condoID INT(11) NOT NULL,
-  catName VARCHAR(255) NOT NULL,
+CREATE TABLE cats_food (
+  catFoodID INT(11) NOT NULL AUTO_INCREMENT,
+  catReservationID INT(11) NOT NULL,
   foodType ENUM('Own', 'Ours') NOT NULL,
   feedingInstructions TEXT NOT NULL,
   specialNotes TEXT DEFAULT NULL,
@@ -45,13 +44,13 @@ CREATE TABLE cats (
   elevatedFeeder ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
   status ENUM('Active', 'Future') NOT NULL,
   lastUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (catID),
-  FOREIGN KEY (condoID) REFERENCES condos(condoID) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (catFoodID),
+  FOREIGN KEY (catReservationID) REFERENCES cats_reservations(catReservationID) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE cats_medications (
   catMedID INT(11) NOT NULL AUTO_INCREMENT,
-  catID INT(11) NOT NULL,
+  catReservationID INT(11) NOT NULL,
   medName VARCHAR(255) NOT NULL,
   strength VARCHAR(100) DEFAULT NULL,
   dosage TEXT NOT NULL,
@@ -59,7 +58,7 @@ CREATE TABLE cats_medications (
   notes TEXT DEFAULT NULL,
   lastUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (catMedID),
-  FOREIGN KEY (catID) REFERENCES cats(catID) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (catReservationID) REFERENCES cats_reservations(catReservationID) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE cats_reservations (
@@ -150,10 +149,9 @@ INSERT INTO rooms (roomID, columnID, rowID, groupID, status) VALUES
 (65, 4, 2, 1, 'Enabled'),
 (66, 4, 1, 1, 'Disabled');
 
-CREATE TABLE dogs (
-  dogID INT(11) NOT NULL AUTO_INCREMENT,
-  roomID INT(11) NOT NULL,
-  dogName VARCHAR(255) NOT NULL,
+CREATE TABLE dogs_food (
+  dogFoodID INT(11) NOT NULL AUTO_INCREMENT,
+  dogReservationID INT(11) NOT NULL,
   foodType ENUM('Own', 'Ours') NOT NULL,
   feedingInstructions TEXT NOT NULL,
   specialNotes TEXT DEFAULT NULL,
@@ -165,13 +163,13 @@ CREATE TABLE dogs (
   elevatedFeeder ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
   status ENUM('Active', 'Future') NOT NULL,
   lastUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (dogID),
-  FOREIGN KEY (roomID) REFERENCES rooms(roomID) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (dogFoodID),
+  FOREIGN KEY (dogReservationID) REFERENCES dogs_reservations(dogReservationID) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE dogs_medications (
   dogMedID INT(11) NOT NULL AUTO_INCREMENT,
-  dogID INT(11) NOT NULL,
+  dogReservationID INT(11) NOT NULL,
   medName VARCHAR(255) NOT NULL,
   strength VARCHAR(100) DEFAULT NULL,
   dosage TEXT NOT NULL,
@@ -179,7 +177,7 @@ CREATE TABLE dogs_medications (
   notes TEXT DEFAULT NULL,
   lastUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (dogMedID),
-  FOREIGN KEY (dogID) REFERENCES dogs(dogID) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (dogReservationID) REFERENCES dogs_reservations(dogReservationID) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE dogs_reservations (

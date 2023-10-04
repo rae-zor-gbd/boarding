@@ -4,20 +4,19 @@ if (isset($_POST['status'])) {
   $status=$_POST['status'];
   echo "<input type='hidden' class='form-control' name='status' id='newStatus' value='$status' required>
   <div class='input-group'>
-  <span class='input-group-addon room'>Condo</span>
-  <select class='form-control' name='condo' id='newCondo' required=''>
-  <option value='' selected disabled>Select Condo</option>";
-  $sql_all_condos="SELECT condoID FROM condos ORDER BY condoID";
-  $result_all_condos=$conn->query($sql_all_condos);
-  while ($row_all_condos=$result_all_condos->fetch_assoc()) {
-    $allCondosID=$row_all_condos['condoID'];
-    echo "<option value='$allCondosID'>Condo $allCondosID</option>";
+  <span class='input-group-addon cat'>Cat Name</span>
+  <select class='form-control' name='cat' id='newCat' required=''>
+  <option value='' selected disabled>Select Cat</option>";
+  $sql_all_cats="SELECT catReservationID, catName, checkIn, checkOut FROM cats_reservations WHERE checkOut>=DATE(NOW()) AND catReservationID NOT IN (SELECT catReservationID FROM cats_food) ORDER BY checkIn, catName";
+  $result_all_cats=$conn->query($sql_all_cats);
+  while ($row_all_cats=$result_all_cats->fetch_assoc()) {
+    $allReservationID=$row_all_cats['catReservationID'];
+    $allReservationName=htmlspecialchars($row_all_cats['catName'], ENT_QUOTES);
+    $allReservationCheckIn=strtotime($row_all_cats['checkIn']);
+    $allReservationCheckOut=strtotime($row_all_cats['checkOut']);
+    echo "<option value='$allReservationID'>$allReservationName (" . date('D n/j', $allReservationCheckIn) . " – " . date('D n/j', $allReservationCheckOut) . ")</option>";
   }
   echo "</select>
-  </div>
-  <div class='input-group'>
-  <span class='input-group-addon cat'>Cat Name</span>
-  <input type='text' class='form-control' name='cat-name' maxlength='255' id='newCatName' required>
   </div>
   <div class='input-group'>
   <span class='input-group-addon food'>Food Type</span>

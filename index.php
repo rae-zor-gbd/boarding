@@ -96,8 +96,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
     $('#addFood').click(function (e) {
       e.preventDefault();
       var status=document.getElementById('newStatus').value;
-      var room=document.getElementById('newRoom').value;
-      var name=document.getElementById('newDogName').value.toUpperCase();
+      var reservationID=document.getElementById('newDog').value;
       var foodType=document.getElementById('newFoodType').value;
       var feedingInstructions=document.getElementById('newFeedingInstructions').value.toUpperCase();
       var specialNotes=document.getElementById('newSpecialNotes').value.toUpperCase();
@@ -135,7 +134,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
         url:'/ajax/add-dog-food.php',
         type:'POST',
         cache:false,
-        data:{status:status, room:room, name:name, foodType:foodType, feedingInstructions:feedingInstructions, specialNotes:specialNotes, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder, separateToFeed:separateToFeed},
+        data:{status:status, reservationID:reservationID, foodType:foodType, feedingInstructions:feedingInstructions, specialNotes:specialNotes, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder, separateToFeed:separateToFeed},
         success:function(response){
           loadFoodMeds(status, <?php echo "'$sortMeds'"; ?>);
           $('#addFoodModal').modal('hide');
@@ -274,8 +273,6 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
       e.preventDefault();
       var id=document.getElementById('editID').value;
       var status=document.getElementById('editStatus').value;
-      var room=document.getElementById('editRoom').value;
-      var dogName=document.getElementById('editDogName').value.toUpperCase();
       var foodType=document.getElementById('editFoodType').value;
       var feedingInstructions=document.getElementById('editFeedingInstructions').value.toUpperCase();
       var specialNotes=document.getElementById('editSpecialNotes').value.toUpperCase();
@@ -313,7 +310,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
         url:'/ajax/edit-dog-food.php',
         type:'POST',
         cache:false,
-        data:{id:id, status:status, room:room, dogName:dogName, foodType:foodType, feedingInstructions:feedingInstructions, specialNotes:specialNotes, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder, separateToFeed:separateToFeed},
+        data:{id:id, status:status, foodType:foodType, feedingInstructions:feedingInstructions, specialNotes:specialNotes, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder, separateToFeed:separateToFeed},
         success:function(response){
           $('#editDogModal').modal('hide');
           $('#editDogModalBody').empty();

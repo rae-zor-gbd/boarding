@@ -3,20 +3,21 @@ include '../assets/config.php';
 if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
   $status=$_POST['status'];
   $sortMeds=$_POST['sortMeds'];
-  $sql_all_cats="SELECT catID, condoID, catName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats";
+  $sql_all_cats="SELECT r.catReservationID, catFoodID, condoID, catName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats_reservations r JOIN cats_food f USING (catReservationID)";
   if ($sortMeds=='all') {
     $sql_all_cats.=" WHERE status='$status'";
   } elseif ($sortMeds=='am') {
-    $sql_all_cats.=" JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('AM', '2X', '3X') GROUP BY catID";
+    $sql_all_cats.=" JOIN cats_medications m USING (catReservationID) WHERE status='$status' AND frequency IN ('AM', '2X', '3X') GROUP BY r.catReservationID, catFoodID";
   } elseif ($sortMeds=='noon') {
-    $sql_all_cats.=" JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('3X') GROUP BY catID";
+    $sql_all_cats.=" JOIN cats_medications m USING (catReservationID) WHERE status='$status' AND frequency IN ('3X') GROUP BY r.catReservationID, catFoodID";
   } elseif ($sortMeds=='pm') {
-    $sql_all_cats.=" JOIN cats_medications m USING (catID) WHERE status='$status' AND frequency IN ('PM', '2X', '3X') GROUP BY catID";
+    $sql_all_cats.=" JOIN cats_medications m USING (catReservationID) WHERE status='$status' AND frequency IN ('PM', '2X', '3X') GROUP BY r.catReservationID, catFoodID";
   }
   $sql_all_cats.=" ORDER BY condoID, catName";
   $result_all_cats=$conn->query($sql_all_cats);
   while ($row_all_cats=$result_all_cats->fetch_assoc()) {
-    $boardingCatID=$row_all_cats['catID'];
+    $boardingReservationID=$row_all_cats['catReservationID'];
+    $boardingFoodID=$row_all_cats['catFoodID'];
     $boardingCondoID=$row_all_cats['condoID'];
     $boardingName=htmlspecialchars($row_all_cats['catName'], ENT_QUOTES);
     $boardingFoodType=$row_all_cats['foodType'];
@@ -28,7 +29,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     $boardingSlowFeeder=$row_all_cats['slowFeeder'];
     $boardingElevatedFeeder=$row_all_cats['elevatedFeeder'];
     $boardingSeparateToFeed=$row_all_cats['separateToFeed'];
-    echo "<tr id='row-cat-$boardingCatID'>
+    echo "<tr id='row-cat-$boardingFoodID'>
     <td>$boardingCondoID</td>
     <td>$boardingName</td>
     <td>
@@ -68,7 +69,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     }
     echo "</td>
     <td>";
-    $sql_cat_meds="SELECT catMedID, medName, strength, dosage, frequency, notes FROM cats c JOIN cats_medications m USING (catID) WHERE catID='$boardingCatID'";
+    $sql_cat_meds="SELECT catMedID, medName, strength, dosage, frequency, notes FROM cats_reservations r JOIN cats_medications m USING (catReservationID) WHERE catReservationID='$boardingReservationID'";
     if ($sortMeds=='am') {
       $sql_cat_meds.=" AND frequency IN ('AM', '2X', '3X')";
     } elseif ($sortMeds=='noon') {
@@ -118,11 +119,11 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     echo "</td>
     <td style='text-align:right;'>";
     if ($status=='Future') {
-      echo "<button type='button' class='button-check' id='check-cat-button' data-toggle='modal' data-target='#checkCatModal' data-id='$boardingCatID' data-backdrop='static' title='Check In'></button>";
+      echo "<button type='button' class='button-check' id='check-cat-button' data-toggle='modal' data-target='#checkCatModal' data-id='$boardingFoodID' data-backdrop='static' title='Check In'></button>";
     }
-    echo "<button type='button' class='button-edit' id='edit-cat-button' data-toggle='modal' data-target='#editCatModal' data-id='$boardingCatID' data-status='$status' data-backdrop='static' title='Edit Food'></button>
-    <button type='button' class='button-meds' id='add-med-button' data-toggle='modal' data-target='#addMedModal' data-status='$status' data-id='$boardingCatID' data-backdrop='static' title='Add Medication'></button>
-    <button type='button' class='button-delete' id='delete-cat-button' data-toggle='modal' data-target='#deleteCatModal' data-status='$status' data-id='$boardingCatID' data-backdrop='static' title='Delete Cat'></button>
+    echo "<button type='button' class='button-edit' id='edit-cat-button' data-toggle='modal' data-target='#editCatModal' data-id='$boardingFoodID' data-status='$status' data-backdrop='static' title='Edit Food'></button>
+    <button type='button' class='button-meds' id='add-med-button' data-toggle='modal' data-target='#addMedModal' data-status='$status' data-id='$boardingReservationID' data-backdrop='static' title='Add Medication'></button>
+    <button type='button' class='button-delete' id='delete-cat-button' data-toggle='modal' data-target='#deleteCatModal' data-status='$status' data-id='$boardingFoodID' data-backdrop='static' title='Delete Cat'></button>
     </td>
     </tr>";
   }

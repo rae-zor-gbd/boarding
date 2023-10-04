@@ -2,7 +2,7 @@
 include '../assets/config.php';
 if (isset($_POST['id'])) {
   $id=$_POST['id'];
-  $sql_dog_info="SELECT roomID, dogName FROM dogs WHERE dogID='$id'";
+  $sql_dog_info="SELECT roomID, dogName FROM dogs_reservations r JOIN dogs_food f USING (dogReservationID) WHERE dogFoodID='$id'";
   $result_dog_info=$conn->query($sql_dog_info);
   $row_dog_info=$result_dog_info->fetch_assoc();
   $roomNo=$row_dog_info['roomID'];

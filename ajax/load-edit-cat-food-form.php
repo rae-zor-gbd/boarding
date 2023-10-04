@@ -3,7 +3,7 @@ include '../assets/config.php';
 if (isset($_POST['id']) AND isset($_POST['status'])) {
   $id=$_POST['id'];
   $status=$_POST['status'];
-  $sql_cat_info="SELECT condoID, catName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats WHERE catID='$id'";
+  $sql_cat_info="SELECT condoID, catName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats_reservations r JOIN cats_food f USING (catReservationID) WHERE catFoodID='$id'";
   $result_cat_info=$conn->query($sql_cat_info);
   $row_cat_info=$result_cat_info->fetch_assoc();
   $condo=$row_cat_info['condoID'];
@@ -36,23 +36,11 @@ if (isset($_POST['id']) AND isset($_POST['status'])) {
   </div>
   <div class='input-group'>
   <span class='input-group-addon room'>Condo</span>
-  <select class='form-control' name='condo' id='editCondo' required>
-  <option value='' disabled>Select Condo</option>";
-  $sql_all_condos="SELECT condoID FROM condos ORDER BY condoID";
-  $result_all_condos=$conn->query($sql_all_condos);
-  while ($row_all_condos=$result_all_condos->fetch_assoc()) {
-    $allCondosID=$row_all_condos['condoID'];
-    echo "<option value='$allCondosID'";
-    if ($allCondosID==$condo) {
-      echo " selected";
-    }
-    echo ">Condo $allCondosID</option>";
-  }
-  echo "</select>
+  <input type='text' class='form-control' name='condo' maxlength='255' id='editCondo' value='$condo' disabled>
   </div>
   <div class='input-group'>
   <span class='input-group-addon cat'>Cat Name</span>
-  <input type='text' class='form-control' name='cat-name' maxlength='255' id='editCatName' value='$catName' required>
+  <input type='text' class='form-control' name='cat-name' maxlength='255' id='editCatName' value='$catName' disabled>
   </div>
   <div class='input-group'>
   <span class='input-group-addon food'>Food Type</span>
@@ -96,7 +84,6 @@ if (isset($_POST['id']) AND isset($_POST['status'])) {
   echo ">
   <label for='editSeparateToFeed'>Separate To Feed</label>
   </div>
-  
   </div>
   <div class='col-sm-4'>
   <div class='input-group'>

@@ -24,12 +24,12 @@ if (isset($_POST['id'])) {
     if ($allRoomsID==$room) {
       echo " selected";
     }
-    echo ">Room $allRoomsID</option>";
+    echo ">$allRoomsID</option>";
   }
   echo "</select>
   </div>
   <div class='input-group'>
-  <span class='input-group-addon dog'>Dog Name(s)</span>
+  <span class='input-group-addon dog'>Dog Name</span>
   <input type='text' class='form-control' name='dog-name' maxlength='255' id='editDogName' value='$dogName' required>
   </div>
   <div class='input-group'>

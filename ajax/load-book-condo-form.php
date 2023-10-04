@@ -10,12 +10,12 @@ $sql_all_condos="SELECT condoID FROM condos ORDER BY condoID";
 $result_all_condos=$conn->query($sql_all_condos);
 while ($row_all_condos=$result_all_condos->fetch_assoc()) {
   $allCondosID=$row_all_condos['condoID'];
-  echo "<option value='$allCondosID'>Condo $allCondosID</option>";
+  echo "<option value='$allCondosID'>$allCondosID</option>";
 }
 echo "</select>
 </div>
 <div class='input-group'>
-<span class='input-group-addon cat'>Cat Name(s)</span>
+<span class='input-group-addon cat'>Cat Name</span>
 <input type='text' class='form-control' name='cat-name' maxlength='255' id='newCatName' required>
 </div>
 <div class='input-group'>

@@ -3,7 +3,7 @@ include '../assets/config.php';
 if (isset($_POST['id']) AND isset($_POST['status'])) {
   $id=$_POST['id'];
   $status=$_POST['status'];
-  $sql_dog_info="SELECT roomID, dogName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM dogs WHERE dogID='$id'";
+  $sql_dog_info="SELECT roomID, dogName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM dogs_reservations r JOIN dogs_food f USING (dogReservationID) WHERE dogFoodID='$id'";
   $result_dog_info=$conn->query($sql_dog_info);
   $row_dog_info=$result_dog_info->fetch_assoc();
   $room=$row_dog_info['roomID'];
@@ -36,23 +36,11 @@ if (isset($_POST['id']) AND isset($_POST['status'])) {
   </div>
   <div class='input-group'>
   <span class='input-group-addon room'>Room</span>
-  <select class='form-control' name='room' id='editRoom' required>
-  <option value='' disabled>Select Room</option>";
-  $sql_all_rooms="SELECT roomID FROM rooms ORDER BY roomID";
-  $result_all_rooms=$conn->query($sql_all_rooms);
-  while ($row_all_rooms=$result_all_rooms->fetch_assoc()) {
-    $allRoomsID=$row_all_rooms['roomID'];
-    echo "<option value='$allRoomsID'";
-    if ($allRoomsID==$room) {
-      echo " selected";
-    }
-    echo ">Room $allRoomsID</option>";
-  }
-  echo "</select>
+  <input type='text' class='form-control' name='room' maxlength='255' id='editRoom' value='$room' disabled>
   </div>
   <div class='input-group'>
   <span class='input-group-addon dog'>Dog Name</span>
-  <input type='text' class='form-control' name='dog-name' maxlength='255' id='editDogName' value='$dogName' required>
+  <input type='text' class='form-control' name='dog-name' maxlength='255' id='editDogName' value='$dogName' disabled>
   </div>
   <div class='input-group'>
   <span class='input-group-addon food'>Food Type</span>
@@ -96,7 +84,6 @@ if (isset($_POST['id']) AND isset($_POST['status'])) {
   echo ">
   <label for='editSeparateToFeed'>Separate To Feed</label>
   </div>
-  
   </div>
   <div class='col-sm-4'>
   <div class='input-group'>

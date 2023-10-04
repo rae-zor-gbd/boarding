@@ -15,7 +15,7 @@ if (isset($_POST['id'])) {
   <input type='text' class='form-control' name='condo' id='deleteCondo' value='$condoNo' disabled>
   </div>
   <div class='input-group'>
-  <span class='input-group-addon cat'>Cat Name(s)</span>
+  <span class='input-group-addon cat'>Cat Name</span>
   <input type='text' class='form-control' name='cat-name' id='deleteCatName' value='$catName' disabled>
   </div>
   <div class='input-group'>

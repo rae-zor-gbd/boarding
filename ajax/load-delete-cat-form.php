@@ -2,7 +2,7 @@
 include '../assets/config.php';
 if (isset($_POST['id'])) {
   $id=$_POST['id'];
-  $sql_cat_info="SELECT condoID, catName FROM cats WHERE catID='$id'";
+  $sql_cat_info="SELECT condoID, catName FROM cats_reservations r JOIN cats_food f USING (catReservationID) WHERE catFoodID='$id'";
   $result_cat_info=$conn->query($sql_cat_info);
   $row_cat_info=$result_cat_info->fetch_assoc();
   $condoNo=$row_cat_info['condoID'];

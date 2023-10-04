@@ -3,7 +3,7 @@ include '../assets/config.php';
 if (isset($_POST['id']) AND isset($_POST['status'])) {
   $id=$_POST['id'];
   $status=$_POST['status'];
-  $sql_med_info="SELECT dogName, medName, strength, dosage, frequency FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogMedID='$id'";
+  $sql_med_info="SELECT dogName, medName, strength, dosage, frequency FROM dogs_reservations r JOIN dogs_medications m USING (dogReservationID) WHERE dogMedID='$id'";
   $result_med_info=$conn->query($sql_med_info);
   $row_med_info=$result_med_info->fetch_assoc();
   $dogName=htmlspecialchars($row_med_info['dogName'], ENT_QUOTES);

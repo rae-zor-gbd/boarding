@@ -2,7 +2,7 @@
 include '../assets/config.php';
 if (isset($_POST['id'])) {
   $id=$_POST['id'];
-  $sql_med_info="SELECT catName, medName, strength, dosage, frequency FROM cats c JOIN cats_medications m USING (catID) WHERE catMedID='$id'";
+  $sql_med_info="SELECT catName, medName, strength, dosage, frequency FROM cats_reservations r JOIN cats_medications m USING (catReservationID) WHERE catMedID='$id'";
   $result_med_info=$conn->query($sql_med_info);
   $row_med_info=$result_med_info->fetch_assoc();
   $catName=htmlspecialchars($row_med_info['catName'], ENT_QUOTES);

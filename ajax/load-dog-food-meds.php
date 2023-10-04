@@ -3,20 +3,21 @@ include '../assets/config.php';
 if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
   $status=$_POST['status'];
   $sortMeds=$_POST['sortMeds'];
-  $sql_all_dogs="SELECT dogID, roomID, dogName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM dogs";
+  $sql_all_dogs="SELECT r.dogReservationID, dogFoodID, roomID, dogName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM dogs_reservations r JOIN dogs_food f USING (dogReservationID)";
   if ($sortMeds=='all') {
     $sql_all_dogs.=" WHERE status='$status'";
   } elseif ($sortMeds=='am') {
-    $sql_all_dogs.=" JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('AM', '2X', '3X') GROUP BY dogID";
+    $sql_all_dogs.=" JOIN dogs_medications m USING (dogReservationID) WHERE status='$status' AND frequency IN ('AM', '2X', '3X') GROUP BY r.dogReservationID, dogFoodID";
   } elseif ($sortMeds=='noon') {
-    $sql_all_dogs.=" JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('3X') GROUP BY dogID";
+    $sql_all_dogs.=" JOIN dogs_medications m USING (dogReservationID) WHERE status='$status' AND frequency IN ('3X') GROUP BY r.dogReservationID, dogFoodID";
   } elseif ($sortMeds=='pm') {
-    $sql_all_dogs.=" JOIN dogs_medications m USING (dogID) WHERE status='$status' AND frequency IN ('PM', '2X', '3X') GROUP BY dogID";
+    $sql_all_dogs.=" JOIN dogs_medications m USING (dogReservationID) WHERE status='$status' AND frequency IN ('PM', '2X', '3X') GROUP BY r.dogReservationID, dogFoodID";
   }
   $sql_all_dogs.=" ORDER BY roomID, dogName";
   $result_all_dogs=$conn->query($sql_all_dogs);
   while ($row_all_dogs=$result_all_dogs->fetch_assoc()) {
-    $boardingDogID=$row_all_dogs['dogID'];
+    $boardingReservationID=$row_all_dogs['dogReservationID'];
+    $boardingFoodID=$row_all_dogs['dogFoodID'];
     $boardingRoomID=$row_all_dogs['roomID'];
     $boardingName=htmlspecialchars($row_all_dogs['dogName'], ENT_QUOTES);
     $boardingFoodType=$row_all_dogs['foodType'];
@@ -28,7 +29,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     $boardingSlowFeeder=$row_all_dogs['slowFeeder'];
     $boardingElevatedFeeder=$row_all_dogs['elevatedFeeder'];
     $boardingSeparateToFeed=$row_all_dogs['separateToFeed'];
-    echo "<tr id='row-dog-$boardingDogID'>
+    echo "<tr id='row-dog-$boardingFoodID'>
     <td>$boardingRoomID</td>
     <td>$boardingName</td>
     <td>
@@ -68,7 +69,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     }
     echo "</td>
     <td>";
-    $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency, notes FROM dogs d JOIN dogs_medications m USING (dogID) WHERE dogID='$boardingDogID'";
+    $sql_dog_meds="SELECT dogMedID, medName, strength, dosage, frequency, notes FROM dogs_reservations r JOIN dogs_medications m USING (dogReservationID) WHERE dogReservationID='$boardingReservationID'";
     if ($sortMeds=='am') {
       $sql_dog_meds.=" AND frequency IN ('AM', '2X', '3X')";
     } elseif ($sortMeds=='noon') {
@@ -118,11 +119,11 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     echo "</td>
     <td style='text-align:right;'>";
     if ($status=='Future') {
-      echo "<button type='button' class='button-check' id='check-dog-button' data-toggle='modal' data-target='#checkDogModal' data-id='$boardingDogID' data-backdrop='static' title='Check In'></button>";
+      echo "<button type='button' class='button-check' id='check-dog-button' data-toggle='modal' data-target='#checkDogModal' data-id='$boardingFoodID' data-backdrop='static' title='Check In'></button>";
     }
-    echo "<button type='button' class='button-edit' id='edit-dog-button' data-toggle='modal' data-target='#editDogModal' data-id='$boardingDogID' data-status='$status' data-backdrop='static' title='Edit Food'></button>
-    <button type='button' class='button-meds' id='add-med-button' data-toggle='modal' data-target='#addMedModal' data-status='$status' data-id='$boardingDogID' data-backdrop='static' title='Add Medication'></button>
-    <button type='button' class='button-delete' id='delete-dog-button' data-toggle='modal' data-target='#deleteDogModal' data-status='$status' data-id='$boardingDogID' data-backdrop='static' title='Delete Dog'></button>
+    echo "<button type='button' class='button-edit' id='edit-dog-button' data-toggle='modal' data-target='#editDogModal' data-id='$boardingFoodID' data-status='$status' data-backdrop='static' title='Edit Food'></button>
+    <button type='button' class='button-meds' id='add-med-button' data-toggle='modal' data-target='#addMedModal' data-status='$status' data-id='$boardingReservationID' data-backdrop='static' title='Add Medication'></button>
+    <button type='button' class='button-delete' id='delete-dog-button' data-toggle='modal' data-target='#deleteDogModal' data-status='$status' data-id='$boardingFoodID' data-backdrop='static' title='Delete Dog'></button>
     </td>
     </tr>";
   }

@@ -24,12 +24,12 @@ if (isset($_POST['id'])) {
     if ($allCondosID==$condo) {
       echo " selected";
     }
-    echo ">Condo $allCondosID</option>";
+    echo ">$allCondosID</option>";
   }
   echo "</select>
   </div>
   <div class='input-group'>
-  <span class='input-group-addon cat'>Cat Name(s)</span>
+  <span class='input-group-addon cat'>Cat Name</span>
   <input type='text' class='form-control' name='cat-name' maxlength='255' id='editCatName' value='$catName' required>
   </div>
   <div class='input-group'>

@@ -16,7 +16,7 @@ if (isset($_POST['status']) AND isset($_POST['id']) AND isset($_POST['medName'])
   } else {
     $notes=NULL;
   }
-  $sql_add_med="INSERT INTO cats_medications (catID, medName, strength, dosage, frequency, notes) VALUES ('$id', '$medName', '$strength', '$dosage', '$frequency', '$notes')";
+  $sql_add_med="INSERT INTO cats_medications (catReservationID, medName, strength, dosage, frequency, notes) VALUES ('$id', '$medName', '$strength', '$dosage', '$frequency', '$notes')";
   $conn->query($sql_add_med);
 }
 ?>
