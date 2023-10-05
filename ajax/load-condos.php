@@ -16,6 +16,13 @@ if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
       echo "<div class='condo-row $status'>
       <div class='condo-number'>$condoID</div>
       <div class='condo-occupant-column'>";
+      $checkedIn=array();
+      $sql_checkedIn="SELECT catReservationID FROM cats_food WHERE status='Active'";
+      $result_checkedIn=$conn->query($sql_checkedIn);
+      while ($row_checkedIn=$result_checkedIn->fetch_assoc()) {
+        $checkedInID=$row_checkedIn['catReservationID'];
+        $checkedIn[]=$checkedInID;
+      }
       $sql_reservations="SELECT catReservationID, catName, checkIn, checkOut FROM cats_reservations WHERE condoID='$condoID' AND checkIn<='$endDate' AND checkOut>='$startDate' ORDER BY checkIn, catName";
       $result_reservations=$conn->query($sql_reservations);
       while ($row_reservations=$result_reservations->fetch_assoc()) {
@@ -24,9 +31,16 @@ if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
         $reservationCheckIn=strtotime($row_reservations['checkIn']);
         $reservationCheckOut=strtotime($row_reservations['checkOut']);
         $checkOutDayOfWeek=date('l', strtotime($row_reservations['checkOut']));
+        $dateToday=strtotime(date('Y-m-d'));
         echo "<div class='condo-occupant' id='condo-occupant-$reservationID'>
         <div class='condo-name-dates'>
-        <div class='condo-name'>$reservationName</div>
+        <div class='condo-name";
+        if ($reservationCheckOut==$dateToday) {
+          echo " checkOutToday";
+        } elseif (in_array($reservationID, $checkedIn)) {
+          echo " checkedIn";
+        }
+        echo "'>$reservationName</div>
         <div class='condo-dates'>
           <span class='condo-check-in'>" . date('D n/j', $reservationCheckIn) . "</span> – <span class='condo-check-out";
           if ($checkOutDayOfWeek=='Friday' OR $checkOutDayOfWeek=='Saturday' OR $checkOutDayOfWeek=='Sunday') {

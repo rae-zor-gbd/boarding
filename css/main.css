@@ -125,6 +125,7 @@
   --icon-hospital:'\e957';
   --icon-hotel:'\e96a';
   --icon-house:'\e96b';
+  --icon-house-circle-check:'\e97c';
   --icon-info:'\e936';
   --icon-inventory:'\e937';
   --icon-list-01:'\e93a';
@@ -613,6 +614,20 @@ nav {
 .condo-name, .room-name {
   line-height:1;
 }
+.condo-name.checkedIn::before, .condo-name.checkOutToday::before, .room-name.checkedIn::before, .room-name.checkOutToday::before {
+  font-family:var(--icon-font-family);
+  font-size:75%;
+  font-weight:var(--font-weight-regular);
+  padding-right:calc(var(--spacer)/3.5);
+}
+.condo-name.checkedIn::before, .room-name.checkedIn::before {
+  color:var(--color-emphasis-02);
+  content:var(--icon-house);
+}
+.condo-name.checkOutToday::before, .room-name.checkOutToday::before {
+  color:var(--color-emphasis-01);
+  content:var(--icon-suitcase-02);
+}
 .condo-name-dates, .room-name-dates {
   width:100%;
 }
@@ -787,6 +802,6 @@ nav {
   margin-top:var(--spacer);
 }
 .weekend-check-out {
-  color:var(--color-emphasis-01);
+  color:var(--color-emphasis-04);
   font-weight:var(--font-weight-bold);
 }
