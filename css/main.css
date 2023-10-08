@@ -251,6 +251,12 @@ tr th:nth-child(2) {
 tr th:nth-child(6) {
   min-width:150px;
 }
+.alert-danger h4::before {
+  content:var(--icon-warning);
+  float:left;
+  font-family:var(--icon-font-family);
+  margin-right:calc(var(--spacer)/2);
+}
 .btn {
   transform:translateZ(0);
   transition-duration:.3s;
@@ -284,10 +290,20 @@ tr th:nth-child(6) {
 .input-group input, .input-group select, .input-group textarea {
   text-transform:uppercase;
 }
+.input-group:has(.form-control:required) .input-group-addon::after {
+  bottom:5px;
+  color:var(--color-emphasis-01);
+  content:var(--icon-asterisk);
+  font-family:var(--icon-font-family);
+  font-size:50%;
+  margin-left:calc(var(--spacer)/15);
+  position:relative;
+}
 .input-group:not(:last-child) {
   margin-bottom:calc(var(--spacer)/2);
 }
 .input-group-addon {
+  max-width:calc(var(--spacer)*6);
   min-width:calc(var(--spacer)*6);
   text-align:left;
 }
@@ -804,4 +820,7 @@ nav {
 .weekend-check-out {
   color:var(--color-emphasis-04);
   font-weight:var(--font-weight-bold);
+}
+#toggleDatesForm .input-group .input-group-addon::after {
+  content:'';
 }
