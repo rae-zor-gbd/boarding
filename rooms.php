@@ -171,6 +171,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
         <div class='modal-dialog'>
           <div class='modal-content'>
             <div class='modal-header'>
+              <button type='button' class='close' data-dismiss='modal'></button>
               <h4 class='modal-title'>Book Room</h4>
             </div>
             <div class='modal-body' id='bookRoomModalBody'></div>
@@ -204,6 +205,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
         <div class='modal-dialog'>
           <div class='modal-content'>
             <div class='modal-header'>
+              <button type='button' class='close' data-dismiss='modal'></button>
               <h4 class='modal-title'>Edit Reservation</h4>
             </div>
             <div class='modal-body' id='editRoomModalBody'></div>
@@ -220,6 +222,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
         <div class='modal-dialog'>
           <div class='modal-content'>
             <div class='modal-header'>
+              <button type='button' class='close' data-dismiss='modal'></button>
               <h4 class='modal-title'>Delete Reservation</h4>
             </div>
             <div class='modal-body' id='deleteRoomModalBody'></div>

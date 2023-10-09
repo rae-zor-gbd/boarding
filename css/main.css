@@ -388,6 +388,16 @@ tr th:nth-child(6) {
 .modal-header {
   text-align:center;
 }
+.modal-header .close {
+  color:var(--color-04);
+  font-family:var(--icon-font-family);
+  font-size:unset;
+  margin-top:calc(var(--spacer)/10);
+  opacity:1!important;
+}
+.modal-header .close::before {
+  content:var(--icon-x);
+}
 .normal {
   font-weight:400;
 }

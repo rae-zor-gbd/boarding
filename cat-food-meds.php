@@ -393,6 +393,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
         <div class='modal-dialog'>
           <div class='modal-content'>
             <div class='modal-header'>
+              <button type='button' class='close' data-dismiss='modal'></button>
               <h4 class='modal-title'>Add Food</h4>
             </div>
             <div class='modal-body' id='addFoodModalBody'></div>
@@ -473,6 +474,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
         <div class='modal-dialog'>
           <div class='modal-content'>
             <div class='modal-header'>
+              <button type='button' class='close' data-dismiss='modal'></button>
               <h4 class='modal-title'>Add Medication</h4>
             </div>
             <div class='modal-body' id='addMedModalBody'></div>
@@ -489,6 +491,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
         <div class='modal-dialog'>
           <div class='modal-content'>
             <div class='modal-header'>
+              <button type='button' class='close' data-dismiss='modal'></button>
               <h4 class='modal-title'>Edit Food</h4>
             </div>
             <div class='modal-body' id='editCatModalBody'></div>
@@ -505,6 +508,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
         <div class='modal-dialog'>
           <div class='modal-content'>
             <div class='modal-header'>
+              <button type='button' class='close' data-dismiss='modal'></button>
               <h4 class='modal-title'>Edit Medication</h4>
             </div>
             <div class='modal-body' id='editMedModalBody'></div>
@@ -521,6 +525,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
         <div class='modal-dialog'>
           <div class='modal-content'>
             <div class='modal-header'>
+              <button type='button' class='close' data-dismiss='modal'></button>
               <h4 class='modal-title'>Delete Cat</h4>
             </div>
             <div class='modal-body' id='deleteCatModalBody'></div>
@@ -537,6 +542,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
         <div class='modal-dialog'>
           <div class='modal-content'>
             <div class='modal-header'>
+              <button type='button' class='close' data-dismiss='modal'></button>
               <h4 class='modal-title'>Delete Medication</h4>
             </div>
             <div class='modal-body' id='deleteMedModalBody'></div>
