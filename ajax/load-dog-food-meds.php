@@ -13,7 +13,11 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
   } elseif ($sortMeds=='pm') {
     $sql_all_dogs.=" JOIN dogs_medications m USING (dogReservationID) WHERE status='$status' AND checkOut>=DATE(NOW()) AND frequency IN ('PM', '2X', '3X') GROUP BY r.dogReservationID, dogFoodID";
   }
-  $sql_all_dogs.=" ORDER BY roomID, dogName";
+  if ($status=='Active') {
+    $sql_all_dogs.=" ORDER BY roomID, dogName";
+  } elseif ($status=='Future') {
+    $sql_all_dogs.=" ORDER BY checkIn, dogName";
+  }
   $result_all_dogs=$conn->query($sql_all_dogs);
   while ($row_all_dogs=$result_all_dogs->fetch_assoc()) {
     $boardingReservationID=$row_all_dogs['dogReservationID'];

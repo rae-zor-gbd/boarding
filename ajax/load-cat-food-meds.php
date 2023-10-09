@@ -13,7 +13,11 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
   } elseif ($sortMeds=='pm') {
     $sql_all_cats.=" JOIN cats_medications m USING (catReservationID) WHERE status='$status' AND checkOut>=DATE(NOW()) AND frequency IN ('PM', '2X', '3X') GROUP BY r.catReservationID, catFoodID";
   }
-  $sql_all_cats.=" ORDER BY condoID, catName";
+  if ($status=='Active') {
+    $sql_all_cats.=" ORDER BY condoID, catName";
+  } elseif ($status=='Future') {
+    $sql_all_cats.=" ORDER BY checkIn, catName";
+  }
   $result_all_cats=$conn->query($sql_all_cats);
   while ($row_all_cats=$result_all_cats->fetch_assoc()) {
     $boardingReservationID=$row_all_cats['catReservationID'];
