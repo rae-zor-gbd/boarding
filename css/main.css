@@ -718,7 +718,7 @@ nav {
 }
 .medication-label .label, .special-notes-label .label {
   display:inline-block;
-  line-height:1;
+  line-height:1.1;
   max-width:400px;
   padding:calc(var(--spacer)/5) calc(var(--spacer)/3.5) calc(var(--spacer)/7);
   text-align:left;
