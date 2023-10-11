@@ -697,7 +697,7 @@ nav {
 }
 .food-label {
   display:inline-block;
-  margin:calc(var(--spacer)/10) calc(var(--spacer)/10) 0 0;
+  margin:0 calc(var(--spacer)/10) calc(var(--spacer)/10) 0;
   padding:calc(var(--spacer)/5) calc(var(--spacer)/3.5) calc(var(--spacer)/7);
 }
 .load-more {

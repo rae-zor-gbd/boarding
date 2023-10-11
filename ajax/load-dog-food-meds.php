@@ -45,14 +45,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     }
     echo "'>$boardingFoodType</span>
     </td>
-    <td>" . stripslashes($boardingFeedingInstructions);
-    if (isset($boardingSpecialNotes) AND $boardingSpecialNotes!='') {
-      echo "<div class='special-notes-label'>
-      <span class='label label-info'>$boardingSpecialNotes</span>
-      </div>";
-    } else {
-      echo "<br>";
-    }
+    <td>" . stripslashes($boardingFeedingInstructions) . "<br>";
     if ($boardingFoodAllergies=='Yes') {
       echo "<span class='food-label label label-danger'>Food Allergies</span>";
     }
@@ -70,6 +63,11 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     }
     if ($boardingElevatedFeeder=='Yes') {
       echo "<span class='food-label label label-primary'>Elevated Feeder</span>";
+    }
+    if (isset($boardingSpecialNotes) AND $boardingSpecialNotes!='') {
+      echo "<div class='special-notes-label'>
+      <span class='label label-info'>$boardingSpecialNotes</span>
+      </div>";
     }
     echo "</td>
     <td>";
