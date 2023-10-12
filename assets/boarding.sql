@@ -89,7 +89,7 @@ INSERT INTO rooms (roomID, columnID, rowID, groupID, status) VALUES
 (5, 1, 12, 2, 'Disabled'),
 (6, 1, 11, 2, 'Enabled'),
 (7, 1, 10, 2, 'Enabled'),
-(8, 1, 9, 2, 'Enabled'),
+(8, 1, 9, 2, 'Disabled'),
 (9, 1, 8, 1, 'Enabled'),
 (10, 1, 7, 1, 'Enabled'),
 (11, 1, 6, 1, 'Enabled'),
