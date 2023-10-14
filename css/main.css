@@ -60,11 +60,13 @@
   --icon-arrow-up:'\e906';
   --icon-asterisk:'\e955';
   --icon-at:'\e907';
+  --icon-ban:'\e981';
   --icon-bars:'\e908';
   --icon-bell:'\e909';
   --icon-bone:'\e90a';
   --icon-book:'\e95b';
   --icon-box:'\e90b';
+  --icon-broom:'\e97e';
   --icon-bucket:'\e95e';
   --icon-building:'\e95f';
   --icon-bullhorn:'\e90c';
@@ -103,6 +105,8 @@
   --icon-doctor:'\e956';
   --icon-dog:'\e927';
   --icon-dollar:'\e928';
+  --icon-door-open:'\e97f';
+  --icon-door-closed:'\e980';
   --icon-drumstick:'\e965';
   --icon-edit:'\e929';
   --icon-envelope:'\e92a';
@@ -126,13 +130,16 @@
   --icon-hotel:'\e96a';
   --icon-house:'\e96b';
   --icon-house-circle-check:'\e97c';
+  --icon-house-lock:'\e984';
   --icon-info:'\e936';
   --icon-inventory:'\e937';
+  --icon-key:'\e982';
   --icon-list-01:'\e93a';
   --icon-list-02:'\e939';
   --icon-list-03:'\e938';
   --icon-location-dot:'\e96c';
   --icon-location-pin:'\e96d';
+  --icon-lock:'\e983';
   --icon-manage:'\e93b';
   --icon-map:'\e96f';
   --icon-map-pin:'\e96e';
@@ -150,6 +157,7 @@
   --icon-paper-plane:'\e958';
   --icon-paperclip:'\e942';
   --icon-paw:'\e943';
+  --icon-person-walking-luggage:'\e97d';
   --icon-phone-01:'\e959';
   --icon-phone-02:'\e95a';
   --icon-play:'\e945';
@@ -594,6 +602,7 @@ nav {
 .condo-buttons, .room-buttons {
   font-size:75%;
   min-width:53px;
+  text-align:right;
   vertical-align:middle;
 }
 .condo-buttons button:nth-last-child(1), .room-buttons button:nth-last-child(1) {
@@ -640,17 +649,17 @@ nav {
 .condo-name, .room-name {
   line-height:1;
 }
-.condo-name.checkedIn::before, .condo-name.checkOutToday::before, .room-name.checkedIn::before, .room-name.checkOutToday::before {
+.condo-name.checkedIn::after, .condo-name.checkOutToday::after, .room-name.checkedIn::after, .room-name.checkOutToday::after {
   font-family:var(--icon-font-family);
   font-size:75%;
   font-weight:var(--font-weight-regular);
-  padding-right:calc(var(--spacer)/3.5);
+  padding-left:calc(var(--spacer)/3.5);
 }
-.condo-name.checkedIn::before, .room-name.checkedIn::before {
+.condo-name.checkedIn::after, .room-name.checkedIn::after {
   color:var(--color-emphasis-02);
   content:var(--icon-house);
 }
-.condo-name.checkOutToday::before, .room-name.checkOutToday::before {
+.condo-name.checkOutToday::after, .room-name.checkOutToday::after {
   color:var(--color-emphasis-01);
   content:var(--icon-suitcase-02);
 }
@@ -660,17 +669,17 @@ nav {
 .condo-number, .room-number {
   display:table-cell;
   font-weight:var(--font-weight-bold);
+  min-width:35px;
   padding-right:calc(var(--spacer)/3);
   width:0;
 }
 .condo-occupant, .room-occupant {
   display:table;
-  text-align:right;
 }
 .condo-occupant:not(:nth-of-type(1)), .room-occupant:not(:nth-of-type(1)) {
   border-top:1px solid var(--color-05);
   margin-top:calc(var(--spacer)/6);
-  padding-top:calc(var(--spacer)/6);
+  padding-top:calc(var(--spacer)/5);
 }
 .condo-occupant-column, .room-occupant-column {
   display:table-cell;
@@ -689,8 +698,13 @@ nav {
   background-color:var(--color-04);
   background-image:url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
 }
-.condo-row.disabled:not(:has(.condo-occupant-column:empty)):hover, .condo-row.enabled:hover, .room-row.disabled:not(:has(.room-occupant-column:empty)):hover, .room-row.enabled:hover {
-  background:#F5F5F5
+.condo-row.disabled:not(:has(.condo-occupant-column:empty)):hover, .condo-row.enabled:hover:not(:has(.condo-occupant-column:empty)):hover, .room-row.disabled:not(:has(.room-occupant-column:empty)):hover, .room-row.enabled:not(:has(.room-occupant-column:empty)):hover {
+  background:#F5F5F5;
+}
+.condo-row.disabled:not(:has(.condo-occupant-column:empty)):hover, .condo-row.enabled:hover:not(:has(.condo-occupant-column:empty)):hover, .room-row.disabled:not(:has(.room-occupant-column:empty)):hover, .room-row.enabled:not(:has(.room-occupant-column:empty)):hover, .table-hover>tbody>tr:hover {
+  transform:translateZ(0);
+  transition-duration:.3s;
+  transition-property:background;
 }
 .condo-row.enabled:has(.condo-occupant-column:empty), .room-row.enabled:has(.room-occupant-column:empty) {
   background:var(--color-highlight);
@@ -762,6 +776,21 @@ nav {
 .panel-title {
   font-size:var(--font-size);
 }
+.rooms-container:nth-of-type(1) .rooms-multi-column .rooms-multi-row {
+  padding-bottom:calc(var(--spacer)/2);
+  padding-top:var(--spacer);
+}
+.rooms-container:nth-of-type(1) .rooms-single-column .rooms-multi-row .room-row {
+  border-bottom-left-radius:0;
+  border-bottom-right-radius:0;
+}
+.rooms-container:nth-of-type(2) .rooms-multi-column .rooms-multi-row {
+  padding-top:calc(var(--spacer)/2);
+}
+.rooms-container:nth-of-type(2) .rooms-single-column .rooms-multi-row .room-row {
+  border-top-left-radius:0;
+  border-top-right-radius:0;
+}
 .rooms-single-column {
   flex:1;
   flex-direction:column;
@@ -795,13 +824,6 @@ nav {
 }
 .rooms-multi-column .rooms-multi-row .room-row:nth-of-type(3n) {
   margin-left:-1px;
-}
-.rooms-multi-column .rooms-multi-row:nth-of-type(1) {
-  padding-bottom:calc(var(--spacer)/2);
-  padding-top:var(--spacer);
-}
-.rooms-multi-column .rooms-multi-row:nth-of-type(2) {
-  padding-top:calc(var(--spacer)/2);
 }
 .room-row {
   width:calc((100vw - (var(--spacer)*2) - (var(--spacer)*11) - (var(--spacer)*(5/3)) - (var(--spacer)*(5/3)))/4);

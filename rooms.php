@@ -198,7 +198,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
       <button type='button' class='btn btn-default nav-button' id='bookRoomButton' data-toggle='modal' data-target='#bookRoomModal' data-backdrop='static' title='Book Room'>Book Room</button>
     </div>
     <div class='container-fluid'>
-      <div class='rooms-container' id='rooms-container'></div>
+      <div class='rooms-outer-container' id='rooms-container'></div>
     </div>
     <form action='' method='post' spellcheck='false' autocomplete='off' id='editRoomForm'>
       <div class='modal fade' id='editRoomModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
