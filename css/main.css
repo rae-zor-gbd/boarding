@@ -250,15 +250,6 @@ label {
 textarea {
   resize:none;
 }
-tr th:nth-child(1), tr th:nth-child(3) {
-  min-width:75px;
-}
-tr th:nth-child(2) {
-  min-width:250px;
-}
-tr th:nth-child(6) {
-  min-width:150px;
-}
 .alert-danger h4::before {
   content:var(--icon-warning);
   float:left;
@@ -430,9 +421,6 @@ td:empty::before {
   content:'None';
   font-style:italic;
   text-transform:none;
-}
-tr td:not(:nth-of-type(1)) {
-  font-variant:tabular-nums;
 }
 @keyframes loading-ring {
   0% {
@@ -714,6 +702,18 @@ nav {
   margin:0 calc(var(--spacer)/10) calc(var(--spacer)/10) 0;
   padding:calc(var(--spacer)/5) calc(var(--spacer)/3.5) calc(var(--spacer)/7);
 }
+.header-currently-boarding tr th:nth-child(1), .header-currently-boarding tr th:nth-child(3), .header-future-arrivals tr th:nth-child(2), .header-future-arrivals tr th:nth-child(4) {
+  min-width:75px;
+}
+.header-currently-boarding tr th:nth-child(2), .header-future-arrivals tr th:nth-child(3) {
+  min-width:250px;
+}
+.header-currently-boarding tr th:nth-child(6), .header-future-arrivals tr th:nth-child(7) {
+  min-width:150px;
+}
+.header-future-arrivals tr th:nth-child(1) {
+  min-width:115px;
+}
 .load-more {
   margin-top:calc(var(--spacer)/2);
   width:100%;
@@ -856,6 +856,9 @@ nav {
 .weekend-check-out {
   color:var(--color-emphasis-04);
   font-weight:var(--font-weight-bold);
+}
+#table-currently-boarding tr td:nth-of-type(4), #table-currently-boarding tr td:nth-of-type(5), #table-future-arrivals tr td:nth-of-type(5), #table-future-arrivals tr td:nth-of-type(6) {
+  font-variant:tabular-nums;
 }
 #toggleDatesForm .input-group .input-group-addon::after {
   content:'';

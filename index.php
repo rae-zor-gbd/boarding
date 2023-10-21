@@ -431,7 +431,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
         </div>
         <div class='table-container'>
           <table class='table table-hover table-condensed'>
-            <thead>
+            <thead class='header-currently-boarding'>
               <tr>
                 <th>Room</th>
                 <th>Name</th>
@@ -455,8 +455,9 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
         </div>
         <div class='table-container'>
           <table class='table table-hover table-condensed'>
-            <thead>
+            <thead class='header-future-arrivals'>
               <tr>
+                <th>Check-In</th>
                 <th>Room</th>
                 <th>Name</th>
                 <th>Food</th>

@@ -3,7 +3,7 @@ include '../assets/config.php';
 if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
   $status=$_POST['status'];
   $sortMeds=$_POST['sortMeds'];
-  $sql_all_dogs="SELECT r.dogReservationID, dogFoodID, roomID, dogName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM dogs_reservations r JOIN dogs_food f USING (dogReservationID)";
+  $sql_all_dogs="SELECT r.dogReservationID, dogFoodID, checkIn, roomID, dogName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM dogs_reservations r JOIN dogs_food f USING (dogReservationID)";
   if ($sortMeds=='all') {
     $sql_all_dogs.=" WHERE status='$status' AND checkOut>=DATE(NOW())";
   } elseif ($sortMeds=='am') {
@@ -22,6 +22,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
   while ($row_all_dogs=$result_all_dogs->fetch_assoc()) {
     $boardingReservationID=$row_all_dogs['dogReservationID'];
     $boardingFoodID=$row_all_dogs['dogFoodID'];
+    $boardingCheckIn=strtotime($row_all_dogs['checkIn']);
     $boardingRoomID=$row_all_dogs['roomID'];
     $boardingName=htmlspecialchars($row_all_dogs['dogName'], ENT_QUOTES);
     $boardingFoodType=$row_all_dogs['foodType'];
@@ -33,8 +34,11 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     $boardingSlowFeeder=$row_all_dogs['slowFeeder'];
     $boardingElevatedFeeder=$row_all_dogs['elevatedFeeder'];
     $boardingSeparateToFeed=$row_all_dogs['separateToFeed'];
-    echo "<tr id='row-dog-$boardingFoodID'>
-    <td>$boardingRoomID</td>
+    echo "<tr id='row-dog-$boardingFoodID'>";
+    if ($status=='Future') {
+      echo "<td>" . date('D n/j', $boardingCheckIn) . "</td>";
+    }
+    echo "<td>$boardingRoomID</td>
     <td>$boardingName</td>
     <td>
     <span class='label label-";
