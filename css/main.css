@@ -722,21 +722,40 @@ nav {
   min-width:455px;
 }
 .medication-label:not(:last-child) {
-  margin-bottom:calc(var(--spacer)/15);
+  margin-bottom:calc(var(--spacer)/10);
 }
 .medication-label button {
-  font-size:75%;
+  font-size:90.909090909%;
   padding:0 calc(var(--spacer)/6);
   position:relative;
-  top:2px;
+  top:1px;
+}
+.medication-label button:hover {
+  color:var(--color-05)!important;
 }
 .medication-label .label, .special-notes-label .label {
   display:inline-block;
   line-height:1.1;
-  max-width:400px;
   padding:calc(var(--spacer)/5) calc(var(--spacer)/3.5) calc(var(--spacer)/7);
   text-align:left;
   white-space:unset;
+}
+.medication-label .label {
+  display:table;
+  max-width:455px;
+}
+.medication-label-buttons, .medication-label-instructions {
+  display:table-cell;
+}
+.medication-label-buttons {
+  border-left:1.5px solid rgb(255 255 255 / 50%);
+  min-width:57px;
+  padding:0 5px;
+  text-align:right;
+  vertical-align:middle;
+}
+.medication-label-instructions {
+  padding:calc(var(--spacer)/5) calc(var(--spacer)/3.5) calc(var(--spacer)/7);
 }
 .medication-notes {
   text-decoration:underline dotted;
@@ -827,6 +846,9 @@ nav {
 }
 .room-row {
   width:calc((100vw - (var(--spacer)*2) - (var(--spacer)*11) - (var(--spacer)*(5/3)) - (var(--spacer)*(5/3)))/4);
+}
+.special-notes-label .label {
+  max-width:400px;
 }
 .table-container:has(>table tbody:empty) {
   display:none;

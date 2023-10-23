@@ -102,7 +102,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
         } else {
           echo "danger";
         }
-        echo "'>$medName";
+        echo "'><span class='medication-label-instructions'>$medName";
         if (isset($strength) AND $strength!='') {
           echo ", $strength";
         }
@@ -117,8 +117,11 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
           echo " <span class='medication-notes'>$notes</span>";
         }
         echo ")</span>
+        <span class='medication-label-buttons'>
         <button type='button' class='button-edit' id='edit-med-button' data-toggle='modal' data-target='#editMedModal' data-id='$catMedID' data-status='$status' data-backdrop='static' title='Edit Medication'></button>
         <button type='button' class='button-delete' id='delete-med-button' data-toggle='modal' data-target='#deleteMedModal' data-id='$catMedID' data-status='$status' data-backdrop='static' title='Delete Medication'></button>
+        </span>
+        </span>
         </div>";
       }
     }
