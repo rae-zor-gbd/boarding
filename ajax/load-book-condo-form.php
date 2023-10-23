@@ -6,11 +6,16 @@ echo "<div class='input-group'>
 <span class='input-group-addon room'>Condo</span>
 <select class='form-control' name='condo' id='newCondo' required=''>
 <option value='' selected disabled>Select Condo</option>";
-$sql_all_condos="SELECT condoID FROM condos ORDER BY condoID";
+$sql_all_condos="SELECT condoID, status FROM condos ORDER BY condoID";
 $result_all_condos=$conn->query($sql_all_condos);
 while ($row_all_condos=$result_all_condos->fetch_assoc()) {
   $allCondosID=$row_all_condos['condoID'];
-  echo "<option value='$allCondosID'>$allCondosID</option>";
+  $allCondosStatus=$row_all_condos['status'];
+  echo "<option value='$allCondosID'>$allCondosID";
+  if ($allCondosStatus=='Disabled') {
+    echo " - Disabled Condo";
+  }
+  echo "</option>";
 }
 echo "</select>
 </div>

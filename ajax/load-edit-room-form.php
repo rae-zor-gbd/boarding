@@ -16,15 +16,20 @@ if (isset($_POST['id'])) {
   <span class='input-group-addon room'>Room</span>
   <select class='form-control' name='room' id='editRoom' required=''>
   <option value='' disabled>Select Room</option>";
-  $sql_all_rooms="SELECT roomID FROM rooms ORDER BY roomID";
+  $sql_all_rooms="SELECT roomID, status FROM rooms ORDER BY roomID";
   $result_all_rooms=$conn->query($sql_all_rooms);
   while ($row_all_rooms=$result_all_rooms->fetch_assoc()) {
     $allRoomsID=$row_all_rooms['roomID'];
+    $allRoomsStatus=$row_all_rooms['status'];
     echo "<option value='$allRoomsID'";
     if ($allRoomsID==$room) {
       echo " selected";
     }
-    echo ">$allRoomsID</option>";
+    echo ">$allRoomsID";
+    if ($allRoomsStatus=='Disabled') {
+      echo " - Disabled Room";
+    }
+    echo "</option>";
   }
   echo "</select>
   </div>
