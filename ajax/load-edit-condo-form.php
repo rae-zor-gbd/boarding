@@ -16,17 +16,20 @@ if (isset($_POST['id'])) {
   <span class='input-group-addon room'>Condo</span>
   <select class='form-control' name='room' id='editCondo' required=''>
   <option value='' disabled>Select Condo</option>";
-  $sql_all_condos="SELECT condoID, status FROM condos ORDER BY condoID";
+  $sql_all_condos="SELECT condoID, status, description FROM condos ORDER BY condoID";
   $result_all_condos=$conn->query($sql_all_condos);
   while ($row_all_condos=$result_all_condos->fetch_assoc()) {
     $allCondosID=$row_all_condos['condoID'];
     $allCondosStatus=$row_all_condos['status'];
+    $allCondosDescription=htmlspecialchars($row_all_condos['description'], ENT_QUOTES);
     echo "<option value='$allCondosID'";
     if ($allCondosID==$condo) {
       echo " selected";
     }
     echo ">$allCondosID";
-    if ($allCondosStatus=='Disabled') {
+    if (isset($allCondosDescription) AND $allCondosDescription!='') {
+      echo " - $allCondosDescription";
+    } elseif ($allCondosStatus=='Disabled') {
       echo " - Disabled Condo";
     }
     echo "</option>";
