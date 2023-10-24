@@ -99,7 +99,7 @@ INSERT INTO rooms (roomID, columnID, rowID, groupID, status, description) VALUES
 (13, 1, 4, 1, 'Enabled', NULL),
 (14, 1, 3, 1, 'Disabled', 'Nakita\'s Room'),
 (15, 1, 2, 1, 'Disabled', 'Ruby\'s Room'),
-(16, 1, 1, 1, 'Disabled', NULL),
+(16, 1, 1, 1, 'Disabled', 'Do Not Use'),
 (17, 2, 16, 2, 'Enabled', NULL),
 (18, 2, 15, 2, 'Enabled', NULL),
 (19, 2, 14, 2, 'Enabled', NULL),
