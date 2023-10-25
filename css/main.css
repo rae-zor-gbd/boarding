@@ -749,9 +749,9 @@ nav {
 }
 .medication-label-buttons {
   border-left:1.5px solid rgb(255 255 255 / 50%);
-  min-width:57px;
+  min-width:58px;
   padding:0 5px;
-  text-align:right;
+  text-align:center;
   vertical-align:middle;
 }
 .medication-label-instructions {
