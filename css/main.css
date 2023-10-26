@@ -580,6 +580,20 @@ nav {
 #pmMedsButton::before {
   content:var(--icon-sunset);
 }
+.checkedIn::after, .checkOutToday::after {
+  font-family:var(--icon-font-family);
+  font-size:75%;
+  font-weight:var(--font-weight-regular);
+  padding-left:calc(var(--spacer)/3.5);
+}
+.checkedIn::after {
+  color:var(--color-emphasis-02);
+  content:var(--icon-house);
+}
+.checkOutToday::after {
+  color:var(--color-emphasis-01);
+  content:var(--icon-suitcase-02);
+}
 .collapsed .panel-heading .panel-arrow {
   top:-1px;
   transform:rotate(0deg);
@@ -636,20 +650,6 @@ nav {
 }
 .condo-name, .room-name {
   line-height:1;
-}
-.condo-name.checkedIn::after, .condo-name.checkOutToday::after, .room-name.checkedIn::after, .room-name.checkOutToday::after {
-  font-family:var(--icon-font-family);
-  font-size:75%;
-  font-weight:var(--font-weight-regular);
-  padding-left:calc(var(--spacer)/3.5);
-}
-.condo-name.checkedIn::after, .room-name.checkedIn::after {
-  color:var(--color-emphasis-02);
-  content:var(--icon-house);
-}
-.condo-name.checkOutToday::after, .room-name.checkOutToday::after {
-  color:var(--color-emphasis-01);
-  content:var(--icon-suitcase-02);
 }
 .condo-name-dates, .room-name-dates {
   width:100%;

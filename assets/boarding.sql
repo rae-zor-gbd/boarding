@@ -131,7 +131,7 @@ INSERT INTO rooms (roomID, columnID, rowID, groupID, status, description) VALUES
 (45, 3, 13, 2, 'Enabled', NULL),
 (46, 3, 14, 2, 'Enabled', NULL),
 (47, 3, 15, 2, 'Enabled', NULL),
-(48, 3, 16, 2, 'Disabled', 'Remi Patterson\'s Room'),
+(48, 3, 16, 2, 'Disabled', 'Remi Boxer\'s Room'),
 (49, 4, 18, 2, 'Enabled', NULL),
 (50, 4, 17, 2, 'Enabled', NULL),
 (51, 4, 16, 2, 'Enabled', NULL),

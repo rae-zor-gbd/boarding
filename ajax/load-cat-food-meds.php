@@ -3,7 +3,7 @@ include '../assets/config.php';
 if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
   $status=$_POST['status'];
   $sortMeds=$_POST['sortMeds'];
-  $sql_all_cats="SELECT r.catReservationID, catFoodID, checkIn, condoID, catName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats_reservations r JOIN cats_food f USING (catReservationID)";
+  $sql_all_cats="SELECT r.catReservationID, catFoodID, checkIn, checkOut, condoID, catName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats_reservations r JOIN cats_food f USING (catReservationID)";
   if ($sortMeds=='all') {
     $sql_all_cats.=" WHERE status='$status' AND checkOut>=DATE(NOW())";
   } elseif ($sortMeds=='am') {
@@ -23,6 +23,8 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     $boardingReservationID=$row_all_cats['catReservationID'];
     $boardingFoodID=$row_all_cats['catFoodID'];
     $boardingCheckIn=strtotime($row_all_cats['checkIn']);
+    $boardingCheckOut=strtotime($row_all_cats['checkOut']);
+    $dateToday=strtotime(date('Y-m-d'));
     $boardingCondoID=$row_all_cats['condoID'];
     $boardingName=htmlspecialchars($row_all_cats['catName'], ENT_QUOTES);
     $boardingFoodType=$row_all_cats['foodType'];
@@ -39,7 +41,11 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
       echo "<td>" . date('D n/j', $boardingCheckIn) . "</td>";
     }
     echo "<td>$boardingCondoID</td>
-    <td>$boardingName</td>
+    <td";
+    if ($boardingCheckOut==$dateToday) {
+      echo " class='checkOutToday'";
+    }
+    echo ">$boardingName</td>
     <td>
     <span class='label label-";
     if ($boardingFoodType=='Ours') {
