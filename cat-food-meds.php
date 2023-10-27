@@ -200,6 +200,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
             success:function(response){
               $('#row-cat-'+id).remove();
               loadFoodMeds('Active', <?php echo "'$sortMeds'"; ?>);
+              loadFoodMeds('Future', <?php echo "'$sortMeds'"; ?>);
             }
           });
         });
