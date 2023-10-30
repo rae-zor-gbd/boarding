@@ -261,18 +261,24 @@ textarea {
   transition-duration:.3s;
   transition-property:background;
 }
-.button-add::before, .button-check::before, .button-delete::before, .button-edit::before, .button-meds::before {
+.button-add::before, .button-check::before, .button-delete::before, .button-door::before, .button-edit::before, .button-meds::before {
   font-family:var(--icon-font-family);
   font-weight:var(--font-weight-regular);
 }
 .button-add::before {
   content:var(--icon-plus);
 }
+.button-check::before, .button-door::before {
+  padding-right:calc(var(--spacer)/5);
+}
 .button-check::before {
   content:var(--icon-check);
 }
 .button-delete::before {
   content:var(--icon-trash);
+}
+.button-door::before {
+  content:var(--icon-door-open);
 }
 .button-edit::before {
   content:var(--icon-edit);

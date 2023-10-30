@@ -204,6 +204,21 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
             }
           });
         });
+        $(document).on('click', '.button-door', function() {
+          var id=$(this).data('id');
+          var row=$(this).data('row');
+          $.ajax({
+            url:'/ajax/delete-room.php',
+            type:'POST',
+            cache:false,
+            data:{id:id},
+            success:function(response){
+              $('#row-dog-'+row).remove();
+              loadFoodMeds('Active', <?php echo "'$sortMeds'"; ?>);
+              loadFoodMeds('Future', <?php echo "'$sortMeds'"; ?>);
+            }
+          });
+        });
         $(document).on('click', '#delete-dog-button', function() {
           var id=$(this).data('id');
           $.ajax({
@@ -529,7 +544,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
           <div class='modal-content'>
             <div class='modal-header'>
               <button type='button' class='close' data-dismiss='modal'></button>
-              <h4 class='modal-title'>Delete Dog</h4>
+              <h4 class='modal-title'>Delete Food</h4>
             </div>
             <div class='modal-body' id='deleteDogModalBody'></div>
             <div class='modal-footer'>
