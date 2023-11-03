@@ -649,6 +649,9 @@ nav {
 .condo-container .condo-row:nth-of-type(2), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(1), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(5), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(6), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(7), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(8), .condo-container:nth-of-type(1) .condo-row:nth-last-child(1) {
   border-top-right-radius:6px;
 }
+.condo-container:nth-of-type(1) .condo-row:nth-last-child(1), .condo-container:nth-of-type(1) .condo-row:nth-of-type(2) {
+  margin-left:-1px;
+}
 .condo-dates, .room-dates {
   font-size:70%;
   padding-top:calc(var(--spacer)/10);
