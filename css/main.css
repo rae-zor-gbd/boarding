@@ -857,6 +857,7 @@ nav {
   width:calc((100vw - (var(--spacer)*2) - (var(--spacer)*11) - (var(--spacer)*(5/3)) - (var(--spacer)*(5/3)))/4);
 }
 .special-notes-label .label {
+  font-variant:none;
   max-width:400px;
 }
 .table-container:has(>table tbody:empty) {
