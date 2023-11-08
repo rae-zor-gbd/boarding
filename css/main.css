@@ -629,11 +629,9 @@ nav {
   margin-left:50%;
   margin-top:var(--spacer);
 }
-.condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(3), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(4), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(5), .condo-container:not(:nth-of-type(1)) .condo-row:nth-of-type(6) {
+.condo-container:nth-of-type(2) .condo-row:nth-of-type(5), .condo-container:nth-of-type(2) .condo-row:nth-of-type(6) {
   margin-bottom:var(--spacer);
-}
-.condo-container:nth-of-type(1) .condo-row:nth-last-child(1), .condo-container:nth-of-type(1) .condo-row:nth-of-type(2), .condo-container:nth-of-type(3) .condo-row:nth-last-child(1), .condo-container:nth-of-type(3) .condo-row:nth-of-type(2) {
-  margin-left:-1px;
+  margin-top:var(--spacer);
 }
 .condo-dates, .room-dates {
   font-size:70%;
@@ -673,6 +671,21 @@ nav {
 }
 .condo-row {
   width:calc((100vw - (var(--spacer)*2) - (var(--spacer)*11) - (var(--spacer)*(5/3)) - (var(--spacer)*(5/3)))/4);
+}
+.condo-row:nth-child(even) {
+  margin-left:-1px;
+}
+.condo-row:nth-last-child(1), .condo-row:nth-of-type(4), .condo-row:nth-of-type(6) {
+  border-bottom-right-radius:6px;
+}
+.condo-row:nth-last-child(2), .condo-row:nth-of-type(3), .condo-row:nth-of-type(5) {
+  border-bottom-left-radius:6px;
+}
+.condo-row:nth-last-child(3), .condo-row:nth-of-type(2), .condo-row:nth-of-type(6) {
+  border-top-right-radius:6px;
+}
+.condo-row:nth-last-child(4), .condo-row:nth-of-type(1), .condo-row:nth-of-type(5) {
+  border-top-left-radius:6px;
 }
 .condo-row.disabled:has(.condo-occupant-column:empty), .room-row.disabled:has(.room-occupant-column:empty) {
   background-color:var(--color-05);
