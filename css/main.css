@@ -304,6 +304,9 @@ textarea {
   margin-left:calc(var(--spacer)/15);
   position:relative;
 }
+.input-group:has(input[type=checkbox]) label:hover {
+  cursor:pointer;
+}
 .input-group:not(:last-child) {
   margin-bottom:calc(var(--spacer)/2);
 }
@@ -855,6 +858,9 @@ nav {
 .special-notes-label .label {
   font-variant:none;
   max-width:400px;
+}
+.special-notes-tag:not(:nth-of-type(1))::before {
+  content:"; ";
 }
 .table-container:has(>table tbody:empty) {
   display:none;

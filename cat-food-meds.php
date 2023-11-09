@@ -130,12 +130,17 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
           } else {
             var separateToFeed='No';
           }
+          if (document.getElementById('newGrazer').checked==true) {
+            var grazer='Yes';
+          } else {
+            var grazer='No';
+          }
           if (status!='' && reservationID!='' && foodType!='' && feedingInstructions!='') {
             $.ajax({
               url:'/ajax/add-cat-food.php',
               type:'POST',
               cache:false,
-              data:{status:status, reservationID:reservationID, foodType:foodType, feedingInstructions:feedingInstructions, specialNotes:specialNotes, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder, separateToFeed:separateToFeed},
+              data:{status:status, reservationID:reservationID, foodType:foodType, feedingInstructions:feedingInstructions, specialNotes:specialNotes, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder, separateToFeed:separateToFeed, grazer:grazer},
               success:function(response){
                 loadFoodMeds(status, <?php echo "'$sortMeds'"; ?>);
                 $('#addFoodModal').modal('hide');
@@ -329,12 +334,17 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
           } else {
             var separateToFeed='No';
           }
+          if (document.getElementById('editGrazer').checked==true) {
+            var grazer='Yes';
+          } else {
+            var grazer='No';
+          }
           if (id!='' && status!='' && foodType!='' && feedingInstructions!='') {
             $.ajax({
               url:'/ajax/edit-cat-food.php',
               type:'POST',
               cache:false,
-              data:{id:id, status:status, foodType:foodType, feedingInstructions:feedingInstructions, specialNotes:specialNotes, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder, separateToFeed:separateToFeed},
+              data:{id:id, status:status, foodType:foodType, feedingInstructions:feedingInstructions, specialNotes:specialNotes, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder, separateToFeed:separateToFeed, grazer:grazer},
               success:function(response){
                 $('#editCatModal').modal('hide');
                 $('#editCatModalBody').empty();

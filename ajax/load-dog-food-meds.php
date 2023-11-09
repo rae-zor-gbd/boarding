@@ -3,7 +3,7 @@ include '../assets/config.php';
 if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
   $status=$_POST['status'];
   $sortMeds=$_POST['sortMeds'];
-  $sql_all_dogs="SELECT r.dogReservationID, dogFoodID, checkIn, checkOut, roomID, dogName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM dogs_reservations r JOIN dogs_food f USING (dogReservationID)";
+  $sql_all_dogs="SELECT r.dogReservationID, dogFoodID, checkIn, checkOut, roomID, dogName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed, grazer FROM dogs_reservations r JOIN dogs_food f USING (dogReservationID)";
   if ($sortMeds=='all') {
     $sql_all_dogs.=" WHERE status='$status' AND checkOut>=DATE(NOW())";
   } elseif ($sortMeds=='am') {
@@ -36,6 +36,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     $boardingSlowFeeder=$row_all_dogs['slowFeeder'];
     $boardingElevatedFeeder=$row_all_dogs['elevatedFeeder'];
     $boardingSeparateToFeed=$row_all_dogs['separateToFeed'];
+    $boardingGrazer=$row_all_dogs['grazer'];
     echo "<tr id='row-dog-$boardingFoodID'>";
     if ($status=='Future') {
       echo "<td>" . date('D n/j', $boardingCheckIn) . "</td>";
@@ -56,27 +57,34 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     echo "'>$boardingFoodType</span>
     </td>
     <td>" . stripslashes($boardingFeedingInstructions) . "<br>";
-    if ($boardingFoodAllergies=='Yes') {
-      echo "<span class='food-label label label-danger'>Food Allergies</span>";
-    }
-    if ($boardingSeparateToFeed=='Yes') {
-      echo "<span class='food-label label label-primary'>Separate To Feed</span>";
-    }
-    if ($boardingNoSlipBowl=='Yes') {
-      echo "<span class='food-label label label-primary'>No-Slip Bowl</span>";
-    }
-    if ($boardingPlasticBowl=='Yes') {
-      echo "<span class='food-label label label-primary'>Plastic Bowl</span>";
-    }
-    if ($boardingSlowFeeder=='Yes') {
-      echo "<span class='food-label label label-primary'>Slow Feeder</span>";
-    }
-    if ($boardingElevatedFeeder=='Yes') {
-      echo "<span class='food-label label label-primary'>Elevated Feeder</span>";
-    }
-    if (isset($boardingSpecialNotes) AND $boardingSpecialNotes!='') {
+    if ($boardingFoodAllergies=='Yes' OR $boardingSeparateToFeed=='Yes' OR $boardingGrazer=='Yes' OR $boardingNoSlipBowl=='Yes' OR $boardingPlasticBowl=='Yes' OR $boardingSlowFeeder=='Yes' OR $boardingElevatedFeeder=='Yes' OR (isset($boardingSpecialNotes) AND $boardingSpecialNotes!='')) {
       echo "<div class='special-notes-label'>
-      <span class='label label-info'>$boardingSpecialNotes</span>
+      <span class='label label-info'>";
+      if ($boardingFoodAllergies=='Yes') {
+        echo "<span class='special-notes-tag'>Food Allergies</span>";
+      }
+      if ($boardingSeparateToFeed=='Yes') {
+        echo "<span class='special-notes-tag'>Separate To Feed</span>";
+      }
+      if ($boardingNoSlipBowl=='Yes') {
+        echo "<span class='special-notes-tag'>No-Slip Bowl</span>";
+      }
+      if ($boardingPlasticBowl=='Yes') {
+        echo "<span class='special-notes-tag'>Plastic Bowl</span>";
+      }
+      if ($boardingSlowFeeder=='Yes') {
+        echo "<span class='special-notes-tag'>Slow Feeder</span>";
+      }
+      if ($boardingElevatedFeeder=='Yes') {
+        echo "<span class='special-notes-tag'>Elevated Feeder</span>";
+      }
+      if ($boardingGrazer=='Yes') {
+        echo "<span class='special-notes-tag'>Grazer</span>";
+      }
+      if (isset($boardingSpecialNotes) AND $boardingSpecialNotes!='') {
+        echo "<span class='special-notes-tag'>$boardingSpecialNotes</span>";
+      }
+      echo "</span>
       </div>";
     }
     echo "</td>
@@ -104,7 +112,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
         if ($frequency=='As Needed') {
           echo "warning";
         } elseif ($frequency=='Other') {
-          echo "info";
+          echo "primary";
         } else {
           echo "danger";
         }

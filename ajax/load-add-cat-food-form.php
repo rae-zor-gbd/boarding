@@ -44,6 +44,10 @@ if (isset($_POST['status'])) {
   <input type='checkbox' id='newSeparateToFeed' name='separateToFeed' value='Yes'>
   <label for='newSeparateToFeed'>Separate To Feed</label>
   </div>
+  <div class='input-group'>
+  <input type='checkbox' id='newGrazer' name='grazer' value='Yes'>
+  <label for='newGrazer'>Grazer</label>
+  </div>
   </div>
   <div class='col-sm-4'>
   <div class='input-group'>

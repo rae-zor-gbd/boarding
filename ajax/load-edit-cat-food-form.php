@@ -3,7 +3,7 @@ include '../assets/config.php';
 if (isset($_POST['id']) AND isset($_POST['status'])) {
   $id=$_POST['id'];
   $status=$_POST['status'];
-  $sql_cat_info="SELECT condoID, catName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed FROM cats_reservations r JOIN cats_food f USING (catReservationID) WHERE catFoodID='$id'";
+  $sql_cat_info="SELECT condoID, catName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed, grazer FROM cats_reservations r JOIN cats_food f USING (catReservationID) WHERE catFoodID='$id'";
   $result_cat_info=$conn->query($sql_cat_info);
   $row_cat_info=$result_cat_info->fetch_assoc();
   $condo=$row_cat_info['condoID'];
@@ -17,6 +17,7 @@ if (isset($_POST['id']) AND isset($_POST['status'])) {
   $slowFeeder=$row_cat_info['slowFeeder'];
   $elevatedFeeder=$row_cat_info['elevatedFeeder'];
   $separateToFeed=$row_cat_info['separateToFeed'];
+  $grazer=$row_cat_info['grazer'];
   echo "<input type='hidden' class='form-control' name='status' id='editID' value='$id' required>
   <div class='input-group'>
   <span class='input-group-addon status'>Status</span>
@@ -83,6 +84,14 @@ if (isset($_POST['id']) AND isset($_POST['status'])) {
   }
   echo ">
   <label for='editSeparateToFeed'>Separate To Feed</label>
+  </div>
+  <div class='input-group'>
+  <input type='checkbox' id='editGrazer' name='grazer' value='Yes'";
+  if ($grazer=='Yes') {
+    echo " checked";
+  }
+  echo ">
+  <label for='editGrazer'>Grazer</label>
   </div>
   </div>
   <div class='col-sm-4'>
