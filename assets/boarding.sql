@@ -12,7 +12,8 @@ CREATE TABLE condos (
   groupID INT(11) NOT NULL,
   status ENUM('Enabled', 'Disabled') NOT NULL DEFAULT 'Enabled',
   description VARCHAR(255) DEFAULT NULL,
-  PRIMARY KEY (condoID)
+  PRIMARY KEY (condoID),
+  CONSTRAINT unique_condos UNIQUE (columnID, rowID, groupID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO condos (condoID, columnID, rowID, groupID, status, description) VALUES
@@ -85,7 +86,8 @@ CREATE TABLE rooms (
   groupID INT(11) NOT NULL,
   status ENUM('Enabled', 'Disabled') NOT NULL DEFAULT 'Enabled',
   description VARCHAR(255) DEFAULT NULL,
-  PRIMARY KEY (roomID)
+  PRIMARY KEY (roomID),
+  CONSTRAINT unique_rooms UNIQUE (columnID, rowID, groupID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO rooms (roomID, columnID, rowID, groupID, status, description) VALUES
