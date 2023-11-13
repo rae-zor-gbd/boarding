@@ -766,6 +766,7 @@ nav {
   padding:calc(var(--spacer)/5) calc(var(--spacer)/3.5) calc(var(--spacer)/7);
 }
 .medication-notes {
+  font-variant:none;
   text-decoration:underline dotted;
 }
 .panel {
