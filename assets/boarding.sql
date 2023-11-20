@@ -36,19 +36,23 @@ INSERT INTO condos (condoID, columnID, rowID, groupID, status, description) VALU
 (17, 2, 1, 3, 'Enabled', NULL),
 (18, 1, 1, 3, 'Enabled', NULL);
 
+CREATE TABLE cats_reservations (
+  catReservationID INT(11) NOT NULL AUTO_INCREMENT,
+  condoID INT(11) NOT NULL,
+  catName VARCHAR(255) NOT NULL,
+  checkIn DATE NOT NULL,
+  checkOut DATE NOT NULL,
+  lastUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (catReservationID),
+  FOREIGN KEY (condoID) REFERENCES condos(condoID) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE TABLE cats_food (
   catFoodID INT(11) NOT NULL AUTO_INCREMENT,
   catReservationID INT(11) NOT NULL,
   foodType ENUM('Own', 'Ours') NOT NULL,
   feedingInstructions TEXT NOT NULL,
   specialNotes TEXT DEFAULT NULL,
-  foodAllergies ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
-  separateToFeed ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
-  noSlipBowl ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
-  plasticBowl ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
-  slowFeeder ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
-  elevatedFeeder ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
-  grazer ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
   status ENUM('Active', 'Future') NOT NULL,
   lastUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (catFoodID),
@@ -66,17 +70,6 @@ CREATE TABLE cats_medications (
   lastUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (catMedID),
   FOREIGN KEY (catReservationID) REFERENCES cats_reservations(catReservationID) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-CREATE TABLE cats_reservations (
-  catReservationID INT(11) NOT NULL AUTO_INCREMENT,
-  condoID INT(11) NOT NULL,
-  catName VARCHAR(255) NOT NULL,
-  checkIn DATE NOT NULL,
-  checkOut DATE NOT NULL,
-  lastUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (catReservationID),
-  FOREIGN KEY (condoID) REFERENCES condos(condoID) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE rooms (
@@ -158,19 +151,23 @@ INSERT INTO rooms (roomID, columnID, rowID, groupID, status, description) VALUES
 (65, 4, 2, 1, 'Enabled', NULL),
 (66, 4, 1, 1, 'Disabled', 'Sully\'s Room');
 
+CREATE TABLE dogs_reservations (
+  dogReservationID INT(11) NOT NULL AUTO_INCREMENT,
+  roomID INT(11) NOT NULL,
+  dogName VARCHAR(255) NOT NULL,
+  checkIn DATE NOT NULL,
+  checkOut DATE NOT NULL,
+  lastUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (dogReservationID),
+  FOREIGN KEY (roomID) REFERENCES rooms(roomID) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE TABLE dogs_food (
   dogFoodID INT(11) NOT NULL AUTO_INCREMENT,
   dogReservationID INT(11) NOT NULL,
   foodType ENUM('Own', 'Ours') NOT NULL,
   feedingInstructions TEXT NOT NULL,
   specialNotes TEXT DEFAULT NULL,
-  foodAllergies ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
-  separateToFeed ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
-  noSlipBowl ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
-  plasticBowl ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
-  slowFeeder ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
-  elevatedFeeder ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
-  grazer ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
   status ENUM('Active', 'Future') NOT NULL,
   lastUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (dogFoodID),
@@ -190,24 +187,14 @@ CREATE TABLE dogs_medications (
   FOREIGN KEY (dogReservationID) REFERENCES dogs_reservations(dogReservationID) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE dogs_reservations (
-  dogReservationID INT(11) NOT NULL AUTO_INCREMENT,
-  roomID INT(11) NOT NULL,
-  dogName VARCHAR(255) NOT NULL,
-  checkIn DATE NOT NULL,
-  checkOut DATE NOT NULL,
-  lastUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (dogReservationID),
-  FOREIGN KEY (roomID) REFERENCES rooms(roomID) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 CREATE TABLE medications (
-  medID INT(11) NOT NULL AUTO_INCREMENT,
-  medName VARCHAR(255) NOT NULL UNIQUE,
-  PRIMARY KEY (medID)
+  medName VARCHAR(255) NOT NULL,
+  PRIMARY KEY (medName)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO medications (medName) VALUES
+('Acepromazine'),
+('Acezine'),
 ('Actigall'),
 ('Allergenic Extract'),
 ('Alprazolam'),
@@ -220,6 +207,7 @@ INSERT INTO medications (medName) VALUES
 ('Antimicrobial Dog Wipes'),
 ('Apoquel'),
 ('Atopica'),
+('Atravet'),
 ('Baytril'),
 ('Benadryl'),
 ('Benazepril'),
@@ -432,5 +420,39 @@ INSERT INTO medications (medName) VALUES
 ('Zonisamide'),
 ('Zuplenz'),
 ('Zyrtec');
+
+CREATE TABLE tags (
+  tagID INT(11) NOT NULL AUTO_INCREMENT,
+  tagName VARCHAR(255) NOT NULL,
+  forDogs ENUM('Yes', 'No') NOT NULL DEFAULT 'Yes',
+  forCats ENUM('Yes', 'No') NOT NULL DEFAULT 'Yes',
+  sortID INT(11) NOT NULL UNIQUE,
+  PRIMARY KEY (tagID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO tags (tagID, tagName, forDogs, forCats, sortID) VALUES
+(1, 'Food Allergies', 'Yes', 'Yes', 1),
+(2, 'Separate to Feed', 'Yes', 'Yes', 2),
+(3, 'No-Slip Bowl', 'Yes', 'Yes', 3),
+(4, 'Plastic Bowl', 'Yes', 'Yes', 4),
+(5, 'Slow Feeder', 'Yes', 'Yes', 5),
+(6, 'Elevated Feeder', 'Yes', 'Yes', 6),
+(7, 'Grazer', 'Yes', 'Yes', 7);
+
+CREATE TABLE cats_tags (
+  catReservationID INT(11) NOT NULL,
+  tagID INT(11) NOT NULL,
+  PRIMARY KEY (catReservationID, tagID),
+  FOREIGN KEY (catReservationID) REFERENCES cats_reservations(catReservationID) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (tagID) REFERENCES tags(tagID) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE dogs_tags (
+  dogReservationID INT(11) NOT NULL,
+  tagID INT(11) NOT NULL,
+  PRIMARY KEY (dogReservationID, tagID),
+  FOREIGN KEY (dogReservationID) REFERENCES dogs_reservations(dogReservationID) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (tagID) REFERENCES tags(tagID) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 SET FOREIGN_KEY_CHECKS=1;

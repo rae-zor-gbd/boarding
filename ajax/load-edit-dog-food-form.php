@@ -3,22 +3,17 @@ include '../assets/config.php';
 if (isset($_POST['id']) AND isset($_POST['status'])) {
   $id=$_POST['id'];
   $status=$_POST['status'];
-  $sql_dog_info="SELECT roomID, dogName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed, grazer FROM dogs_reservations r JOIN dogs_food f USING (dogReservationID) WHERE dogFoodID='$id'";
+  $sql_dog_info="SELECT r.dogReservationID, roomID, dogName, foodType, feedingInstructions, specialNotes FROM dogs_reservations r JOIN dogs_food f USING (dogReservationID) WHERE dogFoodID='$id'";
   $result_dog_info=$conn->query($sql_dog_info);
   $row_dog_info=$result_dog_info->fetch_assoc();
+  $reservationID=$row_dog_info['dogReservationID'];
   $room=$row_dog_info['roomID'];
   $dogName=htmlspecialchars($row_dog_info['dogName'], ENT_QUOTES);
   $foodType=$row_dog_info['foodType'];
   $feedingInstructions=htmlspecialchars($row_dog_info['feedingInstructions'], ENT_QUOTES);
   $specialNotes=htmlspecialchars($row_dog_info['specialNotes'], ENT_QUOTES);
-  $foodAllergies=$row_dog_info['foodAllergies'];
-  $noSlipBowl=$row_dog_info['noSlipBowl'];
-  $plasticBowl=$row_dog_info['plasticBowl'];
-  $slowFeeder=$row_dog_info['slowFeeder'];
-  $elevatedFeeder=$row_dog_info['elevatedFeeder'];
-  $separateToFeed=$row_dog_info['separateToFeed'];
-  $grazer=$row_dog_info['grazer'];
-  echo "<input type='hidden' class='form-control' name='status' id='editID' value='$id' required>
+  echo "<input type='hidden' class='form-control' name='id' id='editID' value='$id' required>
+  <input type='hidden' class='form-control' name='reservationID' id='editReservationID' value='$reservationID' required>
   <div class='input-group'>
   <span class='input-group-addon status'>Status</span>
   <select class='form-control' name='status' id='editStatus' required>
@@ -67,69 +62,28 @@ if (isset($_POST['id']) AND isset($_POST['status'])) {
   <span class='input-group-addon notes'>Special Notes</span>
   <textarea class='form-control' name='special-notes' id='editSpecialNotes' rows='5'>$specialNotes</textarea>
   </div>
-  <div class='row'>
-  <div class='col-sm-4'>
-  <div class='input-group'>
-  <input type='checkbox' id='editFoodAllergies' name='foodAllergies' value='Yes'";
-  if ($foodAllergies=='Yes') {
-    echo " checked";
+  <div class='tag-group'>";
+  $sql_tags_info="SELECT tagID FROM dogs_tags WHERE dogReservationID='$reservationID' ORDER BY tagID";
+  $result_tags_info=$conn->query($sql_tags_info);
+  $tags_info=array();
+  while ($row_tags_info=$result_tags_info->fetch_assoc()) {
+    $tagID=$row_tags_info['tagID'];
+    array_push($tags_info, $tagID);
   }
-  echo ">
-  <label for='editFoodAllergies'>Food Allergies</label>
-  </div>
-  <div class='input-group'>
-  <input type='checkbox' id='editSeparateToFeed' name='separateToFeed' value='Yes'";
-  if ($separateToFeed=='Yes') {
-    echo " checked";
+  $sql_all_tags="SELECT tagID, tagName FROM tags WHERE forDogs='Yes' ORDER BY sortID";
+  $result_all_tags=$conn->query($sql_all_tags);
+  while ($row_all_tags=$result_all_tags->fetch_assoc()) {
+    $allTagID=$row_all_tags['tagID'];
+    $allTagName=htmlspecialchars($row_all_tags['tagName'], ENT_QUOTES);
+    echo "<div class='input-group'>
+    <input type='checkbox' id='editTag$allTagID' name='tag$allTagID' value='$allTagID'";
+    if (in_array($allTagID, $tags_info)) {
+      echo " checked";
+    }
+    echo ">
+    <label for='editTag$allTagID'>$allTagName</label>
+    </div>";
   }
-  echo ">
-  <label for='editSeparateToFeed'>Separate To Feed</label>
-  </div>
-  <div class='input-group'>
-  <input type='checkbox' id='editGrazer' name='grazer' value='Yes'";
-  if ($grazer=='Yes') {
-    echo " checked";
-  }
-  echo ">
-  <label for='editGrazer'>Grazer</label>
-  </div>
-  </div>
-  <div class='col-sm-4'>
-  <div class='input-group'>
-  <input type='checkbox' id='editNoSlipBowl' name='noSlipBowl' value='Yes'";
-  if ($noSlipBowl=='Yes') {
-    echo " checked";
-  }
-  echo ">
-  <label for='editNoSlipBowl'>No-Slip Bowl</label>
-  </div>
-  <div class='input-group'>
-  <input type='checkbox' id='editPlasticBowl' name='plasticBowl' value='Yes'";
-  if ($plasticBowl=='Yes') {
-    echo " checked";
-  }
-  echo ">
-  <label for='editPlasticBowl'>Plastic Bowl</label>
-  </div>
-  </div>
-  <div class='col-sm-4'>
-  <div class='input-group'>
-  <input type='checkbox' id='editSlowFeeder' name='slowFeeder' value='Yes'";
-  if ($slowFeeder=='Yes') {
-    echo " checked";
-  }
-  echo ">
-  <label for='editSlowFeeder'>Slow Feeder</label>
-  </div>
-  <div class='input-group'>
-  <input type='checkbox' id='editElevatedFeeder' name='elevatedFeeder' value='Yes'";
-  if ($elevatedFeeder=='Yes') {
-    echo " checked";
-  }
-  echo ">
-  <label for='editElevatedFeeder'>Elevated Feeder</label>
-  </div>
-  </div>
-  </div>";
+  echo "</div>";
 }
 ?>

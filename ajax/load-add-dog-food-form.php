@@ -34,41 +34,17 @@ if (isset($_POST['status'])) {
   <span class='input-group-addon notes'>Special Notes</span>
   <textarea class='form-control' name='special-notes' id='newSpecialNotes' rows='5'></textarea>
   </div>
-  <div class='row'>
-  <div class='col-sm-4'>
-  <div class='input-group'>
-  <input type='checkbox' id='newFoodAllergies' name='foodAllergies' value='Yes'>
-  <label for='newFoodAllergies'>Food Allergies</label>
-  </div>
-  <div class='input-group'>
-  <input type='checkbox' id='newSeparateToFeed' name='separateToFeed' value='Yes'>
-  <label for='newSeparateToFeed'>Separate To Feed</label>
-  </div>
-  <div class='input-group'>
-  <input type='checkbox' id='newGrazer' name='grazer' value='Yes'>
-  <label for='newGrazer'>Grazer</label>
-  </div>
-  </div>
-  <div class='col-sm-4'>
-  <div class='input-group'>
-  <input type='checkbox' id='newNoSlipBowl' name='noSlipBowl' value='Yes'>
-  <label for='newNoSlipBowl'>No-Slip Bowl</label>
-  </div>
-  <div class='input-group'>
-  <input type='checkbox' id='newPlasticBowl' name='plasticBowl' value='Yes'>
-  <label for='newPlasticBowl'>Plastic Bowl</label>
-  </div>
-  </div>
-  <div class='col-sm-4'>
-  <div class='input-group'>
-  <input type='checkbox' id='newSlowFeeder' name='slowFeeder' value='Yes'>
-  <label for='newSlowFeeder'>Slow Feeder</label>
-  </div>
-  <div class='input-group'>
-  <input type='checkbox' id='newElevatedFeeder' name='elevatedFeeder' value='Yes'>
-  <label for='newElevatedFeeder'>Elevated Feeder</label>
-  </div>
-  </div>
-  </div>";
+  <div class='tag-group'>";
+  $sql_all_tags="SELECT tagID, tagName FROM tags WHERE forDogs='Yes' ORDER BY sortID";
+  $result_all_tags=$conn->query($sql_all_tags);
+  while ($row_all_tags=$result_all_tags->fetch_assoc()) {
+    $allTagID=$row_all_tags['tagID'];
+    $allTagName=htmlspecialchars($row_all_tags['tagName'], ENT_QUOTES);
+    echo "<div class='input-group'>
+    <input type='checkbox' id='newTag$allTagID' name='tag$allTagID' value='$allTagID'>
+    <label for='newTag$allTagID'>$allTagName</label>
+    </div>";
+  }
+  echo "</div>";
 }
 ?>

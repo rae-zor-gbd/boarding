@@ -100,47 +100,26 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
           var foodType=document.getElementById('newFoodType').value;
           var feedingInstructions=document.getElementById('newFeedingInstructions').value.toUpperCase();
           var specialNotes=document.getElementById('newSpecialNotes').value.toUpperCase();
-          if (document.getElementById('newFoodAllergies').checked==true) {
-            var foodAllergies='Yes';
-          } else {
-            var foodAllergies='No';
+          <?php
+          $sql_add_tags="SELECT tagID FROM tags WHERE forDogs='Yes' ORDER BY tagID";
+          $result_add_tags=$conn->query($sql_add_tags);
+          $tags_add=array();
+          while ($row_add_tags=$result_add_tags->fetch_assoc()) {
+            $addTagsID=$row_add_tags['tagID'];
+            array_push($tags_add, 'tag' . $addTagsID);
+            echo "if (document.getElementById('newTag$addTagsID').checked==true) {
+              var tag$addTagsID='Yes';
+            } else {
+              var tag$addTagsID='No';
+            }";
           }
-          if (document.getElementById('newNoSlipBowl').checked==true) {
-            var noSlipBowl='Yes';
-          } else {
-            var noSlipBowl='No';
-          }
-          if (document.getElementById('newPlasticBowl').checked==true) {
-            var plasticBowl='Yes';
-          } else {
-            var plasticBowl='No';
-          }
-          if (document.getElementById('newSlowFeeder').checked==true) {
-            var slowFeeder='Yes';
-          } else {
-            var slowFeeder='No';
-          }
-          if (document.getElementById('newElevatedFeeder').checked==true) {
-            var elevatedFeeder='Yes';
-          } else {
-            var elevatedFeeder='No';
-          }
-          if (document.getElementById('newSeparateToFeed').checked==true) {
-            var separateToFeed='Yes';
-          } else {
-            var separateToFeed='No';
-          }
-          if (document.getElementById('newGrazer').checked==true) {
-            var grazer='Yes';
-          } else {
-            var grazer='No';
-          }
+          ?>
           if (status!='' && reservationID!='' && foodType!='' && feedingInstructions!='') {
             $.ajax({
               url:'/ajax/add-dog-food.php',
               type:'POST',
               cache:false,
-              data:{status:status, reservationID:reservationID, foodType:foodType, feedingInstructions:feedingInstructions, specialNotes:specialNotes, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder, separateToFeed:separateToFeed, grazer:grazer},
+              data:{status:status, reservationID:reservationID, foodType:foodType, feedingInstructions:feedingInstructions, specialNotes:specialNotes<?php foreach ($tags_add as $tagNo) { echo ", $tagNo:$tagNo"; }?>},
               success:function(response){
                 loadFoodMeds(status, <?php echo "'$sortMeds'"; ?>);
                 $('#addFoodModal').modal('hide');
@@ -301,51 +280,31 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
         $('#editDog').click(function (e) {
           e.preventDefault();
           var id=document.getElementById('editID').value;
+          var reservationID=document.getElementById('editReservationID').value;
           var status=document.getElementById('editStatus').value;
           var foodType=document.getElementById('editFoodType').value;
           var feedingInstructions=document.getElementById('editFeedingInstructions').value.toUpperCase();
           var specialNotes=document.getElementById('editSpecialNotes').value.toUpperCase();
-          if (document.getElementById('editFoodAllergies').checked==true) {
-            var foodAllergies='Yes';
-          } else {
-            var foodAllergies='No';
+          <?php
+          $sql_edit_tags="SELECT tagID FROM tags WHERE forDogs='Yes' ORDER BY tagID";
+          $result_edit_tags=$conn->query($sql_edit_tags);
+          $tags_edit=array();
+          while ($row_edit_tags=$result_edit_tags->fetch_assoc()) {
+            $editTagsID=$row_edit_tags['tagID'];
+            array_push($tags_edit, 'tag' . $editTagsID);
+            echo "if (document.getElementById('editTag$editTagsID').checked==true) {
+              var tag$editTagsID='Yes';
+            } else {
+              var tag$editTagsID='No';
+            }";
           }
-          if (document.getElementById('editNoSlipBowl').checked==true) {
-            var noSlipBowl='Yes';
-          } else {
-            var noSlipBowl='No';
-          }
-          if (document.getElementById('editPlasticBowl').checked==true) {
-            var plasticBowl='Yes';
-          } else {
-            var plasticBowl='No';
-          }
-          if (document.getElementById('editSlowFeeder').checked==true) {
-            var slowFeeder='Yes';
-          } else {
-            var slowFeeder='No';
-          }
-          if (document.getElementById('editElevatedFeeder').checked==true) {
-            var elevatedFeeder='Yes';
-          } else {
-            var elevatedFeeder='No';
-          }
-          if (document.getElementById('editSeparateToFeed').checked==true) {
-            var separateToFeed='Yes';
-          } else {
-            var separateToFeed='No';
-          }
-          if (document.getElementById('editGrazer').checked==true) {
-            var grazer='Yes';
-          } else {
-            var grazer='No';
-          }
+          ?>
           if (id!='' && status!='' && foodType!='' && feedingInstructions!='') {
             $.ajax({
               url:'/ajax/edit-dog-food.php',
               type:'POST',
               cache:false,
-              data:{id:id, status:status, foodType:foodType, feedingInstructions:feedingInstructions, specialNotes:specialNotes, foodAllergies:foodAllergies, noSlipBowl:noSlipBowl, plasticBowl:plasticBowl, slowFeeder:slowFeeder, elevatedFeeder:elevatedFeeder, separateToFeed:separateToFeed, grazer:grazer},
+              data:{id:id, reservationID:reservationID, status:status, foodType:foodType, feedingInstructions:feedingInstructions, specialNotes:specialNotes<?php foreach ($tags_edit as $tagNo) { echo ", $tagNo:$tagNo"; }?>},
               success:function(response){
                 $('#editDogModal').modal('hide');
                 $('#editDogModalBody').empty();

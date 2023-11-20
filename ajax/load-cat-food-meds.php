@@ -3,7 +3,7 @@ include '../assets/config.php';
 if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
   $status=$_POST['status'];
   $sortMeds=$_POST['sortMeds'];
-  $sql_all_cats="SELECT r.catReservationID, catFoodID, checkIn, checkOut, condoID, catName, foodType, feedingInstructions, specialNotes, foodAllergies, noSlipBowl, plasticBowl, slowFeeder, elevatedFeeder, separateToFeed, grazer FROM cats_reservations r JOIN cats_food f USING (catReservationID)";
+  $sql_all_cats="SELECT r.catReservationID, catFoodID, checkIn, checkOut, condoID, catName, foodType, feedingInstructions, specialNotes FROM cats_reservations r JOIN cats_food f USING (catReservationID)";
   if ($sortMeds=='all') {
     $sql_all_cats.=" WHERE status='$status' AND checkOut>=DATE(NOW())";
   } elseif ($sortMeds=='am') {
@@ -30,13 +30,6 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     $boardingFoodType=$row_all_cats['foodType'];
     $boardingFeedingInstructions=nl2br(htmlspecialchars($row_all_cats['feedingInstructions'], ENT_QUOTES));
     $boardingSpecialNotes=htmlspecialchars($row_all_cats['specialNotes'], ENT_QUOTES);
-    $boardingFoodAllergies=$row_all_cats['foodAllergies'];
-    $boardingNoSlipBowl=$row_all_cats['noSlipBowl'];
-    $boardingPlasticBowl=$row_all_cats['plasticBowl'];
-    $boardingSlowFeeder=$row_all_cats['slowFeeder'];
-    $boardingElevatedFeeder=$row_all_cats['elevatedFeeder'];
-    $boardingSeparateToFeed=$row_all_cats['separateToFeed'];
-    $boardingGrazer=$row_all_cats['grazer'];
     echo "<tr id='row-cat-$boardingFoodID'>";
     if ($status=='Future') {
       echo "<td>" . date('D n/j', $boardingCheckIn) . "</td>";
@@ -57,29 +50,14 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     echo "'>$boardingFoodType</span>
     </td>
     <td>" . stripslashes($boardingFeedingInstructions) . "<br>";
-    if ($boardingFoodAllergies=='Yes' OR $boardingSeparateToFeed=='Yes' OR $boardingGrazer=='Yes' OR $boardingNoSlipBowl=='Yes' OR $boardingPlasticBowl=='Yes' OR $boardingSlowFeeder=='Yes' OR $boardingElevatedFeeder=='Yes' OR (isset($boardingSpecialNotes) AND $boardingSpecialNotes!='')) {
+    $sql_display_tags="SELECT tagName FROM cats_tags dt JOIN tags t USING (tagID) WHERE catReservationID='$boardingReservationID' ORDER BY sortID";
+    $result_display_tags=$conn->query($sql_display_tags);
+    if ($result_display_tags->num_rows>0 OR $boardingSpecialNotes!='') {
       echo "<div class='special-notes-label'>
       <span class='label label-info'>";
-      if ($boardingFoodAllergies=='Yes') {
-        echo "<span class='special-notes-tag'>Food Allergies</span>";
-      }
-      if ($boardingSeparateToFeed=='Yes') {
-        echo "<span class='special-notes-tag'>Separate To Feed</span>";
-      }
-      if ($boardingNoSlipBowl=='Yes') {
-        echo "<span class='special-notes-tag'>No-Slip Bowl</span>";
-      }
-      if ($boardingPlasticBowl=='Yes') {
-        echo "<span class='special-notes-tag'>Plastic Bowl</span>";
-      }
-      if ($boardingSlowFeeder=='Yes') {
-        echo "<span class='special-notes-tag'>Slow Feeder</span>";
-      }
-      if ($boardingElevatedFeeder=='Yes') {
-        echo "<span class='special-notes-tag'>Elevated Feeder</span>";
-      }
-      if ($boardingGrazer=='Yes') {
-        echo "<span class='special-notes-tag'>Grazer</span>";
+      while ($row_display_tags=$result_display_tags->fetch_assoc()) {
+        $tagName=htmlspecialchars($row_display_tags['tagName'], ENT_QUOTES);
+        echo "<span class='special-notes-tag'>$tagName</span>";
       }
       if (isset($boardingSpecialNotes) AND $boardingSpecialNotes!='') {
         echo "<span class='special-notes-tag'>$boardingSpecialNotes</span>";
