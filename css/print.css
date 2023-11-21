@@ -23,6 +23,12 @@ td:last-of-type, th:last-of-type {
 .container-fluid {
   margin:0;
 }
+.medication-label-buttons {
+  display:none;
+}
+.medication-notes {
+  text-decoration:underline solid;
+}
 .nav-footer {
   display:none;
 }
