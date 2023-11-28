@@ -238,6 +238,9 @@ input[type=checkbox] {
   top:3px;
   width:calc(var(--spacer)/1.75);
 }
+input[type=checkbox][disabled]:hover {
+  cursor:not-allowed;
+}
 input[type=checkbox]:hover {
   cursor:pointer;
 }
@@ -261,7 +264,7 @@ textarea {
   transition-duration:.3s;
   transition-property:background;
 }
-.button-add::before, .button-check::before, .button-delete::before, .button-door::before, .button-edit::before, .button-meds::before {
+.button-add::before, .button-check::before, .button-delete::before, .button-door::before, .button-edit::before, .button-log::before, .button-meds::before {
   font-family:var(--icon-font-family);
   font-weight:var(--font-weight-regular);
 }
@@ -282,6 +285,9 @@ textarea {
 }
 .button-edit::before {
   content:var(--icon-edit);
+}
+.button-log::before {
+  content:var(--icon-clock);
 }
 .button-meds::before {
   content:var(--icon-meds-01);
@@ -726,6 +732,25 @@ nav {
   margin-top:calc(var(--spacer)/2);
   width:100%;
 }
+.log-med-header {
+  font-variant:tabular-nums;
+  font-weight:var(--font-weight-bold);
+  line-height:1.2;
+  padding-bottom:calc(var(--spacer)/3);
+  padding-left:5px;
+  text-decoration:underline;
+  text-transform:uppercase;
+}
+.log-med-table tbody tr td:nth-of-type(2), .log-med-table tbody tr td:nth-of-type(3), .log-med-table tbody tr td:nth-of-type(4), .log-med-table thead tr th:nth-of-type(2), .log-med-table thead tr th:nth-of-type(3), .log-med-table thead tr th:nth-of-type(4) {
+  text-align:center;
+  width:60px;
+}
+.log-med-table tbody tr td input[type=checkbox] {
+  margin-right:0;
+}
+.log-med-table tbody tr td {
+  vertical-align:middle;
+}
 .medication-label {
   min-width:455px;
 }
@@ -757,7 +782,7 @@ nav {
 }
 .medication-label-buttons {
   border-left:1.5px solid rgb(255 255 255 / 50%);
-  min-width:58px;
+  min-width:85px;
   padding:0 5px;
   text-align:center;
   vertical-align:middle;

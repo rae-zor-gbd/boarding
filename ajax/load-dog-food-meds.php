@@ -110,6 +110,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
         }
         echo ")</span>
         <span class='medication-label-buttons'>
+        <button type='button' class='button-log' id='log-med-button' data-toggle='modal' data-target='#logMedModal' data-id='$dogMedID' data-status='$status' data-backdrop='static' title='Log Medication'></button>
         <button type='button' class='button-edit' id='edit-med-button' data-toggle='modal' data-target='#editMedModal' data-id='$dogMedID' data-status='$status' data-backdrop='static' title='Edit Medication'></button>
         <button type='button' class='button-delete' id='delete-med-button' data-toggle='modal' data-target='#deleteMedModal' data-id='$dogMedID' data-status='$status' data-backdrop='static' title='Delete Medication'></button>
         </span>

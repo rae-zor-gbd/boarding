@@ -360,6 +360,19 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
             loadIncompleteFormAlert('#editMedModalBody');
           }
         });
+        $(document).on('click', '#log-med-button', function() {
+          var id=$(this).data('id');
+          var status=$(this).data('status');
+          $.ajax({
+            url:'/ajax/load-log-cat-med-form.php',
+            type:'POST',
+            cache:false,
+            data:{id:id, status:status},
+            success:function(response){
+              $('#logMedModalBody').append(response);
+            }
+          });
+        });
         $('.modal').on('hidden.bs.modal', function(){
           $('#addFoodModalBody').empty();
           $('#addMedModalBody').empty();
@@ -367,6 +380,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
           $('#deleteMedModalBody').empty();
           $('#editCatModalBody').empty();
           $('#editMedModalBody').empty();
+          $('#logMedModalBody').empty();
         });
       });
     </script>
@@ -534,6 +548,23 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
             <div class='modal-body' id='deleteMedModalBody'></div>
             <div class='modal-footer'>
               <button type='submit' class='btn btn-danger' id='deleteMed'>Delete</button>
+              <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <form action='' method='post' spellcheck='false' autocomplete='off' id='logMedForm'>
+      <div class='modal fade' id='logMedModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'>
+          <div class='modal-content'>
+            <div class='modal-header'>
+              <button type='button' class='close' data-dismiss='modal'></button>
+              <h4 class='modal-title'>Log Medication</h4>
+            </div>
+            <div class='modal-body' id='logMedModalBody'></div>
+            <div class='modal-footer'>
+              <button type='submit' class='btn btn-primary' id='logMed'>Submit</button>
               <button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>
             </div>
           </div>

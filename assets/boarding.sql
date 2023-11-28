@@ -72,6 +72,20 @@ CREATE TABLE cats_medications (
   FOREIGN KEY (catReservationID) REFERENCES cats_reservations(catReservationID) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE cats_log (
+  catReservationID INT(11) NOT NULL,
+  catMedID INT(11) NOT NULL,
+  logDate DATE NOT NULL,
+  givenAM ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
+  givenNoon ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
+  givenPM ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
+  notes TEXT DEFAULT NULL,
+  lastUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (catReservationID, catMedID, logDate),
+  FOREIGN KEY (catReservationID) REFERENCES cats_reservations(catReservationID) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (catMedID) REFERENCES cats_medications(catMedID) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE TABLE rooms (
   roomID INT(11) NOT NULL,
   columnID INT(11) NOT NULL,
