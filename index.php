@@ -368,6 +368,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
           $('#deleteMedModalBody').empty();
           $('#editDogModalBody').empty();
           $('#editMedModalBody').empty();
+          $('#logMedModalBody').empty();
         });
       });
     </script>

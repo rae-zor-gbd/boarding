@@ -373,6 +373,55 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
             }
           });
         });
+        $('#logMed').click(function (e) {
+          e.preventDefault();
+          var status=document.getElementById('logStatus').value;
+          var medID=document.getElementById('logMedID').value;
+          var reservationID=document.getElementById('logReservationID').value;
+          var checkIn=document.getElementById('logCheckIn').value;
+          var rangeStart=new Date(document.getElementById('logCheckIn').value);
+          var checkOut=document.getElementById('logCheckOut').value;
+          var rangeEnd=new Date(document.getElementById('logCheckOut').value);
+          let loopDate=new Date(rangeStart);
+          var medsLog=[];
+          while (loopDate<rangeEnd) {
+            var logDate=loopDate.toISOString().slice(0, 10);
+            if (document.getElementById('givenAM'+logDate).checked==true) {
+              medsLog['givenAM'+logDate]='Yes';
+            } else {
+              medsLog['givenAM'+logDate]='No';
+            }
+            if (document.getElementById('givenNoon'+logDate).checked==true) {
+              medsLog['givenNoon'+logDate]='Yes';
+            } else {
+              medsLog['givenNoon'+logDate]='No';
+            }
+            if (document.getElementById('givenPM'+logDate).checked==true) {
+              medsLog['givenPM'+logDate]='Yes';
+            } else {
+              medsLog['givenPM'+logDate]='No';
+            }
+            medsLog['logNotes'+logDate]=document.getElementById('logNotes'+logDate).value.toUpperCase();
+            let nextDate=loopDate.setDate(loopDate.getDate() + 1);
+            loopDate=new Date(nextDate);
+          }
+          var jsonMedsLog=JSON.stringify(medsLog);
+          $.ajax({
+            url:'/ajax/log-cat-med.php',
+            type:'POST',
+            cache:false,
+            data:{status:status, medID:medID, reservationID:reservationID, checkIn:checkIn, checkOut:checkOut, jsonMedsLog:jsonMedsLog},
+            success:function(response){
+              $('#logMedModal').modal('hide');
+              $('#logMedModalBody').empty();
+              $('#table-currently-boarding').empty();
+              $('#table-future-arrivals').empty();
+              loadFoodMeds('Active', <?php echo "'$sortMeds'"; ?>);
+              loadFoodMeds('Future', <?php echo "'$sortMeds'"; ?>);
+              loadTableCounts();
+            }
+          });
+        });
         $('.modal').on('hidden.bs.modal', function(){
           $('#addFoodModalBody').empty();
           $('#addMedModalBody').empty();
