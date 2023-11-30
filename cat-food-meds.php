@@ -412,6 +412,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
             cache:false,
             data:{status:status, medID:medID, reservationID:reservationID, checkIn:checkIn, checkOut:checkOut, jsonMedsLog:jsonMedsLog},
             success:function(response){
+              console.log(medsLog);
               $('#logMedModal').modal('hide');
               $('#logMedModalBody').empty();
               $('#table-currently-boarding').empty();

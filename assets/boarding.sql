@@ -72,7 +72,7 @@ CREATE TABLE cats_medications (
   FOREIGN KEY (catReservationID) REFERENCES cats_reservations(catReservationID) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE cats_log (
+CREATE TABLE cats_medications_log (
   catReservationID INT(11) NOT NULL,
   catMedID INT(11) NOT NULL,
   logDate DATE NOT NULL,
@@ -199,6 +199,20 @@ CREATE TABLE dogs_medications (
   lastUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (dogMedID),
   FOREIGN KEY (dogReservationID) REFERENCES dogs_reservations(dogReservationID) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE dogs_medications_log (
+  dogReservationID INT(11) NOT NULL,
+  dogMedID INT(11) NOT NULL,
+  logDate DATE NOT NULL,
+  givenAM ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
+  givenNoon ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
+  givenPM ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
+  notes TEXT DEFAULT NULL,
+  lastUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (dogReservationID, dogMedID, logDate),
+  FOREIGN KEY (dogReservationID) REFERENCES dogs_reservations(dogReservationID) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (dogMedID) REFERENCES dogs_medications(dogMedID) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE medications (

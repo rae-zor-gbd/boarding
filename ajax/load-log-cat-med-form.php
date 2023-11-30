@@ -56,7 +56,7 @@ if (isset($_POST['status']) AND isset($_POST['id'])) {
   foreach ($dateRange as $logDate) {
     $logDateV1=$logDate->format('Y-m-d');
     $logDateV2=$logDate->format('D n/j');
-    $sql_log_info="SELECT givenAM, givenNoon, givenPM, l.notes FROM cats_log l JOIN cats_medications m USING (catMedID) WHERE l.catReservationID='$reservationID' AND l.catMedID='$medID' AND logDate='$logDateV1'";
+    $sql_log_info="SELECT givenAM, givenNoon, givenPM, l.notes FROM cats_medications_log l JOIN cats_medications m USING (catMedID) WHERE l.catReservationID='$reservationID' AND l.catMedID='$medID' AND logDate='$logDateV1'";
     $result_log_info=$conn->query($sql_log_info);
     if ($result_log_info->num_rows>0) {
       $row_log_info=$result_log_info->fetch_assoc();
