@@ -383,7 +383,7 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
           var checkOut=document.getElementById('logCheckOut').value;
           var rangeEnd=new Date(document.getElementById('logCheckOut').value);
           let loopDate=new Date(rangeStart);
-          var medsLog=[];
+          var medsLog=new Object();
           while (loopDate<rangeEnd) {
             var logDate=loopDate.toISOString().slice(0, 10);
             if (document.getElementById('givenAM'+logDate).checked==true) {
@@ -412,7 +412,6 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
             cache:false,
             data:{status:status, medID:medID, reservationID:reservationID, checkIn:checkIn, checkOut:checkOut, jsonMedsLog:jsonMedsLog},
             success:function(response){
-              console.log(medsLog);
               $('#logMedModal').modal('hide');
               $('#logMedModalBody').empty();
               $('#table-currently-boarding').empty();

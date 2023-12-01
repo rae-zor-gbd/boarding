@@ -250,6 +250,9 @@ label {
   font-weight:var(--font-weight-normal);
   text-transform:uppercase;
 }
+td textarea, .input-group input, .input-group select, .input-group textarea {
+  text-transform:uppercase;
+}
 textarea {
   resize:none;
 }
@@ -297,9 +300,6 @@ textarea {
 }
 .container-fluid {
   margin:calc(var(--spacer)*(2/3)) calc(var(--spacer)*(5/3)) calc(var(--spacer)*(2/3)) calc((var(--spacer)*11) + (var(--spacer)*(5/3)));
-}
-.input-group input, .input-group select, .input-group textarea {
-  text-transform:uppercase;
 }
 .input-group:has(.form-control:required) .input-group-addon::after {
   bottom:5px;
