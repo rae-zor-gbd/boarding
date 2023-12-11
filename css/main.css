@@ -218,7 +218,7 @@ button {
   border:0;
   position:relative;
 }
-button, .nav-link {
+button, .btn, .condo-row.disabled:not(:has(.condo-occupant-column:empty)), .condo-row.enabled:hover:not(:has(.condo-occupant-column:empty)), .nav-link, .room-row.disabled:not(:has(.room-occupant-column:empty)), .room-row.enabled:not(:has(.room-occupant-column:empty)), .table-hover>tbody>tr {
   transform:translateZ(0);
   transition-duration:.3s;
   transition-property:all;
@@ -261,11 +261,6 @@ textarea {
   float:left;
   font-family:var(--icon-font-family);
   margin-right:calc(var(--spacer)/2);
-}
-.btn {
-  transform:translateZ(0);
-  transition-duration:.3s;
-  transition-property:all;
 }
 .button-add::before, .button-check::before, .button-delete::before, .button-door::before, .button-edit::before, .button-log::before, .button-meds::before {
   font-family:var(--icon-font-family);
@@ -699,11 +694,6 @@ nav {
 .condo-row.disabled:has(.condo-occupant-column:empty), .room-row.disabled:has(.room-occupant-column:empty) {
   background-color:var(--color-05);
   background-image:url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
-}
-.condo-row.disabled:not(:has(.condo-occupant-column:empty)), .condo-row.enabled:hover:not(:has(.condo-occupant-column:empty)), .room-row.disabled:not(:has(.room-occupant-column:empty)), .room-row.enabled:not(:has(.room-occupant-column:empty)), .table-hover>tbody>tr {
-  transform:translateZ(0);
-  transition-duration:.3s;
-  transition-property:all;
 }
 .condo-row.disabled:not(:has(.condo-occupant-column:empty)):hover, .condo-row.enabled:hover:not(:has(.condo-occupant-column:empty)):hover, .room-row.disabled:not(:has(.room-occupant-column:empty)):hover, .room-row.enabled:not(:has(.room-occupant-column:empty)):hover {
   background:#F5F5F5;
