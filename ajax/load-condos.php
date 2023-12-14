@@ -35,7 +35,7 @@ if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
         echo "<div class='condo-occupant' id='condo-occupant-$reservationID'>
         <div class='condo-name-dates'>
         <div class='condo-name";
-        if ($reservationCheckOut==$dateToday) {
+        if ($reservationCheckOut<=$dateToday) {
           echo " checkOutToday";
         } elseif (in_array($reservationID, $checkedIn)) {
           echo " checkedIn";

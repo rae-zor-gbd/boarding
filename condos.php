@@ -7,6 +7,7 @@ if (isset($_GET['startDate']) AND $_GET['startDate']!='' AND isset($_GET['endDat
   $startDate=date('Y-m-d');
   $endDate=date('Y-m-d', strtotime($startDate. ' + 30 days'));
 }
+$minStartDate=date('Y-m-d', strtotime($startDate. ' - 1 day'));
 $titleStartDate=date('D n/j', strtotime($startDate));
 $titleEndDate=date('D n/j', strtotime($endDate));
 ?>
@@ -188,11 +189,11 @@ $titleEndDate=date('D n/j', strtotime($endDate));
       <form action='' method='post' spellcheck='false' autocomplete='off' id='toggleDatesForm' onchange='toggleDates()'>
         <div class='input-group'>
           <span class='input-group-addon clock'>Start Date</span>
-          <input type='date' class='form-control' name='start-date' id='startDate' value='<?php echo $startDate; ?>' required>
+          <input type='date' class='form-control' name='start-date' id='startDate' value='<?php echo $startDate; ?>' min='<?php echo $minStartDate; ?>' required>
         </div>
         <div class='input-group'>
           <span class='input-group-addon clock'>End Date</span>
-          <input type='date' class='form-control' name='end-date' id='endDate' value='<?php echo $endDate; ?>' required>
+          <input type='date' class='form-control' name='end-date' id='endDate' value='<?php echo $endDate; ?>' min='<?php echo $startDate; ?>' required>
         </div>
       </form>
       <button type='button' class='btn btn-default nav-button' id='bookCondoButton' data-toggle='modal' data-target='#bookCondoModal' data-backdrop='static' title='Book Condo'>Book Condo</button>

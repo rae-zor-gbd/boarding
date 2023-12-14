@@ -30,7 +30,7 @@ function loadRoomReservation($loadRoomID, $loadRoomStatus, $loadStartDate, $load
     echo "<div class='room-occupant' id='room-occupant-$reservationID'>
     <div class='room-name-dates'>
     <div class='room-name";
-    if ($reservationCheckOut==$dateToday) {
+    if ($reservationCheckOut<=$dateToday) {
       echo " checkOutToday";
     } elseif (in_array($reservationID, $checkedIn)) {
       echo " checkedIn";
