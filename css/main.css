@@ -218,7 +218,7 @@ button {
   border:0;
   position:relative;
 }
-button, .btn, .condo-row.disabled:not(:has(.condo-occupant-column:empty)), .condo-row.enabled:hover:not(:has(.condo-occupant-column:empty)), .nav-link, .room-row.disabled:not(:has(.room-occupant-column:empty)), .room-row.enabled:not(:has(.room-occupant-column:empty)), .table-hover>tbody>tr {
+button, .btn, .condo-row.disabled:not(:has(.condo-occupant-column:empty)), .condo-row.enabled:not(:has(.condo-occupant-column:empty)), .nav-link, .room-row.disabled:not(:has(.room-occupant-column:empty)), .room-row.enabled:not(:has(.room-occupant-column:empty)), .table-hover>tbody>tr {
   transform:translateZ(0);
   transition-duration:.3s;
   transition-property:all;
@@ -674,7 +674,7 @@ nav {
   padding:calc(var(--spacer)/4) calc(var(--spacer)/2);
 }
 .condo-row {
-  width:calc((100vw - (var(--spacer)*2) - (var(--spacer)*11) - (var(--spacer)*(5/3)) - (var(--spacer)*(5/3)))/4);
+  width:calc((100vw - (var(--spacer)*11) - (var(--spacer)*(5/3)) - (var(--spacer)*(5/3)))/4);
 }
 .condo-row:nth-child(even) {
   margin-left:-1px;

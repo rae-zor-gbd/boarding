@@ -1,6 +1,6 @@
 <?php
 include '../assets/config.php';
-function loadRoomReservation($loadRoomID, $loadRoomStatus, $loadStartDate, $loadEndDate) {
+function loadRoomReservation($loadRoomID, $loadRoomStatus, $loadStartDate, $loadEndDate, $loadDescription) {
   include '../assets/config.php';
   echo "<div class='room-row";
   if ($loadRoomStatus=='Disabled') {
@@ -8,7 +8,7 @@ function loadRoomReservation($loadRoomID, $loadRoomStatus, $loadStartDate, $load
   } elseif ($loadRoomStatus=='Enabled') {
     echo " enabled";
   }
-  echo "'>
+  echo "' title='$loadDescription'>
   <div class='room-number'>$loadRoomID</div>
   <div class='room-occupant-column'>";
   $checkedIn=array();
@@ -61,33 +61,35 @@ if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
   while ($row_groups=$result_groups->fetch_assoc()) {
     $groupID=$row_groups['groupID'];
     echo "<div class='rooms-container'>";
-    $sql_multi_column="SELECT roomID, status FROM rooms WHERE groupID='$groupID' AND columnID IN (1,2,3) ORDER BY rowID, columnID";
+    $sql_multi_column="SELECT roomID, status, description FROM rooms WHERE groupID='$groupID' AND columnID IN (1,2,3) ORDER BY rowID, columnID";
     $result_multi_column=$conn->query($sql_multi_column);
     $multiColumn=array();
     while ($row_multi_column=$result_multi_column->fetch_assoc()) {
       $roomID=$row_multi_column['roomID'];
       $status=$row_multi_column['status'];
-      $multiColumn[]=array('room'=>$roomID, 'status'=>$status);
+      $description=htmlspecialchars($row_multi_column['description'], ENT_QUOTES);
+      $multiColumn[]=array('room'=>$roomID, 'status'=>$status, 'description'=>$description);
     }
     echo "<div class='rooms-multi-column'>
     <div class='rooms-multi-row'>";
     foreach($multiColumn as $multiRoom=>$multiStatus) {
-      loadRoomReservation($multiColumn[$multiRoom]['room'], $multiColumn[$multiRoom]['status'], $startDate, $endDate);
+      loadRoomReservation($multiColumn[$multiRoom]['room'], $multiColumn[$multiRoom]['status'], $startDate, $endDate, $multiColumn[$multiRoom]['description']);
     }
     echo "</div>
     </div>";
-    $sql_single_column="SELECT roomID, status FROM rooms WHERE groupID='$groupID' AND columnID=4 ORDER BY rowID, columnID";
+    $sql_single_column="SELECT roomID, status, description FROM rooms WHERE groupID='$groupID' AND columnID=4 ORDER BY rowID, columnID";
     $result_single_column=$conn->query($sql_single_column);
     $singleColumn=array();
     while ($row_single_column=$result_single_column->fetch_assoc()) {
       $roomID=$row_single_column['roomID'];
       $status=$row_single_column['status'];
-      $singleColumn[]=array('room'=>$roomID, 'status'=>$status);
+      $description=htmlspecialchars($row_single_column['description'], ENT_QUOTES);
+      $singleColumn[]=array('room'=>$roomID, 'status'=>$status, 'description'=>$description);
     }
     echo "<div class='rooms-single-column'>
     <div class='rooms-multi-row'>";
     foreach($singleColumn as $singleRoom=>$singleStatus) {
-      loadRoomReservation($singleColumn[$singleRoom]['room'], $singleColumn[$singleRoom]['status'], $startDate, $endDate);
+      loadRoomReservation($singleColumn[$singleRoom]['room'], $singleColumn[$singleRoom]['status'], $startDate, $endDate, $singleColumn[$singleRoom]['description']);
     }
     echo "</div>
     </div>";

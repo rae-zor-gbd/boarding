@@ -8,12 +8,13 @@ if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
   while ($row_containers=$result_containers->fetch_assoc()) {
     $containerID=$row_containers['groupID'];
     echo "<div class='condo-container'>";
-    $sql_condos="SELECT condoID, status FROM condos WHERE groupID='$containerID' ORDER BY rowID, columnID";
+    $sql_condos="SELECT condoID, status, description FROM condos WHERE groupID='$containerID' ORDER BY rowID, columnID";
     $result_condos=$conn->query($sql_condos);
     while ($row_condos=$result_condos->fetch_assoc()) {
       $condoID=$row_condos['condoID'];
       $status=strtolower($row_condos['status']);
-      echo "<div class='condo-row $status'>
+      $description=htmlspecialchars($row_condos['description'], ENT_QUOTES);
+      echo "<div class='condo-row $status' title='$description'>
       <div class='condo-number'>$condoID</div>
       <div class='condo-occupant-column'>";
       $checkedIn=array();
