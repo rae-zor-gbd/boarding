@@ -1,5 +1,19 @@
 <?php
 include '../assets/config.php';
+$doubleBookedRooms=array();
+$sql_doubleBookedRooms="SELECT DISTINCT roomID FROM (SELECT a.roomID FROM (SELECT dogReservationID, roomID, dogName, checkIn, checkOut FROM dogs_reservations WHERE checkOut>=DATE(NOW()) AND roomID IN (SELECT roomID FROM (SELECT roomID, COUNT(dogReservationID) FROM dogs_reservations WHERE checkOut>=DATE(NOW()) GROUP BY roomID HAVING COUNT(dogReservationID)>1) r)) a JOIN (SELECT dogReservationID, roomID, dogName, checkIn, checkOut FROM dogs_reservations WHERE checkOut>=DATE(NOW()) AND roomID IN (SELECT roomID FROM (SELECT roomID, COUNT(dogReservationID) FROM dogs_reservations WHERE checkOut>=DATE(NOW()) GROUP BY roomID HAVING COUNT(dogReservationID)>1) r)) b USING (roomID) WHERE a.dogReservationID<>b.dogReservationID AND a.checkIn<=b.checkOut AND a.checkOut>=b.checkIn GROUP BY a.roomID, a.dogName, a.checkIn, a.checkOut ORDER BY a.roomID, a.checkIn, a.dogName) d";
+$result_doubleBookedRooms=$conn->query($sql_doubleBookedRooms);
+while ($row_doubleBookedRooms=$result_doubleBookedRooms->fetch_assoc()) {
+  $doubleBookedRoomsID=$row_doubleBookedRooms['roomID'];
+  $doubleBookedRooms[]=$doubleBookedRoomsID;
+}
+$doubleBookedReservations=array();
+$sql_doubleBookedReservations="SELECT DISTINCT dogReservationID FROM (SELECT a.dogReservationID FROM (SELECT dogReservationID, roomID, dogName, checkIn, checkOut FROM dogs_reservations WHERE checkOut>=DATE(NOW()) AND roomID IN (SELECT roomID FROM (SELECT roomID, COUNT(dogReservationID) FROM dogs_reservations WHERE checkOut>=DATE(NOW()) GROUP BY roomID HAVING COUNT(dogReservationID)>1) r)) a JOIN (SELECT dogReservationID, roomID, dogName, checkIn, checkOut FROM dogs_reservations WHERE checkOut>=DATE(NOW()) AND roomID IN (SELECT roomID FROM (SELECT roomID, COUNT(dogReservationID) FROM dogs_reservations WHERE checkOut>=DATE(NOW()) GROUP BY roomID HAVING COUNT(dogReservationID)>1) r)) b USING (roomID) WHERE a.dogReservationID<>b.dogReservationID AND a.checkIn<=b.checkOut AND a.checkOut>=b.checkIn GROUP BY a.roomID, a.dogReservationID, a.dogName, a.checkIn, a.checkOut ORDER BY a.roomID, a.checkIn, a.dogName) d";
+$result_doubleBookedReservations=$conn->query($sql_doubleBookedReservations);
+while ($row_doubleBookedReservations=$result_doubleBookedReservations->fetch_assoc()) {
+  $doubleBookedReservationsID=$row_doubleBookedReservations['dogReservationID'];
+  $doubleBookedReservations[]=$doubleBookedReservationsID;
+}
 function loadRoomReservation($loadRoomID, $loadRoomStatus, $loadStartDate, $loadEndDate, $loadDescription) {
   include '../assets/config.php';
   echo "<div class='room-row";
@@ -7,6 +21,10 @@ function loadRoomReservation($loadRoomID, $loadRoomStatus, $loadStartDate, $load
     echo " disabled";
   } elseif ($loadRoomStatus=='Enabled') {
     echo " enabled";
+  }
+  global $doubleBookedRooms;
+  if (in_array($loadRoomID, $doubleBookedRooms)) {
+    echo " double-booked-room";
   }
   echo "' title='$loadDescription'>
   <div class='room-number'>$loadRoomID</div>
@@ -27,7 +45,12 @@ function loadRoomReservation($loadRoomID, $loadRoomStatus, $loadStartDate, $load
     $reservationCheckOut=strtotime($row_reservations['checkOut']);
     $checkOutDayOfWeek=date('l', strtotime($row_reservations['checkOut']));
     $dateToday=strtotime(date('Y-m-d'));
-    echo "<div class='room-occupant' id='room-occupant-$reservationID'>
+    echo "<div class='room-occupant";
+    global $doubleBookedReservations;
+    if (in_array($reservationID, $doubleBookedReservations)) {
+      echo " double-booked-reservation";
+    }
+    echo "' id='room-occupant-$reservationID'>
     <div class='room-name-dates'>
     <div class='room-name";
     if ($reservationCheckOut<=$dateToday) {
