@@ -5,9 +5,9 @@ if (isset($_POST['status']) AND isset($_POST['id']) AND isset($_POST['reservatio
   $id=$_POST['id'];
   $reservationID=$_POST['reservationID'];
   $foodType=mysqli_real_escape_string($conn, $_POST['foodType']);
-  $feedingInstructions=mysqli_real_escape_string($conn, $_POST['feedingInstructions']);
+  $feedingInstructions=mysqli_real_escape_string($conn, trim($_POST['feedingInstructions']));
   if (isset($_POST['specialNotes']) AND $_POST['specialNotes']!='') {
-    $specialNotes=mysqli_real_escape_string($conn, $_POST['specialNotes']);
+    $specialNotes=mysqli_real_escape_string($conn, trim($_POST['specialNotes']));
   } else {
     $specialNotes=NULL;
   }

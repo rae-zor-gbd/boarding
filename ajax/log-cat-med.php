@@ -18,7 +18,7 @@ if (isset($_POST['status']) AND isset($_POST['medID']) AND isset($_POST['reserva
     $givenAM=$jsonMedsLog['givenAM'.$logDate];
     $givenNoon=$jsonMedsLog['givenNoon'.$logDate];
     $givenPM=$jsonMedsLog['givenPM'.$logDate];
-    $notes=mysqli_real_escape_string($conn, $jsonMedsLog['logNotes'.$logDate]);
+    $notes=mysqli_real_escape_string($conn, trim($jsonMedsLog['logNotes'.$logDate]));
     $sql_add_log="INSERT INTO cats_medications_log (catReservationID, catMedID, logDate, givenAM, givenNoon, givenPM, notes) VALUES ('$reservationID', '$medID', '$logDate', '$givenAM', '$givenNoon', '$givenPM', '$notes')";
     $conn->query($sql_add_log);
   }
