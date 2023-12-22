@@ -45,13 +45,13 @@ function loadRoomReservation($loadRoomID, $loadRoomStatus, $loadStartDate, $load
     $reservationCheckOut=strtotime($row_reservations['checkOut']);
     $checkOutDayOfWeek=date('l', strtotime($row_reservations['checkOut']));
     $dateToday=strtotime(date('Y-m-d'));
-    echo "<div class='room-occupant";
+    echo "<div class='room-occupant' id='room-occupant-$reservationID'>
+    <div class='room-name-dates";
     global $doubleBookedReservations;
     if (in_array($reservationID, $doubleBookedReservations)) {
       echo " double-booked-reservation";
     }
-    echo "' id='room-occupant-$reservationID'>
-    <div class='room-name-dates'>
+    echo "'>
     <div class='room-name";
     if ($reservationCheckOut<=$dateToday) {
       echo " checkOutToday";
