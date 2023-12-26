@@ -1,6 +1,20 @@
 <?php
 include '../assets/config.php';
 if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
+  $doubleBookedCondos=array();
+  $sql_doubleBookedCondos="SELECT DISTINCT condoID FROM (SELECT a.condoID FROM (SELECT catReservationID, condoID, catName, checkIn, checkOut FROM cats_reservations WHERE checkOut>=DATE(NOW()) AND condoID IN (SELECT condoID FROM (SELECT condoID, COUNT(catReservationID) FROM cats_reservations WHERE checkOut>=DATE(NOW()) GROUP BY condoID HAVING COUNT(catReservationID)>1) r)) a JOIN (SELECT catReservationID, condoID, catName, checkIn, checkOut FROM cats_reservations WHERE checkOut>=DATE(NOW()) AND condoID IN (SELECT condoID FROM (SELECT condoID, COUNT(catReservationID) FROM cats_reservations WHERE checkOut>=DATE(NOW()) GROUP BY condoID HAVING COUNT(catReservationID)>1) r)) b USING (condoID) WHERE a.catReservationID<>b.catReservationID AND a.checkIn<=b.checkOut AND a.checkOut>=b.checkIn GROUP BY a.condoID, a.catName, a.checkIn, a.checkOut ORDER BY a.condoID, a.checkIn, a.catName) d";
+  $result_doubleBookedCondos=$conn->query($sql_doubleBookedCondos);
+  while ($row_doubleBookedCondos=$result_doubleBookedCondos->fetch_assoc()) {
+    $doubleBookedCondosID=$row_doubleBookedCondos['condoID'];
+    $doubleBookedCondos[]=$doubleBookedCondosID;
+  }
+  $doubleBookedReservations=array();
+  $sql_doubleBookedReservations="SELECT DISTINCT catReservationID FROM (SELECT a.catReservationID FROM (SELECT catReservationID, condoID, catName, checkIn, checkOut FROM cats_reservations WHERE checkOut>=DATE(NOW()) AND condoID IN (SELECT condoID FROM (SELECT condoID, COUNT(catReservationID) FROM cats_reservations WHERE checkOut>=DATE(NOW()) GROUP BY condoID HAVING COUNT(catReservationID)>1) r)) a JOIN (SELECT catReservationID, condoID, catName, checkIn, checkOut FROM cats_reservations WHERE checkOut>=DATE(NOW()) AND condoID IN (SELECT condoID FROM (SELECT condoID, COUNT(catReservationID) FROM cats_reservations WHERE checkOut>=DATE(NOW()) GROUP BY condoID HAVING COUNT(catReservationID)>1) r)) b USING (condoID) WHERE a.catReservationID<>b.catReservationID AND a.checkIn<=b.checkOut AND a.checkOut>=b.checkIn GROUP BY a.condoID, a.catReservationID, a.catName, a.checkIn, a.checkOut ORDER BY a.condoID, a.checkIn, a.catName) d";
+  $result_doubleBookedReservations=$conn->query($sql_doubleBookedReservations);
+  while ($row_doubleBookedReservations=$result_doubleBookedReservations->fetch_assoc()) {
+    $doubleBookedReservationsID=$row_doubleBookedReservations['catReservationID'];
+    $doubleBookedReservations[]=$doubleBookedReservationsID;
+  }
   $startDate=$_POST['startDate'];
   $endDate=$_POST['endDate'];
   $sql_containers="SELECT DISTINCT groupID FROM condos ORDER BY groupID";
@@ -14,7 +28,11 @@ if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
       $condoID=$row_condos['condoID'];
       $status=strtolower($row_condos['status']);
       $description=htmlspecialchars($row_condos['description'], ENT_QUOTES);
-      echo "<div class='condo-row $status' title='$description'>
+      echo "<div class='condo-row $status";
+      if (in_array($condoID, $doubleBookedCondos)) {
+        echo " double-booked-condo";
+      }
+      echo"' title='$description'>
       <div class='condo-number'>$condoID</div>
       <div class='condo-occupant-column'>";
       $checkedIn=array();
@@ -34,7 +52,11 @@ if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
         $checkOutDayOfWeek=date('l', strtotime($row_reservations['checkOut']));
         $dateToday=strtotime(date('Y-m-d'));
         echo "<div class='condo-occupant' id='condo-occupant-$reservationID'>
-        <div class='condo-name-dates'>
+        <div class='condo-name-dates";
+        if (in_array($reservationID, $doubleBookedReservations)) {
+          echo " double-booked-reservation";
+        }
+        echo "'>
         <div class='condo-name";
         if ($reservationCheckOut<=$dateToday) {
           echo " checkOutToday";

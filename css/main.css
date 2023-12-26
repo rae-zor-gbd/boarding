@@ -701,14 +701,14 @@ nav {
 .condo-row.enabled:has(.condo-occupant-column:empty), .room-row.enabled:has(.room-occupant-column:empty) {
   background:var(--color-highlight);
 }
-.double-booked-reservation {
-  color:var(--color-emphasis-01);
-  font-weight:var(--font-weight-bold);
-}
-.double-booked-room {
+.double-booked-condo:not(:has(.condo-occupant-column:empty)), .double-booked-room:not(:has(.room-occupant-column:empty)) {
   border:2px solid var(--color-emphasis-01);
   margin-top:-1px;
   z-index:999;
+}
+.double-booked-reservation {
+  color:var(--color-emphasis-01);
+  font-weight:var(--font-weight-bold);
 }
 .food-label {
   display:inline-block;
