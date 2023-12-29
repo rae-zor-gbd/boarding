@@ -77,18 +77,24 @@ $titleEndDate=date('D n/j', strtotime($endDate));
           var checkIn=document.getElementById('newCheckIn').value;
           var checkOut=document.getElementById('newCheckOut').value;
           if (room!='' && name!='' && checkIn!='' && checkOut!='') {
-            $.ajax({
-              url:'/ajax/book-room.php',
-              type:'POST',
-              cache:false,
-              data:{room:room, name:name, checkIn:checkIn, checkOut:checkOut},
-              success:function(response){
-                loadRooms('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
-                loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
-                $('#bookRoomModal').modal('hide');
-                document.getElementById('bookRoomForm').reset();
-              }
-            });
+            var validateCheckIn=Date.parse(document.getElementById('newCheckIn').value);
+            var validateCheckOut=Date.parse(document.getElementById('newCheckOut').value);
+            if (validateCheckOut>validateCheckIn) {
+              $.ajax({
+                url:'/ajax/book-room.php',
+                type:'POST',
+                cache:false,
+                data:{room:room, name:name, checkIn:checkIn, checkOut:checkOut},
+                success:function(response){
+                  loadRooms('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
+                  loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
+                  $('#bookRoomModal').modal('hide');
+                  document.getElementById('bookRoomForm').reset();
+                }
+              });
+            } else {
+              loadInvalidReservationDatesAlert('#bookRoomModalBody');
+            }
           } else {
             loadIncompleteFormAlert('#bookRoomModalBody');
           }
@@ -141,18 +147,24 @@ $titleEndDate=date('D n/j', strtotime($endDate));
           var checkIn=document.getElementById('editCheckIn').value;
           var checkOut=document.getElementById('editCheckOut').value;
           if (id!='' && room!='' && dogName!='' && checkIn!='' && checkOut!='') {
-            $.ajax({
-              url:'/ajax/edit-room.php',
-              type:'POST',
-              cache:false,
-              data:{id:id, room:room, dogName:dogName, checkIn:checkIn, checkOut:checkOut},
-              success:function(response){
-                $('#editRoomModal').modal('hide');
-                $('#editRoomModalBody').empty();
-                loadRooms('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
-                loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
-              }
-            });
+            var validateCheckIn=Date.parse(document.getElementById('editCheckIn').value);
+            var validateCheckOut=Date.parse(document.getElementById('editCheckOut').value);
+            if (validateCheckOut>validateCheckIn) {
+              $.ajax({
+                url:'/ajax/edit-room.php',
+                type:'POST',
+                cache:false,
+                data:{id:id, room:room, dogName:dogName, checkIn:checkIn, checkOut:checkOut},
+                success:function(response){
+                  $('#editRoomModal').modal('hide');
+                  $('#editRoomModalBody').empty();
+                  loadRooms('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
+                  loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
+                }
+              });
+            } else {
+              loadInvalidReservationDatesAlert('#editRoomModalBody');
+            }
           } else {
             loadIncompleteFormAlert('#editRoomModalBody');
           }

@@ -1,7 +1,7 @@
 <?php
 include '../assets/config.php';
 $today=date('Y-m-d');
-$monthAgo=date('Y-m-d', strtotime($today. ' - 30 days'));
+$weekAgo=date('Y-m-d', strtotime($today. ' - 7 days'));
 echo "<div class='input-group'>
 <span class='input-group-addon room'>Condo</span>
 <select class='form-control' name='condo' id='newCondo' required=''>
@@ -28,7 +28,7 @@ echo "</select>
 </div>
 <div class='input-group'>
 <span class='input-group-addon clock'>Check-In</span>
-<input type='date' class='form-control' name='check-in' id='newCheckIn' min='$monthAgo' required>
+<input type='date' class='form-control' name='check-in' id='newCheckIn' min='$weekAgo' required>
 </div>
 <div class='input-group'>
 <span class='input-group-addon clock'>Check-Out</span>

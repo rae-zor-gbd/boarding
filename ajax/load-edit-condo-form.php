@@ -1,7 +1,7 @@
 <?php
 include '../assets/config.php';
 $today=date('Y-m-d');
-$monthAgo=date('Y-m-d', strtotime($today. ' - 30 days'));
+$weekAgo=date('Y-m-d', strtotime($today. ' - 7 days'));
 if (isset($_POST['id'])) {
   $id=$_POST['id'];
   $sql_reservation_info="SELECT condoID, catName, checkIn, checkOut FROM cats_reservations WHERE catReservationID='$id'";
@@ -41,11 +41,11 @@ if (isset($_POST['id'])) {
   <input type='text' class='form-control' name='cat-name' maxlength='255' id='editCatName' value='$catName' required>
   </div>
   <div class='input-group'>
-  <span class='input-group-addon clock'>Check In</span>
-  <input type='date' class='form-control' name='check-in' min='$monthAgo' id='editCheckIn' value='$checkIn' required>
+  <span class='input-group-addon clock'>Check-In</span>
+  <input type='date' class='form-control' name='check-in' min='$weekAgo' id='editCheckIn' value='$checkIn' required>
   </div>
   <div class='input-group'>
-  <span class='input-group-addon clock'>Check Out</span>
+  <span class='input-group-addon clock'>Check-Out</span>
   <input type='date' class='form-control' name='check-out' min='$today' id='editCheckOut' value='$checkOut' required>
   </div>";
 }

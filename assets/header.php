@@ -26,5 +26,19 @@
       }
     });
   }
+  function loadInvalidReservationDatesAlert(id){
+    $.ajax({
+      url:'/assets/invalid-reservation-dates-alert.php',
+      type:'POST',
+      cache:false,
+      data:{},
+      success:function(data){
+        if (data) {
+          $(id+' .alert').remove();
+          $(id).prepend(data);
+        }
+      }
+    });
+  }
   $(window).ready(hideLoader);
 </script>

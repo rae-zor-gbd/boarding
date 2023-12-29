@@ -77,18 +77,24 @@ $titleEndDate=date('D n/j', strtotime($endDate));
           var checkIn=document.getElementById('newCheckIn').value;
           var checkOut=document.getElementById('newCheckOut').value;
           if (condo!='' && name!='' && checkIn!='' && checkOut!='') {
-            $.ajax({
-              url:'/ajax/book-condo.php',
-              type:'POST',
-              cache:false,
-              data:{condo:condo, name:name, checkIn:checkIn, checkOut:checkOut},
-              success:function(response){
-                loadCondos('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
-                loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
-                $('#bookCondoModal').modal('hide');
-                document.getElementById('bookCondoForm').reset();
-              }
-            });
+            var validateCheckIn=Date.parse(document.getElementById('newCheckIn').value);
+            var validateCheckOut=Date.parse(document.getElementById('newCheckOut').value);
+            if (validateCheckOut>validateCheckIn) {
+              $.ajax({
+                url:'/ajax/book-condo.php',
+                type:'POST',
+                cache:false,
+                data:{condo:condo, name:name, checkIn:checkIn, checkOut:checkOut},
+                success:function(response){
+                  loadCondos('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
+                  loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
+                  $('#bookCondoModal').modal('hide');
+                  document.getElementById('bookCondoForm').reset();
+                }
+              });
+            } else {
+              loadInvalidReservationDatesAlert('#bookCondoModalBody');
+            } 
           } else {
             loadIncompleteFormAlert('#bookCondoModalBody');
           }
@@ -141,18 +147,24 @@ $titleEndDate=date('D n/j', strtotime($endDate));
           var checkIn=document.getElementById('editCheckIn').value;
           var checkOut=document.getElementById('editCheckOut').value;
           if (id!='' && condo!='' && catName!='' && checkIn!='' && checkOut!='') {
-            $.ajax({
-              url:'/ajax/edit-condo.php',
-              type:'POST',
-              cache:false,
-              data:{id:id, condo:condo, catName:catName, checkIn:checkIn, checkOut:checkOut},
-              success:function(response){
-                $('#editCondoModal').modal('hide');
-                $('#editCondoModalBody').empty();
-                loadCondos('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
-                loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
-              }
-            });
+            var validateCheckIn=Date.parse(document.getElementById('editCheckIn').value);
+            var validateCheckOut=Date.parse(document.getElementById('editCheckOut').value);
+            if (validateCheckOut>validateCheckIn) {
+              $.ajax({
+                url:'/ajax/edit-condo.php',
+                type:'POST',
+                cache:false,
+                data:{id:id, condo:condo, catName:catName, checkIn:checkIn, checkOut:checkOut},
+                success:function(response){
+                  $('#editCondoModal').modal('hide');
+                  $('#editCondoModalBody').empty();
+                  loadCondos('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
+                  loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
+                }
+              });
+            } else {
+              loadInvalidReservationDatesAlert('#editCondoModalBody');
+            }
           } else {
             loadIncompleteFormAlert('#editCondoModalBody');
           } 
