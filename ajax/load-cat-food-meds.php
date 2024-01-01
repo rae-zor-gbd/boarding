@@ -94,7 +94,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
         } else {
           echo "danger";
         }
-        echo "'><span class='medication-label-instructions'>$medName";
+        echo "'><span class='medication-label-instructions'><strong>$medName</strong>";
         if (isset($strength) AND $strength!='') {
           echo ", $strength";
         }

@@ -769,15 +769,14 @@ nav {
   color:var(--color-05)!important;
 }
 .medication-label .label, .special-notes-label .label {
-  display:inline-block;
   line-height:1.1;
-  padding:calc(var(--spacer)/5) calc(var(--spacer)/3.5) calc(var(--spacer)/7);
   text-align:left;
   white-space:unset;
 }
 .medication-label .label {
   display:table;
   max-width:455px;
+  padding:calc(var(--spacer)/5) calc(var(--spacer)/3.5) calc(var(--spacer)/7);
 }
 .medication-label-buttons, .medication-label-instructions {
   display:table-cell;
@@ -887,8 +886,14 @@ nav {
   width:calc((100vw - (var(--spacer)*2) - (var(--spacer)*11) - (var(--spacer)*(5/3)) - (var(--spacer)*(5/3)))/4);
 }
 .special-notes-label .label {
+  background:transparent;
+  color:var(--color-emphasis-01);
+  display:block;
+  font-size:85%;
   font-variant:none;
+  margin-top:calc(var(--spacer)/10);
   max-width:400px;
+  padding:0;
 }
 .special-notes-tag:not(:nth-of-type(1))::before {
   content:"; ";
@@ -904,11 +909,11 @@ nav {
   border-top-left-radius:6px;
   border-top-right-radius:6px;
   color:var(--color-08);
+  font-size:20px;
   padding:calc(var(--spacer)*(2/3)) calc(var(--spacer) + 5px) calc(var(--spacer)/3);
   text-transform:uppercase;
 }
 .table-heading {
-  font-size:20px;
   font-weight:var(--font-weight-bold);
 }
 .table-outer:has(>.table-container table tbody:empty)>.table-header {
