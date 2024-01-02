@@ -39,7 +39,7 @@ td:last-of-type, th:last-of-type {
   border:0;
 }
 .label-default, .medication-label .label {
-  font-weight:var(--font-weight-normal);
+  font-weight:var(--font-weight-regular);
 }
 .medication-label {
   min-width:unset;
