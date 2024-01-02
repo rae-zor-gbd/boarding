@@ -31,9 +31,7 @@ if (isset($_POST['status'])) {
   <textarea class='form-control' name='feeding-instructions' id='newFeedingInstructions' rows='5' required></textarea>
   </div>
   <div class='input-group'>
-  <span class='input-group-addon notes'>Special Notes</span>
-  <textarea class='form-control' name='special-notes' id='newSpecialNotes' rows='5'></textarea>
-  </div>
+  <span class='input-group-addon tags'>Labels</span>
   <div class='tag-group'>";
   $sql_all_tags="SELECT tagID, tagName FROM tags WHERE forCats='Yes' ORDER BY sortID";
   $result_all_tags=$conn->query($sql_all_tags);
@@ -45,6 +43,11 @@ if (isset($_POST['status'])) {
     <label for='newTag$allTagID'>$allTagName</label>
     </div>";
   }
-  echo "</div>";
+  echo "</div>
+  </div>
+  <div class='input-group'>
+  <span class='input-group-addon notes'>Special Notes</span>
+  <textarea class='form-control' name='special-notes' id='newSpecialNotes' rows='5'></textarea>
+  </div>";
 }
 ?>
