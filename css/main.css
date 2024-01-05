@@ -920,6 +920,9 @@ nav {
 .table-heading {
   font-weight:var(--font-weight-bold);
 }
+.table-outer {
+  border-radius:6px;
+}
 .table-outer:has(>.table-container table tbody:empty)>.table-header {
   border-radius:6px;
   padding:calc(var(--spacer)*(2/3)) calc(var(--spacer) + 5px);
