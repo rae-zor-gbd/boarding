@@ -161,6 +161,32 @@ if (isset($_GET['meds']) AND $_GET['meds']!='') {
         $('#addFutureArrivalsButton').click(function (e) {
           loadAddFoodForm('Future');
         });
+        $(document).on('change', '#editMedName', function() {
+          var medName=document.getElementById('editMedName').value;
+          $.ajax({
+            url:'/ajax/load-strengths.php',
+            type:'POST',
+            cache:false,
+            data:{medName:medName},
+            success:function(response){
+              $('#editStrengthsList').empty();
+              $('#editStrengthsList').append(response);
+            }
+          });
+        });
+        $(document).on('change', '#newMedName', function() {
+          var medName=document.getElementById('newMedName').value;
+          $.ajax({
+            url:'/ajax/load-strengths.php',
+            type:'POST',
+            cache:false,
+            data:{medName:medName},
+            success:function(response){
+              $('#newStrengthsList').empty();
+              $('#newStrengthsList').append(response);
+            }
+          });
+        });
         $(document).on('click', '#add-med-button', function() {
           var status=$(this).data('status');
           var id=$(this).data('id');

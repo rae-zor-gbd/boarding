@@ -19,7 +19,8 @@ if (isset($_POST['status']) AND isset($_POST['id'])) {
   </div>
   <div class='input-group'>
   <span class='input-group-addon chart'>Strength</span>
-  <input type='text' class='form-control' name='strength' maxlength='255' id='newStrength'>
+  <input type='text' class='form-control' name='strength' maxlength='255' list='newStrengthsList' id='newStrength' style='border-bottom-right-radius:4px; border-top-right-radius:4px;'>
+  <datalist id='newStrengthsList'></datalist>
   </div>
   <div class='input-group'>
   <span class='input-group-addon list'>Dosage</span>
