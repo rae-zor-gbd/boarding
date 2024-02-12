@@ -295,7 +295,7 @@ textarea {
   padding:0;
 }
 .container-fluid {
-  margin:calc(var(--spacer)*(2/3)) calc(var(--spacer)*(5/3)) calc(var(--spacer)*(2/3)) calc((var(--spacer)*11) + (var(--spacer)*(5/3)));
+  margin:var(--spacer) calc(var(--spacer)*(5/3)) calc(var(--spacer)*(4/3)) calc((var(--spacer)*11) + (var(--spacer)*(5/3)));
 }
 .input-group:has(.form-control:required) .input-group-addon::after {
   bottom:5px;
