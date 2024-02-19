@@ -356,6 +356,9 @@ textarea {
 .input-group-addon.tags::before {
   content:var(--icon-tag);
 }
+.label {
+  padding:0.2em 0.6em;
+}
 .label-danger {
   background:var(--color-emphasis-01);
 }
@@ -417,11 +420,17 @@ textarea {
 .search-panel {
   padding:calc(var(--spacer)/2) var(--spacer);
 }
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+  line-height:1.2;
+}
 .table {
   margin-bottom:0;
 }
+.table-condensed>tbody>tr>td, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>td, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>thead>tr>th {
+  padding:7px 5px;
+}
 .table-condensed>tbody>tr>td {
-  padding:calc(var(--spacer)/3) 5px;
+  padding:12px 5px;
   text-transform:uppercase;
 }
 .table-container {
@@ -895,7 +904,7 @@ nav {
   display:block;
   font-size:85%;
   font-variant:none;
-  margin-top:calc(var(--spacer)/10);
+  margin-top:calc(var(--spacer)/6);
   max-width:400px;
   padding:0;
 }
