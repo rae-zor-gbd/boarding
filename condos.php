@@ -7,7 +7,7 @@ if (isset($_GET['startDate']) AND $_GET['startDate']!='' AND isset($_GET['endDat
   $startDate=date('Y-m-d');
   $endDate=date('Y-m-d', strtotime($startDate. ' + 30 days'));
 }
-$minStartDate=date('Y-m-d', strtotime($startDate. ' - 1 day'));
+$minStartDate=date('Y-m-d', strtotime(date('Y-m-d'). ' - 1 day'));
 $titleStartDate=date('D n/j', strtotime($startDate));
 $titleEndDate=date('D n/j', strtotime($endDate));
 ?>
