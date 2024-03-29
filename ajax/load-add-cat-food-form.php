@@ -19,9 +19,9 @@ if (isset($_POST['status'])) {
   echo "</select>
   </div>
   <div class='input-group'>
-  <span class='input-group-addon food'>Food Type</span>
+  <span class='input-group-addon food'>Food Source</span>
   <select class='form-control' name='foodType' id='newFoodType' required=''>
-  <option value='' selected disabled>Select Food Type</option>
+  <option value='' selected disabled>Select Food Source</option>
   <option value='Own'>Own Food</option>
   <option value='Ours'>Our Food</option>
   </select>

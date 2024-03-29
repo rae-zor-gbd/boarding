@@ -39,9 +39,9 @@ if (isset($_POST['id']) AND isset($_POST['status'])) {
   <input type='text' class='form-control' name='dog-name' maxlength='255' id='editDogName' value='$dogName' disabled>
   </div>
   <div class='input-group'>
-  <span class='input-group-addon food'>Food Type</span>
+  <span class='input-group-addon food'>Food Source</span>
   <select class='form-control' name='foodType' id='editFoodType' required>
-  <option value='' disabled>Select Food Type</option>
+  <option value='' disabled>Select Food Source</option>
   <option value='Own'";
   if ($foodType=='Own') {
     echo " selected";
