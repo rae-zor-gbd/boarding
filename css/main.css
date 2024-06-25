@@ -638,10 +638,31 @@ nav {
 }
 .condo-container {
   display:flex;
+  flex-wrap:wrap;
+  width:50%;
+}
+.condo-container:not(:nth-of-type(1)) {
+  margin-left:-2px;
+}
+.condo-container:nth-of-type(1) .condo-row:nth-of-type(1) {
+  border-top-left-radius:6px;
 }
 .condo-container:nth-of-type(2) {
-  flex-direction:column;
-  margin-left:calc((((100vw - (var(--spacer)*11) - (var(--spacer)*(5/3)) - (var(--spacer)*(5/3)))/5)*4) - 4px);
+  width:calc(50% - 1px);
+}
+.condo-container:nth-of-type(2) .condo-row {
+  border-top-right-radius:6px;
+  flex-basis:100%;
+}
+.condo-container:nth-of-type(3) {
+  margin-left:calc(50% - 2px);
+}
+.condo-container:nth-of-type(3) .condo-row:last-child {
+  border-bottom-right-radius:6px;
+}
+.condos-container {
+  display:flex;
+  flex-wrap:wrap;
 }
 .condo-dates, .room-dates {
   font-size:70%;
@@ -680,22 +701,11 @@ nav {
   padding:calc(var(--spacer)/4) calc(var(--spacer)/2);
 }
 .condo-row {
-  width:calc((100vw - (var(--spacer)*11) - (var(--spacer)*(5/3)) - (var(--spacer)*(5/3)))/5);
-}
-.condo-container:not(:nth-of-type(2)) .condo-row:not(:nth-of-type(1)) {
   margin-left:-1px;
+  width:calc((100vw - (var(--spacer)*11) - (var(--spacer)*(5/3)) - (var(--spacer)*(5/3)))/4);
 }
-.condo-container:nth-of-type(1) .condo-row:nth-last-child(1) {
-  border-top-right-radius:6px;
-}
-.condo-container:nth-of-type(1) .condo-row:nth-of-type(1), .condo-container:nth-of-type(2) .condo-row:nth-last-child(1) {
+.condo-row:nth-of-type(3) {
   border-bottom-left-radius:6px;
-}
-.condo-container:nth-of-type(1) .condo-row:nth-of-type(1) {
-  border-top-left-radius:6px;
-}
-.condo-container:nth-of-type(2) .condo-row:nth-last-child(1) {
-  border-bottom-right-radius:6px;
 }
 .condo-row.disabled:has(.condo-occupant-column:empty), .room-row.disabled:has(.room-occupant-column:empty) {
   background-color:var(--color-05);
