@@ -70,11 +70,10 @@ CREATE TABLE rooms (
   roomID INT(11) NOT NULL,
   columnID INT(11) NOT NULL,
   rowID INT(11) NOT NULL,
-  groupID INT(11) NOT NULL,
   status ENUM('Enabled', 'Disabled') NOT NULL DEFAULT 'Enabled',
   description VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (roomID),
-  CONSTRAINT unique_rooms UNIQUE (columnID, rowID, groupID)
+  CONSTRAINT unique_rooms UNIQUE (columnID, rowID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE dogs_reservations (
