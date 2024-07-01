@@ -9,7 +9,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
   } elseif ($sortMeds=='am') {
     $sql_all_dogs.=" JOIN dogs_medications m USING (dogReservationID) WHERE status='$status' AND checkOut>=DATE(NOW()) AND frequency IN ('AM', '2X', '3X') GROUP BY r.dogReservationID, dogFoodID";
   } elseif ($sortMeds=='noon') {
-    $sql_all_dogs.=" JOIN dogs_medications m USING (dogReservationID) WHERE status='$status' AND checkOut>=DATE(NOW()) AND frequency IN ('3X') GROUP BY r.dogReservationID, dogFoodID";
+    $sql_all_dogs.=" JOIN dogs_medications m USING (dogReservationID) WHERE status='$status' AND checkOut>=DATE(NOW()) AND frequency IN ('Noon', '3X') GROUP BY r.dogReservationID, dogFoodID";
   } elseif ($sortMeds=='pm') {
     $sql_all_dogs.=" JOIN dogs_medications m USING (dogReservationID) WHERE status='$status' AND checkOut>=DATE(NOW()) AND frequency IN ('PM', '2X', '3X') GROUP BY r.dogReservationID, dogFoodID";
   }
@@ -71,11 +71,11 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     if ($sortMeds=='am') {
       $sql_dog_meds.=" AND frequency IN ('AM', '2X', '3X')";
     } elseif ($sortMeds=='noon') {
-      $sql_dog_meds.=" AND frequency IN ('3X')";
+      $sql_dog_meds.=" AND frequency IN ('Noon', '3X')";
     } elseif ($sortMeds=='pm') {
       $sql_dog_meds.=" AND frequency IN ('PM', '2X', '3X')";
     }
-    $sql_dog_meds.=" ORDER BY FIELD(frequency,'AM','2X','3X','PM','Other','As Needed'), medName, strength";
+    $sql_dog_meds.=" ORDER BY FIELD(frequency,'AM','2X','Noon','3X','PM','Other','As Needed'), medName, strength";
     $result_dog_meds=$conn->query($sql_dog_meds);
     if ($result_dog_meds->num_rows>0) {
       while ($row_dog_meds=$result_dog_meds->fetch_assoc()) {

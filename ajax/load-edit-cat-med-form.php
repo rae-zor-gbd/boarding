@@ -50,6 +50,11 @@ if (isset($_POST['status']) AND isset($_POST['id'])) {
     echo " selected";
   }
   echo ">AM</option>
+  <option value='Noon'";
+  if ($frequency=='Noon') {
+    echo " selected";
+  }
+  echo ">Noon</option>
   <option value='PM'";
   if ($frequency=='PM') {
     echo " selected";

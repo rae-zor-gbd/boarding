@@ -31,6 +31,7 @@ if (isset($_POST['status']) AND isset($_POST['id'])) {
   <select class='form-control' name='frequency' id='newFrequency' required>
   <option value='' selected disabled>Select Frequency</option>
   <option value='AM'>AM</option>
+  <option value='Noon'>Noon</option>
   <option value='PM'>PM</option>
   <option value='2X'>2X</option>
   <option value='3X'>3X</option>
