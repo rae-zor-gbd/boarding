@@ -73,7 +73,7 @@ if (isset($_POST['status']) AND isset($_POST['id'])) {
     echo "<tr>
     <td>" . $logDateV2 . "</td>
     <td><input type='checkbox' id='givenAM$logDateV1' name='given-am-$logDateV1' value='$logDateV1'";
-    if ($frequency=='PM') {
+    if ($frequency=='Noon' OR $frequency=='PM') {
       echo " disabled";
     }
     if ($givenAM=='Yes') {
@@ -89,7 +89,7 @@ if (isset($_POST['status']) AND isset($_POST['id'])) {
     }
     echo "></td>
     <td><input type='checkbox' id='givenPM$logDateV1' name='given-pm-$logDateV1' value='$logDateV1'";
-    if ($frequency=='AM') {
+    if ($frequency=='AM' OR $frequency=='Noon') {
       echo " disabled";
     }
     if ($givenPM=='Yes') {
