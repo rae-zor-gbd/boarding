@@ -744,6 +744,17 @@ nav {
 .header-future-arrivals tr th:nth-child(1) {
   min-width:115px;
 }
+.hooked-bucket {
+  color:var(--color-emphasis-03);
+  font-size:70%;
+  line-height:1;
+  text-align:left;
+}
+.hooked-bucket::before {
+  content:var(--icon-bucket);
+  font-family:var(--icon-font-family);
+  font-weight:var(--font-weight-regular);
+}
 .load-more {
   margin-top:calc(var(--spacer)/2);
   width:100%;
