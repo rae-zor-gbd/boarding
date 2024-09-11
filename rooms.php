@@ -79,7 +79,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
           if (room!='' && name!='' && checkIn!='' && checkOut!='') {
             var validateCheckIn=Date.parse(document.getElementById('newCheckIn').value);
             var validateCheckOut=Date.parse(document.getElementById('newCheckOut').value);
-            if (validateCheckOut>validateCheckIn) {
+            if (validateCheckOut>=validateCheckIn) {
               $.ajax({
                 url:'/ajax/book-room.php',
                 type:'POST',
@@ -149,7 +149,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
           if (id!='' && room!='' && dogName!='' && checkIn!='' && checkOut!='') {
             var validateCheckIn=Date.parse(document.getElementById('editCheckIn').value);
             var validateCheckOut=Date.parse(document.getElementById('editCheckOut').value);
-            if (validateCheckOut>validateCheckIn) {
+            if (validateCheckOut>=validateCheckIn) {
               $.ajax({
                 url:'/ajax/edit-room.php',
                 type:'POST',
