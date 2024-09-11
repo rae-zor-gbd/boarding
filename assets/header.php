@@ -41,4 +41,18 @@
     });
   }
   $(window).ready(hideLoader);
+  $(document).ready(function() {
+    window.addEventListener('keydown', function (e) {
+      if (e.ctrlKey && e.code==='KeyD') {
+        e.preventDefault();
+        var currentTimestamp='<?php echo date('n/j/y') ?>';
+        var activeElement=document.activeElement;
+        let startPosition=activeElement.selectionStart;
+        let endPosition=activeElement.selectionEnd;
+        if (activeElement.tagName=='TEXTAREA') {
+          activeElement.value=`${activeElement.value.substring(0, startPosition)}${currentTimestamp+': '}${activeElement.value.substring(endPosition, activeElement.value.length)}`;
+        }
+      }
+    });
+  });
 </script>
