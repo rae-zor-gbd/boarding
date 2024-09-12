@@ -73,10 +73,11 @@ $titleEndDate=date('D n/j', strtotime($endDate));
         $('#bookRoom').click(function (e) {
           e.preventDefault();
           var room=document.getElementById('newRoom').value;
-          var name=document.getElementById('newDogName').value.toUpperCase();
+          var lastName=document.getElementById('newLastName').value.toUpperCase();
+          var dogName=document.getElementById('newDogName').value.toUpperCase();
           var checkIn=document.getElementById('newCheckIn').value;
           var checkOut=document.getElementById('newCheckOut').value;
-          if (room!='' && name!='' && checkIn!='' && checkOut!='') {
+          if (room!='' && lastName!='' && dogName!='' && checkIn!='' && checkOut!='') {
             var validateCheckIn=Date.parse(document.getElementById('newCheckIn').value);
             var validateCheckOut=Date.parse(document.getElementById('newCheckOut').value);
             if (validateCheckOut>=validateCheckIn) {
@@ -84,7 +85,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
                 url:'/ajax/book-room.php',
                 type:'POST',
                 cache:false,
-                data:{room:room, name:name, checkIn:checkIn, checkOut:checkOut},
+                data:{room:room, lastName:lastName, dogName:dogName, checkIn:checkIn, checkOut:checkOut},
                 success:function(response){
                   loadRooms('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
                   loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
@@ -143,10 +144,11 @@ $titleEndDate=date('D n/j', strtotime($endDate));
           e.preventDefault();
           var id=document.getElementById('editID').value;
           var room=document.getElementById('editRoom').value;
+          var lastName=document.getElementById('editLastName').value.toUpperCase();
           var dogName=document.getElementById('editDogName').value.toUpperCase();
           var checkIn=document.getElementById('editCheckIn').value;
           var checkOut=document.getElementById('editCheckOut').value;
-          if (id!='' && room!='' && dogName!='' && checkIn!='' && checkOut!='') {
+          if (id!='' && lastName!='' && room!='' && dogName!='' && checkIn!='' && checkOut!='') {
             var validateCheckIn=Date.parse(document.getElementById('editCheckIn').value);
             var validateCheckOut=Date.parse(document.getElementById('editCheckOut').value);
             if (validateCheckOut>=validateCheckIn) {
@@ -154,7 +156,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
                 url:'/ajax/edit-room.php',
                 type:'POST',
                 cache:false,
-                data:{id:id, room:room, dogName:dogName, checkIn:checkIn, checkOut:checkOut},
+                data:{id:id, room:room, lastName:lastName, dogName:dogName, checkIn:checkIn, checkOut:checkOut},
                 success:function(response){
                   $('#editRoomModal').modal('hide');
                   $('#editRoomModalBody').empty();

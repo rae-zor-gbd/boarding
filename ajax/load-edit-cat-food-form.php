@@ -3,11 +3,12 @@ include '../assets/config.php';
 if (isset($_POST['id']) AND isset($_POST['status'])) {
   $id=$_POST['id'];
   $status=$_POST['status'];
-  $sql_cat_info="SELECT r.catReservationID, condoID, catName, foodType, feedingInstructions, specialNotes FROM cats_reservations r JOIN cats_food f USING (catReservationID) WHERE catFoodID='$id'";
+  $sql_cat_info="SELECT r.catReservationID, condoID, lastName, catName, foodType, feedingInstructions, specialNotes FROM cats_reservations r JOIN cats_food f USING (catReservationID) WHERE catFoodID='$id'";
   $result_cat_info=$conn->query($sql_cat_info);
   $row_cat_info=$result_cat_info->fetch_assoc();
   $reservationID=$row_cat_info['catReservationID'];
   $condo=$row_cat_info['condoID'];
+  $lastName=htmlspecialchars($row_cat_info['lastName'], ENT_QUOTES);
   $catName=htmlspecialchars($row_cat_info['catName'], ENT_QUOTES);
   $foodType=$row_cat_info['foodType'];
   $feedingInstructions=htmlspecialchars($row_cat_info['feedingInstructions'], ENT_QUOTES);
@@ -37,6 +38,10 @@ if (isset($_POST['id']) AND isset($_POST['status'])) {
   <div class='input-group'>
   <span class='input-group-addon cat'>Cat Name</span>
   <input type='text' class='form-control' name='cat-name' maxlength='255' id='editCatName' value='$catName' disabled>
+  </div>
+  <div class='input-group'>
+  <span class='input-group-addon cat'>Last Name</span>
+  <input type='text' class='form-control' name='last-name' maxlength='255' id='editLastName' value='$lastName' disabled>
   </div>
   <div class='input-group'>
   <span class='input-group-addon food'>Food Source</span>

@@ -19,6 +19,7 @@ CREATE TABLE condos (
 CREATE TABLE cats_reservations (
   catReservationID INT(11) NOT NULL AUTO_INCREMENT,
   condoID INT(11) NOT NULL,
+  lastName VARCHAR(255) NOT NULL,
   catName VARCHAR(255) NOT NULL,
   checkIn DATE NOT NULL,
   checkOut DATE NOT NULL,
@@ -80,6 +81,7 @@ CREATE TABLE rooms (
 CREATE TABLE dogs_reservations (
   dogReservationID INT(11) NOT NULL AUTO_INCREMENT,
   roomID INT(11) NOT NULL,
+  lastName VARCHAR(255) NOT NULL,
   dogName VARCHAR(255) NOT NULL,
   checkIn DATE NOT NULL,
   checkOut DATE NOT NULL,

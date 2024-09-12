@@ -3,9 +3,10 @@ include '../assets/config.php';
 if (isset($_POST['id']) AND isset($_POST['status'])) {
   $id=$_POST['id'];
   $status=$_POST['status'];
-  $sql_med_info="SELECT dogName, medName, strength, dosage, frequency FROM dogs_reservations r JOIN dogs_medications m USING (dogReservationID) WHERE dogMedID='$id'";
+  $sql_med_info="SELECT lastName, dogName, medName, strength, dosage, frequency FROM dogs_reservations r JOIN dogs_medications m USING (dogReservationID) WHERE dogMedID='$id'";
   $result_med_info=$conn->query($sql_med_info);
   $row_med_info=$result_med_info->fetch_assoc();
+  $lastName=htmlspecialchars($row_med_info['lastName'], ENT_QUOTES);
   $dogName=htmlspecialchars($row_med_info['dogName'], ENT_QUOTES);
   $medName=htmlspecialchars($row_med_info['medName'], ENT_QUOTES);
   $strength=htmlspecialchars($row_med_info['strength'], ENT_QUOTES);
@@ -14,8 +15,12 @@ if (isset($_POST['id']) AND isset($_POST['status'])) {
   echo "<input type='hidden' class='form-control' name='id' id='deleteID' value='$id' required>
   <input type='hidden' class='form-control' name='status' id='deleteStatus' value='$status' required>
   <div class='input-group'>
-  <span class='input-group-addon dog'>Dog Name(s)</span>
+  <span class='input-group-addon dog'>Dog Name</span>
   <input type='text' class='form-control' name='dog-name' id='deleteDogName' value='$dogName' disabled>
+  </div>
+  <div class='input-group'>
+  <span class='input-group-addon dog'>Last Name</span>
+  <input type='text' class='form-control' name='last-name' id='deleteLastName' value='$lastName' disabled>
   </div>
   <div class='input-group'>
   <span class='input-group-addon meds'>Medication Name</span>

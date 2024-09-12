@@ -27,6 +27,10 @@ echo "</select>
 <input type='text' class='form-control' name='dog-name' maxlength='255' id='newDogName' required>
 </div>
 <div class='input-group'>
+<span class='input-group-addon dog'>Last Name</span>
+<input type='text' class='form-control' name='last-name' maxlength='255' id='newLastName' required>
+</div>
+<div class='input-group'>
 <span class='input-group-addon clock'>Check-In</span>
 <input type='date' class='form-control' name='check-in' id='newCheckIn' min='$weekAgo' required>
 </div>

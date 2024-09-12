@@ -2,7 +2,7 @@
 include '../assets/config.php';
 if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
   $doubleBookedReservations=array();
-  $sql_doubleBookedReservations="SELECT DISTINCT catReservationID FROM (SELECT a.catReservationID FROM (SELECT catReservationID, condoID, catName, checkIn, checkOut FROM cats_reservations WHERE checkOut>=DATE(NOW()) AND condoID IN (SELECT condoID FROM (SELECT condoID, COUNT(catReservationID) FROM cats_reservations WHERE checkOut>=DATE(NOW()) GROUP BY condoID HAVING COUNT(catReservationID)>1) r)) a JOIN (SELECT catReservationID, condoID, catName, checkIn, checkOut FROM cats_reservations WHERE checkOut>=DATE(NOW()) AND condoID IN (SELECT condoID FROM (SELECT condoID, COUNT(catReservationID) FROM cats_reservations WHERE checkOut>=DATE(NOW()) GROUP BY condoID HAVING COUNT(catReservationID)>1) r)) b USING (condoID) WHERE a.catReservationID<>b.catReservationID AND a.checkIn<=b.checkOut AND a.checkOut>=b.checkIn GROUP BY a.condoID, a.catReservationID, a.catName, a.checkIn, a.checkOut ORDER BY a.condoID, a.checkIn, a.catName) d";
+  $sql_doubleBookedReservations="SELECT DISTINCT catReservationID FROM (SELECT a.catReservationID FROM (SELECT catReservationID, condoID, lastName, catName, checkIn, checkOut FROM cats_reservations WHERE checkOut>=DATE(NOW()) AND condoID IN (SELECT condoID FROM (SELECT condoID, COUNT(catReservationID) FROM cats_reservations WHERE checkOut>=DATE(NOW()) GROUP BY condoID HAVING COUNT(catReservationID)>1) r)) a JOIN (SELECT catReservationID, condoID, lastName, catName, checkIn, checkOut FROM cats_reservations WHERE checkOut>=DATE(NOW()) AND condoID IN (SELECT condoID FROM (SELECT condoID, COUNT(catReservationID) FROM cats_reservations WHERE checkOut>=DATE(NOW()) GROUP BY condoID HAVING COUNT(catReservationID)>1) r)) b USING (condoID) WHERE a.catReservationID<>b.catReservationID AND a.checkIn<=b.checkOut AND a.checkOut>=b.checkIn GROUP BY a.condoID, a.catReservationID, a.lastName, a.catName, a.checkIn, a.checkOut ORDER BY a.condoID, a.checkIn, a.lastName, a.catName) d";
   $result_doubleBookedReservations=$conn->query($sql_doubleBookedReservations);
   while ($row_doubleBookedReservations=$result_doubleBookedReservations->fetch_assoc()) {
     $doubleBookedReservationsID=$row_doubleBookedReservations['catReservationID'];
@@ -31,11 +31,12 @@ if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
         $checkedInID=$row_checkedIn['catReservationID'];
         $checkedIn[]=$checkedInID;
       }
-      $sql_reservations="SELECT catReservationID, catName, checkIn, checkOut FROM cats_reservations WHERE condoID='$condoID' AND checkIn<='$endDate' AND checkOut>='$startDate' ORDER BY checkIn, catName";
+      $sql_reservations="SELECT catReservationID, lastName, catName, checkIn, checkOut FROM cats_reservations WHERE condoID='$condoID' AND checkIn<='$endDate' AND checkOut>='$startDate' ORDER BY checkIn, lastName, catName";
       $result_reservations=$conn->query($sql_reservations);
       while ($row_reservations=$result_reservations->fetch_assoc()) {
         $reservationID=$row_reservations['catReservationID'];
-        $reservationName=htmlspecialchars($row_reservations['catName'], ENT_QUOTES);
+        $reservationLastName=htmlspecialchars($row_reservations['lastName'], ENT_QUOTES);
+        $reservationCatName=htmlspecialchars($row_reservations['catName'], ENT_QUOTES);
         $reservationCheckIn=strtotime($row_reservations['checkIn']);
         $reservationCheckOut=strtotime($row_reservations['checkOut']);
         $checkOutDayOfWeek=date('l', strtotime($row_reservations['checkOut']));
@@ -52,7 +53,7 @@ if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
         } elseif (in_array($reservationID, $checkedIn)) {
           echo " checkedIn";
         }
-        echo "'>$reservationName</div>
+        echo "'>$reservationCatName $reservationLastName</div>
         <div class='condo-dates'>
           <span class='condo-check-in'>" . date('D n/j', $reservationCheckIn) . "</span> – <span class='condo-check-out";
           if ($checkOutDayOfWeek=='Friday' OR $checkOutDayOfWeek=='Saturday' OR $checkOutDayOfWeek=='Sunday') {

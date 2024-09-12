@@ -3,7 +3,7 @@ include '../assets/config.php';
 if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
   $status=$_POST['status'];
   $sortMeds=$_POST['sortMeds'];
-  $sql_all_dogs="SELECT r.dogReservationID, dogFoodID, checkIn, checkOut, roomID, dogName, foodType, feedingInstructions, specialNotes FROM dogs_reservations r JOIN dogs_food f USING (dogReservationID)";
+  $sql_all_dogs="SELECT r.dogReservationID, dogFoodID, checkIn, checkOut, roomID, lastName, dogName, foodType, feedingInstructions, specialNotes FROM dogs_reservations r JOIN dogs_food f USING (dogReservationID)";
   if ($sortMeds=='all') {
     $sql_all_dogs.=" WHERE status='$status' AND checkOut>=DATE(NOW())";
   } elseif ($sortMeds=='am') {
@@ -14,9 +14,9 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     $sql_all_dogs.=" JOIN dogs_medications m USING (dogReservationID) WHERE status='$status' AND checkOut>=DATE(NOW()) AND frequency IN ('PM', '2X', '3X') GROUP BY r.dogReservationID, dogFoodID";
   }
   if ($status=='Active') {
-    $sql_all_dogs.=" ORDER BY roomID, dogName";
+    $sql_all_dogs.=" ORDER BY roomID, lastName, dogName";
   } elseif ($status=='Future') {
-    $sql_all_dogs.=" ORDER BY checkIn, dogName";
+    $sql_all_dogs.=" ORDER BY checkIn, lastName, dogName";
   }
   $result_all_dogs=$conn->query($sql_all_dogs);
   while ($row_all_dogs=$result_all_dogs->fetch_assoc()) {
@@ -26,7 +26,8 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     $boardingCheckOut=strtotime($row_all_dogs['checkOut']);
     $dateToday=strtotime(date('Y-m-d'));
     $boardingRoomID=$row_all_dogs['roomID'];
-    $boardingName=htmlspecialchars($row_all_dogs['dogName'], ENT_QUOTES);
+    $boardingLastName=htmlspecialchars($row_all_dogs['lastName'], ENT_QUOTES);
+    $boardingDogName=htmlspecialchars($row_all_dogs['dogName'], ENT_QUOTES);
     $boardingFoodType=$row_all_dogs['foodType'];
     $boardingFeedingInstructions=nl2br(htmlspecialchars($row_all_dogs['feedingInstructions'], ENT_QUOTES));
     $boardingSpecialNotes=htmlspecialchars($row_all_dogs['specialNotes'], ENT_QUOTES);
@@ -39,7 +40,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     if ($boardingCheckOut==$dateToday) {
       echo " class='checkOutToday'";
     }
-    echo ">$boardingName</td>
+    echo ">$boardingDogName $boardingLastName</td>
     <td>
     <span class='label label-";
     if ($boardingFoodType=='Ours') {

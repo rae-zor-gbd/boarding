@@ -73,10 +73,11 @@ $titleEndDate=date('D n/j', strtotime($endDate));
         $('#bookCondo').click(function (e) {
           e.preventDefault();
           var condo=document.getElementById('newCondo').value;
-          var name=document.getElementById('newCatName').value.toUpperCase();
+          var lastName=document.getElementById('newLastName').value.toUpperCase();
+          var catName=document.getElementById('newCatName').value.toUpperCase();
           var checkIn=document.getElementById('newCheckIn').value;
           var checkOut=document.getElementById('newCheckOut').value;
-          if (condo!='' && name!='' && checkIn!='' && checkOut!='') {
+          if (condo!='' && lastName!='' && catName!='' && checkIn!='' && checkOut!='') {
             var validateCheckIn=Date.parse(document.getElementById('newCheckIn').value);
             var validateCheckOut=Date.parse(document.getElementById('newCheckOut').value);
             if (validateCheckOut>=validateCheckIn) {
@@ -84,7 +85,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
                 url:'/ajax/book-condo.php',
                 type:'POST',
                 cache:false,
-                data:{condo:condo, name:name, checkIn:checkIn, checkOut:checkOut},
+                data:{condo:condo, lastName:lastName, catName:catName, checkIn:checkIn, checkOut:checkOut},
                 success:function(response){
                   loadCondos('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
                   loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
@@ -143,6 +144,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
           e.preventDefault();
           var id=document.getElementById('editID').value;
           var condo=document.getElementById('editCondo').value;
+          var lastName=document.getElementById('editLastName').value.toUpperCase();
           var catName=document.getElementById('editCatName').value.toUpperCase();
           var checkIn=document.getElementById('editCheckIn').value;
           var checkOut=document.getElementById('editCheckOut').value;
@@ -154,7 +156,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
                 url:'/ajax/edit-condo.php',
                 type:'POST',
                 cache:false,
-                data:{id:id, condo:condo, catName:catName, checkIn:checkIn, checkOut:checkOut},
+                data:{id:id, condo:condo, lastName:lastName, catName:catName, checkIn:checkIn, checkOut:checkOut},
                 success:function(response){
                   $('#editCondoModal').modal('hide');
                   $('#editCondoModalBody').empty();

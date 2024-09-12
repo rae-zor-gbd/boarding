@@ -1,7 +1,7 @@
 <?php
 include '../assets/config.php';
 $doubleBookedReservations=array();
-$sql_doubleBookedReservations="SELECT DISTINCT dogReservationID FROM (SELECT a.dogReservationID FROM (SELECT dogReservationID, roomID, dogName, checkIn, checkOut FROM dogs_reservations WHERE checkOut>=DATE(NOW()) AND roomID IN (SELECT roomID FROM (SELECT roomID, COUNT(dogReservationID) FROM dogs_reservations WHERE checkOut>=DATE(NOW()) GROUP BY roomID HAVING COUNT(dogReservationID)>1) r)) a JOIN (SELECT dogReservationID, roomID, dogName, checkIn, checkOut FROM dogs_reservations WHERE checkOut>=DATE(NOW()) AND roomID IN (SELECT roomID FROM (SELECT roomID, COUNT(dogReservationID) FROM dogs_reservations WHERE checkOut>=DATE(NOW()) GROUP BY roomID HAVING COUNT(dogReservationID)>1) r)) b USING (roomID) WHERE a.dogReservationID<>b.dogReservationID AND a.checkIn<=b.checkOut AND a.checkOut>=b.checkIn GROUP BY a.roomID, a.dogReservationID, a.dogName, a.checkIn, a.checkOut ORDER BY a.roomID, a.checkIn, a.dogName) d";
+$sql_doubleBookedReservations="SELECT DISTINCT dogReservationID FROM (SELECT a.dogReservationID FROM (SELECT dogReservationID, roomID, lastName, dogName, checkIn, checkOut FROM dogs_reservations WHERE checkOut>=DATE(NOW()) AND roomID IN (SELECT roomID FROM (SELECT roomID, COUNT(dogReservationID) FROM dogs_reservations WHERE checkOut>=DATE(NOW()) GROUP BY roomID HAVING COUNT(dogReservationID)>1) r)) a JOIN (SELECT dogReservationID, roomID, lastName, dogName, checkIn, checkOut FROM dogs_reservations WHERE checkOut>=DATE(NOW()) AND roomID IN (SELECT roomID FROM (SELECT roomID, COUNT(dogReservationID) FROM dogs_reservations WHERE checkOut>=DATE(NOW()) GROUP BY roomID HAVING COUNT(dogReservationID)>1) r)) b USING (roomID) WHERE a.dogReservationID<>b.dogReservationID AND a.checkIn<=b.checkOut AND a.checkOut>=b.checkIn GROUP BY a.roomID, a.dogReservationID, a.lastName, a.dogName, a.checkIn, a.checkOut ORDER BY a.roomID, a.checkIn, a.lastName, a.dogName) d";
 $result_doubleBookedReservations=$conn->query($sql_doubleBookedReservations);
 while ($row_doubleBookedReservations=$result_doubleBookedReservations->fetch_assoc()) {
   $doubleBookedReservationsID=$row_doubleBookedReservations['dogReservationID'];
@@ -50,11 +50,12 @@ function loadRoomReservation($loadRoomID, $loadColumnID, $loadRowID, $loadHooks,
     $checkedInID=$row_checkedIn['dogReservationID'];
     $checkedIn[]=$checkedInID;
   }
-  $sql_reservations="SELECT dogReservationID, dogName, checkIn, checkOut FROM dogs_reservations WHERE roomID='$loadRoomID' AND checkIn<='$loadEndDate' AND checkOut>='$loadStartDate' ORDER BY checkIn, dogName";
+  $sql_reservations="SELECT dogReservationID, lastName, dogName, checkIn, checkOut FROM dogs_reservations WHERE roomID='$loadRoomID' AND checkIn<='$loadEndDate' AND checkOut>='$loadStartDate' ORDER BY checkIn, lastName, dogName";
   $result_reservations=$conn->query($sql_reservations);
   while ($row_reservations=$result_reservations->fetch_assoc()) {
     $reservationID=$row_reservations['dogReservationID'];
-    $reservationName=htmlspecialchars($row_reservations['dogName'], ENT_QUOTES);
+    $reservationLastName=htmlspecialchars($row_reservations['lastName'], ENT_QUOTES);
+    $reservationDogName=htmlspecialchars($row_reservations['dogName'], ENT_QUOTES);
     $reservationCheckIn=strtotime($row_reservations['checkIn']);
     $reservationCheckOut=strtotime($row_reservations['checkOut']);
     $checkOutDayOfWeek=date('l', strtotime($row_reservations['checkOut']));
@@ -72,7 +73,7 @@ function loadRoomReservation($loadRoomID, $loadColumnID, $loadRowID, $loadHooks,
     } elseif (in_array($reservationID, $checkedIn)) {
       echo " checkedIn";
     }
-    echo "'>$reservationName</div>
+    echo "'>$reservationDogName $reservationLastName</div>
     <div class='room-dates'>
     <span class='room-check-in'>" . date('D n/j', $reservationCheckIn) . "</span> – <span class='room-check-out";
     if ($checkOutDayOfWeek=='Friday' OR $checkOutDayOfWeek=='Saturday' OR $checkOutDayOfWeek=='Sunday') {

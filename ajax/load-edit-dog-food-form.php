@@ -3,11 +3,12 @@ include '../assets/config.php';
 if (isset($_POST['id']) AND isset($_POST['status'])) {
   $id=$_POST['id'];
   $status=$_POST['status'];
-  $sql_dog_info="SELECT r.dogReservationID, roomID, dogName, foodType, feedingInstructions, specialNotes FROM dogs_reservations r JOIN dogs_food f USING (dogReservationID) WHERE dogFoodID='$id'";
+  $sql_dog_info="SELECT r.dogReservationID, roomID, lastName, dogName, foodType, feedingInstructions, specialNotes FROM dogs_reservations r JOIN dogs_food f USING (dogReservationID) WHERE dogFoodID='$id'";
   $result_dog_info=$conn->query($sql_dog_info);
   $row_dog_info=$result_dog_info->fetch_assoc();
   $reservationID=$row_dog_info['dogReservationID'];
   $room=$row_dog_info['roomID'];
+  $lastName=htmlspecialchars($row_dog_info['lastName'], ENT_QUOTES);
   $dogName=htmlspecialchars($row_dog_info['dogName'], ENT_QUOTES);
   $foodType=$row_dog_info['foodType'];
   $feedingInstructions=htmlspecialchars($row_dog_info['feedingInstructions'], ENT_QUOTES);
@@ -37,6 +38,10 @@ if (isset($_POST['id']) AND isset($_POST['status'])) {
   <div class='input-group'>
   <span class='input-group-addon dog'>Dog Name</span>
   <input type='text' class='form-control' name='dog-name' maxlength='255' id='editDogName' value='$dogName' disabled>
+  </div>
+  <div class='input-group'>
+  <span class='input-group-addon dog'>Last Name</span>
+  <input type='text' class='form-control' name='last-name' maxlength='255' id='editLastName' value='$lastName' disabled>
   </div>
   <div class='input-group'>
   <span class='input-group-addon food'>Food Source</span>
