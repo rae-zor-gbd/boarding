@@ -139,7 +139,7 @@ CREATE TABLE medications (
 CREATE TABLE medications_strengths (
   medID INT(11) NOT NULL,
   strength FLOAT NOT NULL,
-  unit ENUM('MG', 'ML', 'G', '%') NOT NULL DEFAULT 'MG',
+  unit ENUM('MCG', 'MG', 'G', '%', 'ML') NOT NULL DEFAULT 'MG',
   PRIMARY KEY (medID, strength, unit),
   FOREIGN KEY (medID) REFERENCES medications(medID) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
