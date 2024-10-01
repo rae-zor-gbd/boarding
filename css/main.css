@@ -255,6 +255,7 @@ td textarea, .input-group input, .input-group select, .input-group textarea {
   text-transform:uppercase;
 }
 textarea {
+  font-variant:tabular-nums;
   resize:none;
 }
 .alert-danger h4::before {
