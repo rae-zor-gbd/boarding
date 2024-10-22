@@ -5,7 +5,15 @@ if (isset($_GET['startDate']) AND $_GET['startDate']!='' AND isset($_GET['endDat
   $endDate=date('Y-m-d', strtotime($_GET['endDate']));
 } else {
   $startDate=date('Y-m-d');
-  $endDate=date('Y-m-d', strtotime($startDate. ' + 30 days'));
+  $sql_end_date="SELECT MAX(checkOut) AS endDate FROM cats_reservations";
+  $result_end_date=$conn->query($sql_end_date);
+  $row_end_date=$result_end_date->fetch_assoc();
+  $endDate=$row_end_date['endDate'];
+  if (isset($row_end_date['endDate']) AND $row_end_date['endDate']!='') {
+    $endDate=$row_end_date['endDate'];
+  } else {
+    $endDate=date('Y-m-d', strtotime($startDate. ' + 30 days'));
+  }
 }
 $minStartDate=date('Y-m-d', strtotime(date('Y-m-d'). ' - 1 day'));
 $titleStartDate=date('D n/j', strtotime($startDate));
