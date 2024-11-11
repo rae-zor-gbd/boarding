@@ -232,11 +232,11 @@ button.disabled {
   opacity:0.5;
 }
 input[type=checkbox] {
+  bottom:1px;
   height:calc(var(--spacer)/1.75);
   margin-right:calc(var(--spacer)/3);
   margin-top:0;
   position:relative;
-  top:3px;
   width:calc(var(--spacer)/1.75);
 }
 input[type=checkbox][disabled]:hover {
@@ -915,14 +915,15 @@ nav {
   box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
   display:flex;
   flex-flow:wrap;
-  padding:6px 12px;
+  line-height:1;
+  padding:12px;
 }
 .tag-group .input-group {
   display:flex;
   width:calc(100%/2);
 }
 .tag-group .input-group:not(:nth-last-child(-n+2)) {
-  margin-bottom:5px;
+  margin-bottom:8px;
 }
 .tag-group .input-group:nth-last-child(-n+2), .tag-group .input-group:nth-last-child(-n+2) label {
   margin-bottom:0;
