@@ -511,9 +511,6 @@ nav {
   position:fixed;
   width:calc(var(--spacer)*9);
 }
-.nav-footer form .input-group:last-child {
-  margin-bottom:calc(var(--spacer)/2);
-}
 .nav-footer form .input-group .input-group-addon {
   min-width:calc(var(--spacer)*4);
 }
@@ -603,6 +600,13 @@ nav {
 }
 #pmMedsButton::before {
   content:var(--icon-sunset);
+}
+#statsButton {
+  margin-bottom:calc(var(--spacer)/2);
+  margin-top:0;
+}
+#statsButton::before {
+  content:var(--icon-table);
 }
 .checkedIn::after, .checkOutToday::after {
   font-family:var(--icon-font-family);

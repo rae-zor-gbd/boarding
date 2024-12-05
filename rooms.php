@@ -66,6 +66,19 @@ $titleEndDate=date('D n/j', strtotime($endDate));
           }
         });
       }
+      function loadStats(){
+        $.ajax({
+          url:'/ajax/load-dog-stats.php',
+          type:'POST',
+          cache:false,
+          data:{},
+          success:function(data){
+            if (data) {
+              $('#statsModalBody').append(data);
+            }
+          }
+        });
+      }
       function toggleDates(){
         var startDate=document.getElementById('startDate').value;
         var endDate=document.getElementById('endDate').value;
@@ -107,6 +120,9 @@ $titleEndDate=date('D n/j', strtotime($endDate));
           } else {
             loadIncompleteFormAlert('#bookRoomModalBody');
           }
+        });
+        $('#statsButton').click(function (e) {
+          loadStats();
         });
         $(document).on('click', '#delete-room-button', function() {
           var id=$(this).data('id');
@@ -183,6 +199,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
           $('#bookRoomModalBody').empty();
           $('#deleteRoomModalBody').empty();
           $('#editRoomModalBody').empty();
+          $('#statsModalBody').empty();
         });
       });
     </script>
@@ -206,8 +223,20 @@ $titleEndDate=date('D n/j', strtotime($endDate));
         </div>
       </div>
     </form>
+    <div class='modal fade' id='statsModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+      <div class='modal-dialog'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <button type='button' class='close' data-dismiss='modal'></button>
+            <h4 class='modal-title'>Daily Statistics</h4>
+          </div>
+          <div class='modal-body' id='statsModalBody'></div>
+        </div>
+      </div>
+    </div>
     <div class='nav-footer'>
       <div id='navCounts'></div>
+      <button type='button' class='btn btn-default nav-button' id='statsButton' data-toggle='modal' data-target='#statsModal' data-backdrop='static' title='Daily Statistics'>Daily Statistics</button>
       <form action='' method='post' spellcheck='false' autocomplete='off' id='toggleDatesForm' onchange='toggleDates()'>
         <div class='input-group'>
           <span class='input-group-addon clock'>Start Date</span>
