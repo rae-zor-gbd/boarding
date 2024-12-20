@@ -38,11 +38,11 @@ function loadRoomReservation($loadRoomID, $loadColumnID, $loadRowID, $loadHooks,
   }
   echo "' title='$loadDescription'>
   <div class='room-number'>$loadRoomID";
-  if ($loadHooks=='Yes') {
-    echo "<div class='hooked-bucket' title='Hooked Water Bucket'></div>";
-  }
   if ($loadCovered=='Yes') {
     echo "<div class='covered-room' title='Covered Room'></div>";
+  }
+  if ($loadHooks=='Yes') {
+    echo "<div class='hooked-bucket' title='Hooked Water Bucket'></div>";
   }
   echo "</div>
   <div class='room-occupant-column'>";

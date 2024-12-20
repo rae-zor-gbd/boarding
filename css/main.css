@@ -879,7 +879,7 @@ nav {
   grid-template-columns:25% 25% 25% 25%;
 }
 .room-number div:not(:last-child) {
-  padding-bottom:calc(var(--spacer)/4);
+  padding-bottom:calc(var(--spacer)/5);
 }
 .room-row {
   grid-row-end:span 2;
