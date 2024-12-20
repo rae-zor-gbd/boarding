@@ -7,7 +7,7 @@ while ($row_doubleBookedReservations=$result_doubleBookedReservations->fetch_ass
   $doubleBookedReservationsID=$row_doubleBookedReservations['dogReservationID'];
   $doubleBookedReservations[]=$doubleBookedReservationsID;
 }
-function loadRoomReservation($loadRoomID, $loadColumnID, $loadRowID, $loadHooks, $loadRoomStatus, $loadStartDate, $loadEndDate, $loadDescription) {
+function loadRoomReservation($loadRoomID, $loadColumnID, $loadRowID, $loadHooks, $loadCovered, $loadRoomStatus, $loadStartDate, $loadEndDate, $loadDescription) {
   include '../assets/config.php';
   echo "<div class='room-row";
   if ($loadRoomStatus=='Disabled') {
@@ -40,6 +40,9 @@ function loadRoomReservation($loadRoomID, $loadColumnID, $loadRowID, $loadHooks,
   <div class='room-number'>$loadRoomID";
   if ($loadHooks=='Yes') {
     echo "<div class='hooked-bucket' title='Hooked Water Bucket'></div>";
+  }
+  if ($loadCovered=='Yes') {
+    echo "<div class='covered-room' title='Covered Room'></div>";
   }
   echo "</div>
   <div class='room-occupant-column'>";
@@ -94,16 +97,17 @@ function loadRoomReservation($loadRoomID, $loadColumnID, $loadRowID, $loadHooks,
 if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
   $startDate=$_POST['startDate'];
   $endDate=$_POST['endDate'];
-  $sql_rooms="SELECT roomID, columnID, rowID, hooks, status, description FROM rooms ORDER BY roomID";
+  $sql_rooms="SELECT roomID, columnID, rowID, hooks, covered, status, description FROM rooms ORDER BY roomID";
   $result_rooms=$conn->query($sql_rooms);
   while ($row_rooms=$result_rooms->fetch_assoc()) {
     $roomID=$row_rooms['roomID'];
     $columnID=$row_rooms['columnID'];
     $rowID=$row_rooms['rowID'];
     $hooks=$row_rooms['hooks'];
+    $covered=$row_rooms['covered'];
     $status=$row_rooms['status'];
     $description=htmlspecialchars($row_rooms['description'], ENT_QUOTES);
-    loadRoomReservation($roomID, $columnID, $rowID, $hooks, $status, $startDate, $endDate, $description);
+    loadRoomReservation($roomID, $columnID, $rowID, $hooks, $covered, $status, $startDate, $endDate, $description);
   }
 }
 ?>

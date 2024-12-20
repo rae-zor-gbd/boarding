@@ -724,6 +724,21 @@ nav {
 .condo-row.enabled:has(.condo-occupant-column:empty), .room-row.enabled:has(.room-occupant-column:empty) {
   background:var(--color-highlight);
 }
+.covered-room, .hooked-bucket {
+  font-size:70%;
+  line-height:1;
+  text-align:left;
+}
+.covered-room {
+  color:var(--color-emphasis-05);
+}
+.covered-room::before, .hooked-bucket::before {
+  font-family:var(--icon-font-family);
+  font-weight:var(--font-weight-regular);
+}
+.covered-room::before {
+  content:var(--icon-house-lock);
+}
 .double-booked-condo:not(:has(.condo-occupant-column:empty)), .double-booked-room:not(:has(.room-occupant-column:empty)) {
   border:2px solid var(--color-emphasis-01);
   margin-top:-1px;
@@ -752,14 +767,9 @@ nav {
 }
 .hooked-bucket {
   color:var(--color-emphasis-03);
-  font-size:70%;
-  line-height:1;
-  text-align:left;
 }
 .hooked-bucket::before {
   content:var(--icon-bucket);
-  font-family:var(--icon-font-family);
-  font-weight:var(--font-weight-regular);
 }
 .load-more {
   margin-top:calc(var(--spacer)/2);
@@ -867,6 +877,9 @@ nav {
 .rooms-container {
   display:grid;
   grid-template-columns:25% 25% 25% 25%;
+}
+.room-number div:not(:last-child) {
+  padding-bottom:calc(var(--spacer)/4);
 }
 .room-row {
   grid-row-end:span 2;

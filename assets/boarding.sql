@@ -73,6 +73,7 @@ CREATE TABLE rooms (
   rowID INT(11) NOT NULL,
   status ENUM('Enabled', 'Disabled') NOT NULL DEFAULT 'Enabled',
   hooks ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
+  covered ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
   description VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (roomID),
   CONSTRAINT unique_rooms UNIQUE (columnID, rowID)
