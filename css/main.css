@@ -422,7 +422,7 @@ textarea {
   padding:calc(var(--spacer)/2) var(--spacer);
 }
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
-  line-height:1.2;
+  line-height:1;
 }
 .table {
   margin-bottom:0;
