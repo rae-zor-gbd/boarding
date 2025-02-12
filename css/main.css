@@ -517,6 +517,9 @@ nav {
 .nav-footer form .input-group .input-group-addon {
   min-width:calc(var(--spacer)*4);
 }
+.nav-footer .input-group:not(:last-child) {
+  margin-bottom:calc(var(--spacer)/3);
+}
 .nav-header, .nav-links, .panel-body, .panel-footer {
   border-top:1.5px solid var(--color-06)!important;
 }
