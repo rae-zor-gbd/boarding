@@ -5,19 +5,16 @@ if (isset($_GET['startDate']) AND $_GET['startDate']!='' AND isset($_GET['endDat
   $endDate=date('Y-m-d', strtotime($_GET['endDate']));
 } else {
   $startDate=date('Y-m-d');
-  /*$sql_end_date="SELECT MAX(checkOut) AS endDate FROM dogs_reservations";
-  $result_end_date=$conn->query($sql_end_date);
-  $row_end_date=$result_end_date->fetch_assoc();*/
   $endDate=date('Y-m-d', strtotime($startDate. ' + 14 days'));
-  /*if (isset($row_end_date['endDate']) AND $row_end_date['endDate']!='') {
-    $endDate=$row_end_date['endDate'];
-  } else {
-    $endDate=date('Y-m-d', strtotime($startDate. ' + 30 days'));
-  }*/
 }
 $minStartDate=date('Y-m-d', strtotime(date('Y-m-d'). ' - 1 day'));
 $titleStartDate=date('D n/j', strtotime($startDate));
 $titleEndDate=date('D n/j', strtotime($endDate));
+$today=date('Y-m-d');
+$sql_max_end_date="SELECT MAX(checkOut) AS endDate FROM dogs_reservations";
+$result_max_end_date=$conn->query($sql_max_end_date);
+$row_max_end_date=$result_max_end_date->fetch_assoc();
+$maxEndDate=$row_max_end_date['endDate'];
 ?>
 <!DOCTYPE html>
 <html lang='en'>
@@ -34,20 +31,6 @@ $titleEndDate=date('D n/j', strtotime($endDate));
           success:function(data){
             if (data) {
               $('#bookRoomModalBody').append(data);
-            }
-          }
-        });
-      }
-      function loadCounts(startDate, endDate){
-        $.ajax({
-          url:'/ajax/load-dog-counts.php',
-          type:'POST',
-          cache:false,
-          data:{startDate:startDate, endDate:endDate},
-          success:function(data){
-            if (data) {
-              $('#navCounts').empty();
-              $('#navCounts').append(data);
             }
           }
         });
@@ -87,7 +70,6 @@ $titleEndDate=date('D n/j', strtotime($endDate));
       $(document).ready(function() {
         $('#rooms').addClass('active');
         loadRooms('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
-        loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
         $('#bookRoomButton').click(function (e) {
           loadBookRoomForm();
         });
@@ -109,7 +91,6 @@ $titleEndDate=date('D n/j', strtotime($endDate));
                 data:{room:room, lastName:lastName, dogName:dogName, checkIn:checkIn, checkOut:checkOut},
                 success:function(response){
                   loadRooms('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
-                  loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
                   $('#bookRoomModal').modal('hide');
                   document.getElementById('bookRoomForm').reset();
                 }
@@ -148,7 +129,6 @@ $titleEndDate=date('D n/j', strtotime($endDate));
               $('#room-occupant-'+id).remove();
               $('#deleteRoomModal').modal('hide');
               $('#deleteRoomModalBody').empty();
-              loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
             }
           });
         });
@@ -185,7 +165,6 @@ $titleEndDate=date('D n/j', strtotime($endDate));
                   $('#editRoomModal').modal('hide');
                   $('#editRoomModalBody').empty();
                   loadRooms('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
-                  loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
                 }
               });
             } else {
@@ -235,8 +214,10 @@ $titleEndDate=date('D n/j', strtotime($endDate));
       </div>
     </div>
     <div class='nav-footer'>
-      <div id='navCounts'></div>
       <button type='button' class='btn btn-default nav-button' id='statsButton' data-toggle='modal' data-target='#statsModal' data-backdrop='static' title='Daily Statistics'>Daily Statistics</button>
+      <a href='/dogs/rooms/<?php echo $today; ?>/<?php echo $maxEndDate; ?>'>
+        <button type='button' class='btn btn-default nav-button' id='showAllButton'>All Reservations</button>
+      </a>
       <form action='' method='post' spellcheck='false' autocomplete='off' id='toggleDatesForm' onchange='toggleDates()'>
         <div class='input-group'>
           <span class='input-group-addon clock'>Start Date</span>

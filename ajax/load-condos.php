@@ -63,6 +63,9 @@ if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
           </div>
         </div>
         <div class='condo-buttons'>
+        <a href='/cats/condos/" . date('Y-m-d', $reservationCheckIn) . "/" . date('Y-m-d', $reservationCheckOut) . "'>
+        <button type='button' class='button-availability' id='check-availability-button' title='Check Availability'></button>
+        </a>
         <button type='button' class='button-edit' id='edit-condo-button' data-toggle='modal' data-target='#editCondoModal' data-id='$reservationID' data-backdrop='static' title='Edit Reservation'></button>
         <button type='button' class='button-delete' id='delete-condo-button' data-toggle='modal' data-target='#deleteCondoModal' data-id='$reservationID' data-backdrop='static' title='Delete Reservation'></button>
         </div>

@@ -264,12 +264,15 @@ textarea {
   font-family:var(--icon-font-family);
   margin-right:calc(var(--spacer)/2);
 }
-.button-add::before, .button-check::before, .button-delete::before, .button-door::before, .button-edit::before, .button-log::before, .button-meds::before {
+.button-add::before, .button-availability::before, .button-check::before, .button-delete::before, .button-door::before, .button-edit::before, .button-log::before, .button-meds::before {
   font-family:var(--icon-font-family);
   font-weight:var(--font-weight-regular);
 }
 .button-add::before {
   content:var(--icon-plus);
+}
+.button-availability::before {
+  content:var(--icon-calendar-days);
 }
 .button-check::before, .button-door::before {
   padding-right:calc(var(--spacer)/5);
@@ -601,9 +604,17 @@ nav {
 #pmMedsButton::before {
   content:var(--icon-sunset);
 }
-#statsButton {
-  margin-bottom:calc(var(--spacer)/2);
+#showAllButton, #statsButton {
   margin-top:0;
+}
+#showAllButton {
+  margin-bottom:calc(var(--spacer)/2);
+}
+#showAllButton::before {
+  content:var(--icon-expand-01);
+}
+#statsButton {
+  margin-bottom:calc(var(--spacer)/3);
 }
 #statsButton::before {
   content:var(--icon-table);
@@ -631,15 +642,13 @@ nav {
 }
 .condo-buttons, .room-buttons {
   font-size:75%;
-  min-width:53px;
+  letter-spacing:7px;
+  min-width:59px;
   text-align:right;
   vertical-align:middle;
 }
-.condo-buttons button:nth-last-child(1), .room-buttons button:nth-last-child(1) {
-  padding-right:0;
-}
-.condo-buttons button:nth-of-type(1), .room-buttons button:nth-of-type(1) {
-  padding-left:0;
+.condo-buttons button, .room-buttons button {
+  padding:0;
 }
 .condo-container {
   display:flex;

@@ -5,19 +5,16 @@ if (isset($_GET['startDate']) AND $_GET['startDate']!='' AND isset($_GET['endDat
   $endDate=date('Y-m-d', strtotime($_GET['endDate']));
 } else {
   $startDate=date('Y-m-d');
-  /*$sql_end_date="SELECT MAX(checkOut) AS endDate FROM cats_reservations";
-  $result_end_date=$conn->query($sql_end_date);
-  $row_end_date=$result_end_date->fetch_assoc();*/
   $endDate=date('Y-m-d', strtotime($startDate. ' + 14 days'));
-  /*if (isset($row_end_date['endDate']) AND $row_end_date['endDate']!='') {
-    $endDate=$row_end_date['endDate'];
-  } else {
-    $endDate=date('Y-m-d', strtotime($startDate. ' + 30 days'));
-  }*/
 }
 $minStartDate=date('Y-m-d', strtotime(date('Y-m-d'). ' - 1 day'));
 $titleStartDate=date('D n/j', strtotime($startDate));
 $titleEndDate=date('D n/j', strtotime($endDate));
+$today=date('Y-m-d');
+$sql_max_end_date="SELECT MAX(checkOut) AS endDate FROM cats_reservations";
+$result_max_end_date=$conn->query($sql_max_end_date);
+$row_max_end_date=$result_max_end_date->fetch_assoc();
+$maxEndDate=$row_max_end_date['endDate'];
 ?>
 <!DOCTYPE html>
 <html lang='en'>
@@ -52,16 +49,15 @@ $titleEndDate=date('D n/j', strtotime($endDate));
           }
         });
       }
-      function loadCounts(startDate, endDate){
+      function loadStats(){
         $.ajax({
-          url:'/ajax/load-cat-counts.php',
+          url:'/ajax/load-cat-stats.php',
           type:'POST',
           cache:false,
-          data:{startDate:startDate, endDate:endDate},
+          data:{},
           success:function(data){
             if (data) {
-              $('#navCounts').empty();
-              $('#navCounts').append(data);
+              $('#statsModalBody').append(data);
             }
           }
         });
@@ -74,7 +70,6 @@ $titleEndDate=date('D n/j', strtotime($endDate));
       $(document).ready(function() {
         $('#condos').addClass('active');
         loadCondos('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
-        loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
         $('#bookCondoButton').click(function (e) {
           loadBookCondoForm();
         });
@@ -96,7 +91,6 @@ $titleEndDate=date('D n/j', strtotime($endDate));
                 data:{condo:condo, lastName:lastName, catName:catName, checkIn:checkIn, checkOut:checkOut},
                 success:function(response){
                   loadCondos('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
-                  loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
                   $('#bookCondoModal').modal('hide');
                   document.getElementById('bookCondoForm').reset();
                 }
@@ -107,6 +101,9 @@ $titleEndDate=date('D n/j', strtotime($endDate));
           } else {
             loadIncompleteFormAlert('#bookCondoModalBody');
           }
+        });
+        $('#statsButton').click(function (e) {
+          loadStats();
         });
         $(document).on('click', '#delete-condo-button', function() {
           var id=$(this).data('id');
@@ -132,7 +129,6 @@ $titleEndDate=date('D n/j', strtotime($endDate));
               $('#condo-occupant-'+id).remove();
               $('#deleteCondoModal').modal('hide');
               $('#deleteCondoModalBody').empty();
-              loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
             }
           });
         });
@@ -169,7 +165,6 @@ $titleEndDate=date('D n/j', strtotime($endDate));
                   $('#editCondoModal').modal('hide');
                   $('#editCondoModalBody').empty();
                   loadCondos('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
-                  loadCounts('<?php echo "$startDate" ?>', '<?php echo "$endDate" ?>');
                 }
               });
             } else {
@@ -183,6 +178,7 @@ $titleEndDate=date('D n/j', strtotime($endDate));
           $('#bookCondoModalBody').empty();
           $('#deleteCondoModalBody').empty();
           $('#editCondoModalBody').empty();
+          $('#statsModalBody').empty();
         });
       });
     </script>
@@ -206,8 +202,22 @@ $titleEndDate=date('D n/j', strtotime($endDate));
         </div>
       </div>
     </form>
+    <div class='modal fade' id='statsModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+      <div class='modal-dialog'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <button type='button' class='close' data-dismiss='modal'></button>
+            <h4 class='modal-title'>Daily Statistics</h4>
+          </div>
+          <div class='modal-body' id='statsModalBody'></div>
+        </div>
+      </div>
+    </div>
     <div class='nav-footer'>
-      <div id='navCounts'></div>
+      <button type='button' class='btn btn-default nav-button' id='statsButton' data-toggle='modal' data-target='#statsModal' data-backdrop='static' title='Daily Statistics'>Daily Statistics</button>
+      <a href='/cats/condos/<?php echo $today; ?>/<?php echo $maxEndDate; ?>'>
+        <button type='button' class='btn btn-default nav-button' id='showAllButton'>All Reservations</button>
+      </a>
       <form action='' method='post' spellcheck='false' autocomplete='off' id='toggleDatesForm' onchange='toggleDates()'>
         <div class='input-group'>
           <span class='input-group-addon clock'>Start Date</span>

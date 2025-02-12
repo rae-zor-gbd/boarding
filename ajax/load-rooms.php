@@ -86,6 +86,9 @@ function loadRoomReservation($loadRoomID, $loadColumnID, $loadRowID, $loadHooks,
     </div>
     </div>
     <div class='room-buttons'>
+    <a href='/dogs/rooms/" . date('Y-m-d', $reservationCheckIn) . "/" . date('Y-m-d', $reservationCheckOut) . "'>
+    <button type='button' class='button-availability' id='check-availability-button' title='Check Availability'></button>
+    </a>
     <button type='button' class='button-edit' id='edit-room-button' data-toggle='modal' data-target='#editRoomModal' data-id='$reservationID' data-backdrop='static' title='Edit Reservation'></button>
     <button type='button' class='button-delete' id='delete-room-button' data-toggle='modal' data-target='#deleteRoomModal' data-id='$reservationID' data-backdrop='static' title='Delete Reservation'></button>
     </div>
