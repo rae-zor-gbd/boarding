@@ -31,7 +31,7 @@ CREATE TABLE cats_reservations (
 CREATE TABLE cats_food (
   catFoodID INT(11) NOT NULL AUTO_INCREMENT,
   catReservationID INT(11) NOT NULL,
-  foodType ENUM('Own', 'Ours') NOT NULL,
+  foodType ENUM('Own', 'Ours', 'Own & Ours') NOT NULL,
   feedingInstructions TEXT NOT NULL,
   specialNotes TEXT DEFAULT NULL,
   status ENUM('Active', 'Future') NOT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE dogs_reservations (
 CREATE TABLE dogs_food (
   dogFoodID INT(11) NOT NULL AUTO_INCREMENT,
   dogReservationID INT(11) NOT NULL,
-  foodType ENUM('Own', 'Ours') NOT NULL,
+  foodType ENUM('Own', 'Ours', 'Own & Ours') NOT NULL,
   feedingInstructions TEXT NOT NULL,
   specialNotes TEXT DEFAULT NULL,
   status ENUM('Active', 'Future') NOT NULL,

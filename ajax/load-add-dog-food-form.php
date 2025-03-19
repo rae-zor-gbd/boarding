@@ -25,6 +25,7 @@ if (isset($_POST['status'])) {
   <option value='' selected disabled>Select Food Source</option>
   <option value='Own'>Own Food</option>
   <option value='Ours'>Our Food</option>
+  <option value='Own & Ours'>Own & Our Food</option>
   </select>
   </div>
   <div class='input-group'>

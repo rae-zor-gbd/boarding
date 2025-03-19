@@ -57,6 +57,11 @@ if (isset($_POST['id']) AND isset($_POST['status'])) {
     echo " selected";
   }
   echo ">Our Food</option>
+  <option value='Own & Ours'";
+  if ($foodType=='Own & Ours') {
+    echo " selected";
+  }
+  echo ">Own & Our Food</option>
   </select>
   </div>
   <div class='input-group'>

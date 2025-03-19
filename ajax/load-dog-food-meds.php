@@ -45,6 +45,8 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     <span class='label label-";
     if ($boardingFoodType=='Ours') {
       echo "success";
+    } elseif ($boardingFoodType=='Own & Ours') {
+      echo "info";
     } else {
       echo "default";
     }

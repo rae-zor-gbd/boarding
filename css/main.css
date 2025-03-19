@@ -643,9 +643,11 @@ nav {
 .condo-buttons, .condo-name-dates, .room-buttons, .room-name-dates {
   display:table-cell;
 }
+.condo-buttons, .medication-label-buttons, .room-buttons {
+  letter-spacing:7px;
+}
 .condo-buttons, .room-buttons {
   font-size:75%;
-  letter-spacing:7px;
   min-width:59px;
   text-align:right;
   vertical-align:middle;
@@ -817,7 +819,7 @@ nav {
 }
 .medication-label button {
   font-size:90.909090909%;
-  padding:0 calc(var(--spacer)/6);
+  padding:0;
   position:relative;
   top:1px;
 }
@@ -839,7 +841,7 @@ nav {
 }
 .medication-label-buttons {
   border-left:1.5px solid rgb(255 255 255 / 50%);
-  min-width:85px;
+  min-width:72px;
   padding:0 5px;
   text-align:center;
   vertical-align:middle;
