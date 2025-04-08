@@ -70,13 +70,7 @@ function loadRoomReservation($loadRoomID, $loadColumnID, $loadRowID, $loadHooks,
       echo " double-booked-reservation";
     }
     echo "'>
-    <div class='room-name";
-    if ($reservationCheckOut<=$dateToday) {
-      echo " checkOutToday";
-    } elseif (in_array($reservationID, $checkedIn)) {
-      echo " checkedIn";
-    }
-    echo "'>$reservationDogName $reservationLastName</div>
+    <div class='room-name'>$reservationDogName $reservationLastName</div>
     <div class='room-dates'>
     <span class='room-check-in'>" . date('D n/j', $reservationCheckIn) . "</span> – <span class='room-check-out";
     if ($checkOutDayOfWeek=='Friday' OR $checkOutDayOfWeek=='Saturday' OR $checkOutDayOfWeek=='Sunday') {
@@ -85,7 +79,13 @@ function loadRoomReservation($loadRoomID, $loadColumnID, $loadRowID, $loadHooks,
     echo "'>" . date('D n/j', $reservationCheckOut) . "</span>
     </div>
     </div>
-    <div class='room-buttons'>
+    <div class='room-buttons";
+    if ($reservationCheckOut<=$dateToday) {
+      echo " checkOutTodayLeft";
+    } elseif (in_array($reservationID, $checkedIn)) {
+      echo " checkedIn";
+    }
+    echo "'>
     <a href='/dogs/rooms/" . date('Y-m-d', $reservationCheckIn) . "/" . date('Y-m-d', $reservationCheckOut) . "'>
     <button type='button' class='button-availability' id='check-availability-button' title='Check Availability'></button>
     </a>

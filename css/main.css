@@ -622,19 +622,24 @@ nav {
 #statsButton::before {
   content:var(--icon-table);
 }
-.checkedIn::after, .checkOutToday::after {
+.checkedIn::before, .checkOutTodayLeft::before, .checkOutTodayRight::after {
   font-family:var(--icon-font-family);
-  font-size:75%;
   font-weight:var(--font-weight-regular);
-  padding-left:calc(var(--spacer)/3.5);
 }
-.checkedIn::after {
+.checkedIn::before, .checkOutTodayLeft::before {
+  letter-spacing:3px;
+}
+.checkedIn::before {
   color:var(--color-emphasis-02);
   content:var(--icon-house);
 }
-.checkOutToday::after {
+.checkOutTodayLeft::before, .checkOutTodayRight::after {
   color:var(--color-emphasis-01);
   content:var(--icon-suitcase-02);
+}
+.checkOutTodayRight::after {
+  font-size:75%;
+  padding-left:calc(var(--spacer)/3.5);
 }
 .collapsed .panel-heading .panel-arrow {
   top:-1px;
@@ -648,7 +653,7 @@ nav {
 }
 .condo-buttons, .room-buttons {
   font-size:75%;
-  min-width:59px;
+  min-width:86px;
   text-align:right;
   vertical-align:middle;
 }

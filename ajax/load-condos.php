@@ -47,13 +47,7 @@ if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
           echo " double-booked-reservation";
         }
         echo "'>
-        <div class='condo-name";
-        if ($reservationCheckOut<=$dateToday) {
-          echo " checkOutToday";
-        } elseif (in_array($reservationID, $checkedIn)) {
-          echo " checkedIn";
-        }
-        echo "'>$reservationCatName $reservationLastName</div>
+        <div class='condo-name'>$reservationCatName $reservationLastName</div>
         <div class='condo-dates'>
           <span class='condo-check-in'>" . date('D n/j', $reservationCheckIn) . "</span> – <span class='condo-check-out";
           if ($checkOutDayOfWeek=='Friday' OR $checkOutDayOfWeek=='Saturday' OR $checkOutDayOfWeek=='Sunday') {
@@ -62,7 +56,13 @@ if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
           echo "'>" . date('D n/j', $reservationCheckOut) . "</span>
           </div>
         </div>
-        <div class='condo-buttons'>
+        <div class='condo-buttons";
+        if ($reservationCheckOut<=$dateToday) {
+          echo " checkOutTodayLeft";
+        } elseif (in_array($reservationID, $checkedIn)) {
+          echo " checkedIn";
+        }
+        echo "'>
         <a href='/cats/condos/" . date('Y-m-d', $reservationCheckIn) . "/" . date('Y-m-d', $reservationCheckOut) . "'>
         <button type='button' class='button-availability' id='check-availability-button' title='Check Availability'></button>
         </a>

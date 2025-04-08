@@ -38,7 +38,7 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     echo "<td>$boardingCondoID</td>
     <td";
     if ($boardingCheckOut==$dateToday) {
-      echo " class='checkOutToday'";
+      echo " class='checkOutTodayRight'";
     }
     echo ">$boardingCatName $boardingLastName</td>
     <td>
