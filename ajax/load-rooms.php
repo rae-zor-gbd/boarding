@@ -24,16 +24,16 @@ function loadRoomReservation($loadRoomID, $loadColumnID, $loadRowID, $loadHooks,
   } elseif ($loadColumnID=='2' OR $loadColumnID=='4') {
     echo " margin-left:calc(var(--spacer)/2);";
   }
-  if ($loadRoomID=='1' OR $loadRoomID=='9' OR $loadRoomID=='17' OR $loadRoomID=='25' OR $loadRoomID=='49') {
+  if (in_array($loadRoomID, array('1', '9', '17', '25', '49'), TRUE)) {
     echo " border-bottom-left-radius:6px;";
   }
-  if ($loadRoomID=='1' OR $loadRoomID=='9' OR $loadRoomID=='40' OR $loadRoomID=='48' OR $loadRoomID=='49') {
+  if (in_array($loadRoomID, array('1', '9', '40', '48', '49'), TRUE)) {
     echo " border-bottom-right-radius:6px;";
   }
-  if ($loadRoomID=='8' OR $loadRoomID=='16' OR $loadRoomID=='24' OR $loadRoomID=='32' OR $loadRoomID=='66') {
+  if (in_array($loadRoomID, array('8', '16', '24', '32', '66'), TRUE)) {
     echo " border-top-left-radius:6px;";
   }
-  if ($loadRoomID=='8' OR $loadRoomID=='16' OR $loadRoomID=='33' OR $loadRoomID=='41' OR $loadRoomID=='66') {
+  if (in_array($loadRoomID, array('8', '16', '33', '41', '66'), TRUE)) {
     echo " border-top-right-radius:6px;";
   }
   echo "' title='$loadDescription'>
