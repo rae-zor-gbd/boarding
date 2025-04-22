@@ -29,7 +29,8 @@ if (isset($_POST['status']) AND isset($_POST['id'])) {
   <span class='input-group-addon chart'>Strength</span>
   <input type='text' class='form-control' name='strength' maxlength='255' list='editStrengthsList' id='editStrength' style='border-bottom-right-radius:4px; border-top-right-radius:4px;' value='$strength'>
   <datalist id='editStrengthsList'>";
-  $sql_edit_strengths="SELECT CONCAT(strength, IF(unit='%', '', ' '), unit) AS strength FROM medications m JOIN medications_strengths s USING (medID) WHERE medName='$medName' ORDER BY s.unit, s.strength";
+  $medNameDecoded=htmlspecialchars_decode($medName);
+  $sql_edit_strengths="SELECT CONCAT(strength, IF(unit='%', '', ' '), unit) AS strength FROM medications m JOIN medications_strengths s USING (medID) WHERE medName='$medNameDecoded' ORDER BY s.unit, s.strength";
   $result_edit_strengths=$conn->query($sql_edit_strengths);
   while ($row_edit_strengths=$result_edit_strengths->fetch_assoc()) {
     $editStrengthList=strtoupper(htmlspecialchars($row_edit_strengths['strength'], ENT_QUOTES));
