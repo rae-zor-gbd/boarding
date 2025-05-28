@@ -78,19 +78,25 @@ function loadRoomReservation($loadRoomID, $loadColumnID, $loadRowID, $loadHooks,
     }
     echo "'>" . date('D n/j', $reservationCheckOut) . "</span>
     </div>
-    </div>
     <div class='room-buttons";
     if ($reservationCheckOut<=$dateToday) {
       echo " checkOutTodayLeft";
     } elseif (in_array($reservationID, $checkedIn)) {
       echo " checkedIn";
     }
-    echo "'>
-    <a href='/dogs/rooms/" . date('Y-m-d', $reservationCheckIn) . "/" . date('Y-m-d', $reservationCheckOut) . "'>
+    echo "'>";
+    $nights=($reservationCheckOut-$reservationCheckIn)/86400;
+    if ($nights>=6) {
+      echo "<a href='/dogs/long-term-sheet/$reservationID' target='_blank'>
+      <button type='button' class='button-clean' id='long-term-sheet-button' title='Print Long-Term Sheet'></button>
+      </a>";
+    }
+    echo "<a href='/dogs/rooms/" . date('Y-m-d', $reservationCheckIn) . "/" . date('Y-m-d', $reservationCheckOut) . "'>
     <button type='button' class='button-availability' id='check-availability-button' title='Check Availability'></button>
     </a>
     <button type='button' class='button-edit' id='edit-room-button' data-toggle='modal' data-target='#editRoomModal' data-id='$reservationID' data-backdrop='static' title='Edit Reservation'></button>
     <button type='button' class='button-delete' id='delete-room-button' data-toggle='modal' data-target='#deleteRoomModal' data-id='$reservationID' data-backdrop='static' title='Delete Reservation'></button>
+    </div>
     </div>
     </div>";
   }

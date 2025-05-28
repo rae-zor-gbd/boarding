@@ -264,7 +264,7 @@ textarea {
   font-family:var(--icon-font-family);
   margin-right:calc(var(--spacer)/2);
 }
-.button-add::before, .button-availability::before, .button-check::before, .button-delete::before, .button-door::before, .button-edit::before, .button-log::before, .button-meds::before {
+.button-add::before, .button-availability::before, .button-check::before, .button-clean::before, .button-delete::before, .button-door::before, .button-edit::before, .button-log::before, .button-meds::before {
   font-family:var(--icon-font-family);
   font-weight:var(--font-weight-regular);
 }
@@ -279,6 +279,9 @@ textarea {
 }
 .button-check::before {
   content:var(--icon-check);
+}
+.button-clean::before {
+  content:var(--icon-broom);
 }
 .button-delete::before {
   content:var(--icon-trash);
@@ -645,15 +648,13 @@ nav {
   top:-1px;
   transform:rotate(0deg);
 }
-.condo-buttons, .condo-name-dates, .room-buttons, .room-name-dates {
-  display:table-cell;
-}
 .condo-buttons, .medication-label-buttons, .room-buttons {
-  letter-spacing:7px;
+  letter-spacing:5px;
 }
 .condo-buttons, .room-buttons {
+  display:table-cell;
   font-size:75%;
-  min-width:86px;
+  min-width:110px;
   text-align:right;
   vertical-align:middle;
 }
@@ -690,15 +691,14 @@ nav {
   flex-basis:100%;
 }
 .condo-dates, .room-dates {
+  display:table-cell;
   font-size:70%;
   padding-top:calc(var(--spacer)/10);
   text-transform:uppercase;
+  width:100%;
 }
 .condo-name, .room-name {
   line-height:1;
-}
-.condo-name-dates, .room-name-dates {
-  width:100%;
 }
 .condo-number, .room-number {
   display:table-cell;
@@ -706,9 +706,6 @@ nav {
   min-width:35px;
   padding-right:calc(var(--spacer)/3);
   width:0;
-}
-.condo-occupant, .room-occupant {
-  display:table;
 }
 .condo-occupant:not(:nth-of-type(1)), .room-occupant:not(:nth-of-type(1)) {
   border-top:1px solid var(--color-05);
@@ -815,6 +812,34 @@ nav {
 }
 .log-med-table tbody tr td {
   vertical-align:middle;
+}
+.long-term-box {
+  border:1px solid;
+  font-size:18px;
+  min-height:48px;
+  padding:10px;
+  text-transform:uppercase;
+}
+.long-term-column-header {
+  text-align:center;
+}
+.long-term-header {
+  border-bottom:3px solid;
+  display:table;
+  margin-bottom:5px;
+  padding-bottom:5px;
+  width:100%;
+}
+.long-term-header-name, .long-term-header-room {
+  display:table-cell;
+  vertical-align:bottom;
+}
+.long-term-header-name {
+  width:85%;
+}
+.long-term-header-room {
+  text-align:right;
+  width:15%;
 }
 .medication-label {
   min-width:455px;

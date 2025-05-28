@@ -55,7 +55,6 @@ if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
           }
           echo "'>" . date('D n/j', $reservationCheckOut) . "</span>
           </div>
-        </div>
         <div class='condo-buttons";
         if ($reservationCheckOut<=$dateToday) {
           echo " checkOutTodayLeft";
@@ -68,6 +67,7 @@ if (isset($_POST['startDate']) AND isset($_POST['endDate'])) {
         </a>
         <button type='button' class='button-edit' id='edit-condo-button' data-toggle='modal' data-target='#editCondoModal' data-id='$reservationID' data-backdrop='static' title='Edit Reservation'></button>
         <button type='button' class='button-delete' id='delete-condo-button' data-toggle='modal' data-target='#deleteCondoModal' data-id='$reservationID' data-backdrop='static' title='Delete Reservation'></button>
+        </div>
         </div>
         </div>";
       }
