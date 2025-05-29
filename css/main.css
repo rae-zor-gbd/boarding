@@ -841,6 +841,12 @@ nav {
   text-align:right;
   width:15%;
 }
+.long-term-name:not(:first-of-type):last-of-type::before {
+  content:" & ";
+}
+.long-term-name:not(:first-of-type):not(:last-of-type)::before {
+  content:", ";
+}
 .medication-label {
   min-width:455px;
 }
