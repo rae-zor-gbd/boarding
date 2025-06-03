@@ -251,7 +251,7 @@ label {
   font-weight:var(--font-weight-regular);
   text-transform:uppercase;
 }
-td button {
+td button:not(.medication-label-buttons button) {
   letter-spacing:5px;
   padding:0;
 }
