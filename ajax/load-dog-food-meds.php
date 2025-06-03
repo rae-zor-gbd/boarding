@@ -128,6 +128,12 @@ if (isset($_POST['status']) AND isset($_POST['sortMeds'])) {
     } elseif ($boardingCheckOut==$dateToday) {
       echo "<button type='button' class='button-door' id='check-out-dog-button' data-toggle='modal' data-target='#checkOutDogModal' data-id='$boardingReservationID' data-row='$boardingFoodID' data-backdrop='static' title='Check Out'></button>";
     }
+    $nights=($boardingCheckOut-$boardingCheckIn)/86400;
+    if ($nights>=6) {
+      echo "<a href='/dogs/long-term-sheet/$boardingReservationID' target='_blank'>
+      <button type='button' class='button-clean' id='long-term-sheet-button' title='Print Long-Term Sheet'></button>
+      </a>";
+    }
     echo "<button type='button' class='button-edit' id='edit-dog-button' data-toggle='modal' data-target='#editDogModal' data-id='$boardingFoodID' data-status='$status' data-backdrop='static' title='Edit Food'></button>
     <button type='button' class='button-meds' id='add-med-button' data-toggle='modal' data-target='#addMedModal' data-status='$status' data-id='$boardingReservationID' data-backdrop='static' title='Add Medication'></button>
     <button type='button' class='button-delete' id='delete-dog-button' data-toggle='modal' data-target='#deleteDogModal' data-status='$status' data-id='$boardingFoodID' data-backdrop='static' title='Delete Food'></button>

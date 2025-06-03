@@ -251,6 +251,10 @@ label {
   font-weight:var(--font-weight-regular);
   text-transform:uppercase;
 }
+td button {
+  letter-spacing:5px;
+  padding:0;
+}
 td textarea, .input-group input, .input-group select, .input-group textarea {
   text-transform:uppercase;
 }
@@ -274,11 +278,9 @@ textarea {
 .button-availability::before {
   content:var(--icon-calendar-days);
 }
-.button-check::before, .button-door::before {
-  padding-right:calc(var(--spacer)/5);
-}
 .button-check::before {
   content:var(--icon-check);
+  padding-right:calc(var(--spacer)/8);
 }
 .button-clean::before {
   content:var(--icon-broom);
@@ -288,6 +290,7 @@ textarea {
 }
 .button-door::before {
   content:var(--icon-door-open);
+  padding-right:calc(var(--spacer)/5);
 }
 .button-edit::before {
   content:var(--icon-edit);
