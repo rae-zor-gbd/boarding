@@ -65,12 +65,12 @@ $checkOut=strtotime($row_long_term_info['checkOut']);
     <h4>Date Range</h4>
     </div>
     </div>
-    <div class='col-xs-4'>
+    <div class='col-xs-3'>
     <div class='long-term-column-header'>
     <h4>Cleaned On</h4>
     </div>
     </div>
-    <div class='col-xs-2'>
+    <div class='col-xs-3'>
     <div class='long-term-column-header'>
     <h4>Initials</h4>
     </div>
@@ -105,10 +105,10 @@ $checkOut=strtotime($row_long_term_info['checkOut']);
       <div class='col-xs-4'>
       <div class='long-term-box'>" . date('D n/j', $rangeStart) . " – " . date('D n/j', $rangeEnd) . "</div>
       </div>
-      <div class='col-xs-4'>
+      <div class='col-xs-3'>
       <div class='long-term-box'></div>
       </div>
-      <div class='col-xs-2'>
+      <div class='col-xs-3'>
       <div class='long-term-box'></div>
       </div>
       </div>";
@@ -121,10 +121,10 @@ $checkOut=strtotime($row_long_term_info['checkOut']);
       <div class='col-xs-4'>
       <div class='long-term-box'></div>
       </div>
-      <div class='col-xs-4'>
+      <div class='col-xs-3'>
       <div class='long-term-box'></div>
       </div>
-      <div class='col-xs-2'>
+      <div class='col-xs-3'>
       <div class='long-term-box'></div>
       </div>
       </div>";
